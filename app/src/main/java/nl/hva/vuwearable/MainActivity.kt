@@ -48,6 +48,9 @@ import java.util.concurrent.TimeUnit
  * @author Lorenzo Bindemann
  * @author Callum Svadkovski
  * @author Hugo Zuidema
+ * @author Casey Kruijer
+ * @author Kaan Uğur
+ * @author Redouan bouziza
  */
 class MainActivity : AppCompatActivity() {
 
