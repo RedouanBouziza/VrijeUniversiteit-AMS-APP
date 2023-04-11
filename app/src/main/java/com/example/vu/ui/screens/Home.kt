@@ -4,8 +4,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun HomePage() {
-    Text(text = "Chart Page")
+fun Home() {
+    Text(text = "home Page")
 }
 
 
