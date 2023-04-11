@@ -1,4 +1,9 @@
 package com.example.vu.ui.screens
 
-class Breathing {
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+
+@Composable
+fun BreathingPage() {
+    Text(text = "Breathing Page")
 }
