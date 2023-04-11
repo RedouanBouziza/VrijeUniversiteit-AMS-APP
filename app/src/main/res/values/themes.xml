@@ -2,6 +2,7 @@
 <resources>
 
     <style name="Theme.VU" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:statusBarColor">#2E889A</item>
+        <item name="android:statusBarColor">@color/amsDark</item>
+        <item name="android:navigationBarColor">@color/amsDark</item>
     </style>
 </resources>
