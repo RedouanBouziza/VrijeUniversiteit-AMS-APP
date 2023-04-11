@@ -7,6 +7,6 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="ams">#3BAFC6</color>
-    <color name="amsDark">#2E889A</color>
+    <color name="ams">#00b6cb</color>
+    <color name="amsDark">#01A0B3</color>
 </resources>
