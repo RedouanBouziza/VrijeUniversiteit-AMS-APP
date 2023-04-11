@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">VU</string>
+    <string name="breathe_in">Breathe in</string>
+    <string name="seconds">Second(s)</string>
     <string name="ams">AMS</string>
+    <string name="breathe_out">Breathe out</string>
 </resources>
