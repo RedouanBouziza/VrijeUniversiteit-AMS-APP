@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.vu.ui.screens.Breathing
+import com.example.vu.ui.screens.BreathingSettings
 import com.example.vu.ui.screens.Chart
 import com.example.vu.ui.screens.Home
 import com.example.vu.ui.screens.Screen
@@ -59,7 +59,7 @@ private fun ScreenContent(modifier: Modifier) {
             Chart(navController)
         }
         composable(route = Screen.Breathing.route) {
-            Breathing(navController)
+            BreathingSettings(navController)
         }
     }
 }
