@@ -1,18 +1,21 @@
 package com.example.vu.ui.screens
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountBox
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import com.example.vu.R
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,7 +29,7 @@ fun Home(navController: NavHostController) {
             TopBar()
         }
     ) {
-    Text(text = "Home Page")
+        Text(text = "Home Page")
     }
 }
 
@@ -34,6 +37,7 @@ fun Home(navController: NavHostController) {
 fun TopBar() {
     TopAppBar(
         backgroundColor = colorResource(id = R.color.ams),
+        contentColor = Color.White,
         title = {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -42,7 +46,24 @@ fun TopBar() {
             ) {
                 Text(
                     text = stringResource(id = R.string.ams),
-                    color = Color.White
+                )
+            }
+        },
+        navigationIcon = {
+            IconButton(onClick = {
+                //todo
+            }) {
+                Icon(
+                    Icons.Default.Menu,
+                    contentDescription = "Menu",
+                )
+            }
+        },
+        actions = {
+            IconButton(onClick = { /*TODO*/ }) {
+                Icon(
+                    Icons.Default.AccountBox,
+                    contentDescription = "Menu",
                 )
             }
         }
