@@ -8,4 +8,13 @@
     <string name="max_duration">Max Duration</string>
     <string name="minutes">Minutes</string>
     <string name="start">Start</string>
+    <!--  String for Setup  -->
+    <string name="title_setup">How to connect the electrodes</string>
+    <string name="step">Step %s:</string>
+    <string name="step1_explanation">This is the explanation text of step 1</string>
+    <string name="step2_explanation">This is the explanation text of step 2</string>
+    <string name="step3_explanation">This is the explanation text of step 3</string>
+    <string name="step4_explanation">This is the explanation text of step 4</string>
+    <string name="next_step">Next Step</string>
+    <string name="finish">Finish</string>
 </resources>

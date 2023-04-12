@@ -12,9 +12,11 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.vu.R
+import com.example.vu.ui.screens.Screen
 import com.example.vu.ui.screens.TopBar
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
@@ -23,15 +25,18 @@ fun Setup(navController: NavHostController) {
 
     Scaffold(topBar = { TopBar() }
     ) {
-        SetupInstructions()
+        SetupInstructions(navController)
     }
-
-
 }
 
 @Composable
-private fun SetupInstructions() {
+private fun SetupInstructions(navController: NavHostController) {
     var currentStep by remember { mutableStateOf(1) }
+    var buttonText by remember { mutableStateOf("") }
+    val secondLastQuestion = 4
+    val lastQuestion = 5
+
+
 
     Column(
         Modifier
@@ -39,23 +44,28 @@ private fun SetupInstructions() {
             .padding(top = 15.dp)
     ) {
         Text(
-            text = "How to connect the electrodes",
+            text = stringResource(id = R.string.title_setup),
             style = MaterialTheme.typography.h5
         )
 
         Text(
-            text = "Step $currentStep: ",
+            text = stringResource(id = R.string.step, currentStep),
             Modifier.padding(top = 50.dp),
             style = MaterialTheme.typography.subtitle1
         )
 
-        Image(
-            painter = painterResource(id = R.drawable.ams),
-            modifier = Modifier.padding(top = 15.dp),
-            contentDescription = "Instruction image"
+        Text(
+            text = stringResource(id = currentStepExplanation(currentStep)),
+            Modifier.padding(top = 50.dp),
+            style = MaterialTheme.typography.subtitle2
         )
-
     }
+
+    Image(
+        painter = painterResource(id = currentStepImage(currentStep)),
+        modifier = Modifier.fillMaxSize(),
+        contentDescription = "Instruction image"
+    )
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -63,9 +73,41 @@ private fun SetupInstructions() {
     ) {
         Button(
             shape = RoundedCornerShape(5.dp),
-            onClick = { /* Handle button click */ }
+            onClick = { currentStep++ }
         ) {
-            Text(text = "Next Step")
+            Text(text = buttonText)
         }
+    }
+
+    when (currentStep) {
+        secondLastQuestion -> {
+            buttonText = stringResource(id = R.string.finish)
+        }
+        lastQuestion -> {
+            LaunchedEffect(Unit) {
+                navController.navigate(Screen.Home.route)
+            }
+        }
+        else -> {
+            buttonText = stringResource(id = R.string.next_step)
+        }
+    }
+}
+
+fun currentStepImage(currentStep: Int): Int {
+    return when (currentStep) {
+        1 -> R.drawable.eggman
+        2 -> R.drawable.ams
+        3 -> R.drawable.eggman
+        else -> R.drawable.eggman
+    }
+}
+
+fun currentStepExplanation(currentStep: Int): Int {
+    return when (currentStep) {
+        1 -> R.string.step1_explanation
+        2 -> R.string.step2_explanation
+        3 -> R.string.step3_explanation
+        else -> R.string.step4_explanation
     }
 }
