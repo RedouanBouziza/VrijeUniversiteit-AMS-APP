@@ -19,6 +19,11 @@ import com.example.vu.R
 import com.example.vu.ui.screens.Screen
 import com.example.vu.ui.screens.TopBar
 
+/**
+ * @author Kaan Uğur
+ * @author Casey Kruijer
+ * @author Redouan Bouziza
+ */
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun Setup(navController: NavHostController) {
@@ -29,6 +34,11 @@ fun Setup(navController: NavHostController) {
     }
 }
 
+/**
+ * @author Kaan Uğur
+ * @author Casey Kruijer
+ * @author Redouan Bouziza
+ */
 @Composable
 private fun SetupInstructions(navController: NavHostController) {
     var currentStep by remember { mutableStateOf(1) }
@@ -94,6 +104,11 @@ private fun SetupInstructions(navController: NavHostController) {
     }
 }
 
+/**
+ * @author Kaan Uğur
+ * @author Casey Kruijer
+ * @author Redouan Bouziza
+ */
 fun currentStepImage(currentStep: Int): Int {
     return when (currentStep) {
         1 -> R.drawable.eggman
@@ -103,6 +118,11 @@ fun currentStepImage(currentStep: Int): Int {
     }
 }
 
+/**
+ * @author Kaan Uğur
+ * @author Casey Kruijer
+ * @author Redouan Bouziza
+ */
 fun currentStepExplanation(currentStep: Int): Int {
     return when (currentStep) {
         1 -> R.string.step1_explanation
