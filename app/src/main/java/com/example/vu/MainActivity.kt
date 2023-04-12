@@ -16,6 +16,7 @@ import com.example.vu.ui.screens.Chart
 import com.example.vu.ui.screens.Home
 import com.example.vu.ui.screens.Screen
 import com.example.vu.ui.screens.breathing.BreathingExercise
+import com.example.vu.ui.screens.faq.Setup
 import com.example.vu.ui.theme.VUTheme
 
 /**
@@ -50,7 +51,7 @@ private fun ScreenContent(modifier: Modifier) {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.BreathingSettings.route,
+        startDestination = Screen.Setup.route,
         modifier = modifier
     ) {
         composable(route = Screen.Home.route) {
@@ -64,6 +65,9 @@ private fun ScreenContent(modifier: Modifier) {
         }
         composable(route = Screen.BreathingExercise.route) {
             BreathingExercise()
+        }
+        composable(route = Screen.Setup.route){
+            Setup(navController = navController)
         }
     }
 }

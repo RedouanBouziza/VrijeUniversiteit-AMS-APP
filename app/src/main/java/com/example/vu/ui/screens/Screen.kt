@@ -7,5 +7,6 @@ sealed class Screen(
     object Chart: Screen("chart")
     object BreathingSettings: Screen("breathingSettings")
     object BreathingExercise: Screen("BreathingExercise")
+    object Setup: Screen("Setup")
 }
 
