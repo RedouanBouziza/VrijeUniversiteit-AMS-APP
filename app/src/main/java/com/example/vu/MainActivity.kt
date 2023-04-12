@@ -11,11 +11,18 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.vu.ui.screens.breathing.BreathingSettings
 import com.example.vu.ui.screens.Chart
 import com.example.vu.ui.screens.Home
 import com.example.vu.ui.screens.Screen
+import com.example.vu.ui.screens.breathing.BreathingExercise
 import com.example.vu.ui.theme.VUTheme
 
+/**
+ * @author Casey Kruijer
+ * @author Kaan Uğur
+ * @author Redouan Bouziza
+ */
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +50,7 @@ private fun ScreenContent(modifier: Modifier) {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route,
+        startDestination = Screen.BreathingSettings.route,
         modifier = modifier
     ) {
         composable(route = Screen.Home.route) {
@@ -51,6 +58,12 @@ private fun ScreenContent(modifier: Modifier) {
         }
         composable(route = Screen.Chart.route) {
             Chart(navController)
+        }
+        composable(route = Screen.BreathingSettings.route) {
+            BreathingSettings(navController)
+        }
+        composable(route = Screen.BreathingExercise.route) {
+            BreathingExercise()
         }
     }
 }
