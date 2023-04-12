@@ -11,10 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.vu.ui.screens.BreathingSettings
+import com.example.vu.ui.screens.breathing.BreathingSettings
 import com.example.vu.ui.screens.Chart
 import com.example.vu.ui.screens.Home
 import com.example.vu.ui.screens.Screen
+import com.example.vu.ui.screens.breathing.BreathingExercise
 import com.example.vu.ui.theme.VUTheme
 
 /**
@@ -49,7 +50,7 @@ private fun ScreenContent(modifier: Modifier) {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Breathing.route,
+        startDestination = Screen.BreathingSettings.route,
         modifier = modifier
     ) {
         composable(route = Screen.Home.route) {
@@ -58,8 +59,11 @@ private fun ScreenContent(modifier: Modifier) {
         composable(route = Screen.Chart.route) {
             Chart(navController)
         }
-        composable(route = Screen.Breathing.route) {
+        composable(route = Screen.BreathingSettings.route) {
             BreathingSettings(navController)
+        }
+        composable(route = Screen.BreathingExercise.route) {
+            BreathingExercise()
         }
     }
 }

@@ -1,18 +1,16 @@
-package com.example.vu.ui.screens
+package com.example.vu.ui.screens.breathing
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.vu.R
+import com.example.vu.ui.screens.Screen
 import java.util.*
 import kotlin.math.roundToInt
 
@@ -108,7 +106,7 @@ fun BreathingSettings(navController: NavController) {
         )
 
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { navController.navigate(Screen.BreathingExercise.route) },
             colors = ButtonDefaults.buttonColors(colorResource(R.color.ams))
         ) {
             Text(stringResource(R.string.start).uppercase(Locale.ROOT))

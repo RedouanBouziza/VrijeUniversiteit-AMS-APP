@@ -5,6 +5,7 @@ sealed class Screen(
 ) {
     object Home: Screen("home")
     object Chart: Screen("chart")
-    object Breathing: Screen("breathing")
+    object BreathingSettings: Screen("breathingSettings")
+    object BreathingExercise: Screen("BreathingExercise")
 }
 
