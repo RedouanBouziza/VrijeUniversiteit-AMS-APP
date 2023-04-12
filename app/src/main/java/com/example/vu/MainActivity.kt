@@ -51,7 +51,7 @@ private fun ScreenContent(modifier: Modifier) {
 
     NavHost(
         navController = navController,
-        startDestination = Screen.Setup.route,
+        startDestination = Screen.Home.route,
         modifier = modifier
     ) {
         composable(route = Screen.Home.route) {
