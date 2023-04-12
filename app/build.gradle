@@ -63,4 +63,7 @@ dependencies {
     //Navigation Component for Compose (https://developer.android.com/jetpack/compose/navigation)
     def nav_version = "2.5.3"
     implementation("androidx.navigation:navigation-compose:$nav_version")
+
+    implementation "androidx.compose.runtime:runtime-livedata:$compose_ui_version"
+
 }
