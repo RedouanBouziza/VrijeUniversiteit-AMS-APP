@@ -31,6 +31,7 @@ import com.example.vu.ui.screens.faq.SetupInstructions
 import com.example.vu.ui.screens.menu.MenuBody
 import com.example.vu.ui.screens.menu.MenuHeader
 import com.example.vu.ui.theme.VUTheme
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 /**
@@ -78,10 +79,22 @@ private fun ScreenContent(modifier: Modifier) {
             MenuHeader()
             MenuBody(onItemClick = {
                 when (it.id) {
-                    "home" -> navController.navigate(Screen.Home.route)
-                    "faq" -> navController.navigate(Screen.Setup.route)
-                    "chart" -> navController.navigate(Screen.Chart.route)
-                    "breathing" -> navController.navigate(Screen.BreathingSettings.route)
+                    "home" -> {
+                        navController.navigate(Screen.Home.route)
+                        closeNavBar(scope, scaffoldState)
+                    }
+                    "faq" -> {
+                        navController.navigate(Screen.Setup.route)
+                        closeNavBar(scope, scaffoldState)
+                    }
+                    "chart" -> {
+                        navController.navigate(Screen.Chart.route)
+                        closeNavBar(scope, scaffoldState)
+                    }
+                    "breathing" -> {
+                        navController.navigate(Screen.BreathingSettings.route)
+                        closeNavBar(scope, scaffoldState)
+                    }
                 }
             }
             )
@@ -149,4 +162,8 @@ fun TopBar(
             }
         }
     )
+}
+
+fun closeNavBar(scope: CoroutineScope, scaffoldState: ScaffoldState) {
+    scope.launch { scaffoldState.drawerState.close() }
 }
