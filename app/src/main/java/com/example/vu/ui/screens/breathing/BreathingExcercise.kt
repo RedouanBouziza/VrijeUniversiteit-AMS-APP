@@ -1,6 +1,6 @@
 package com.example.vu.ui.screens.breathing
 
-import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
@@ -21,7 +21,8 @@ enum class BreathingExcercisePosition {
 fun BreathingExercise() {
     var imageState by remember { mutableStateOf(BreathingExcercisePosition.Start) }
     val offsetAnimation: Dp by animateDpAsState(
-        if (imageState == BreathingExcercisePosition.Start) 200.dp else 250.dp
+        if (imageState == BreathingExcercisePosition.Start) 200.dp else 250.dp,
+        repeatable(5, tween(1000, easing = CubicBezierEasing(0.4f, 0.0f, 0.8f, 0.8f)), RepeatMode.Reverse)
     )
 
     Column(
