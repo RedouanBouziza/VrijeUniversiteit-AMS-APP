@@ -4,14 +4,10 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountBox
-import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -23,8 +19,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.vu.ui.screens.breathing.BreathingSettings
-import com.example.vu.ui.screens.Chart
-import com.example.vu.ui.screens.Home
+import com.example.vu.ui.screens.chart.Chart
+import com.example.vu.ui.screens.home.Home
 import com.example.vu.ui.screens.Screen
 import com.example.vu.ui.screens.breathing.BreathingExercise
 import com.example.vu.ui.screens.faq.SetupInstructions
@@ -125,9 +121,7 @@ private fun ScreenContent(modifier: Modifier) {
 }
 
 @Composable
-fun TopBar(
-    onNavigationIconClick: () -> Unit
-) {
+fun TopBar(onNavigationIconClick: () -> Unit) {
     TopAppBar(
         backgroundColor = colorResource(id = R.color.ams),
         contentColor = Color.White,
@@ -154,10 +148,25 @@ fun TopBar(
             }
         },
         actions = {
-            IconButton(onClick = { /*TODO*/ }) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Icon(
-                    Icons.Default.AccountBox,
+                    imageVector = Icons.Default.Wifi,
                     contentDescription = "AccountBox",
+                    tint = Color.White
+                )
+                Icon(
+                    imageVector = Icons.Default.WifiProtectedSetup,
+                    contentDescription = "AccountBox",
+                    tint = Color.White
+                )
+                Icon(
+                    imageVector = Icons.Default.WifiOff,
+                    contentDescription = "AccountBox",
+                    tint = Color.White
                 )
             }
         }

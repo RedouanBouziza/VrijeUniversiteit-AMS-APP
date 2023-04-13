@@ -64,6 +64,9 @@ dependencies {
     def nav_version = "2.5.3"
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
+    //LiveData for Compose (https://developer.android.com/jetpack/compose/state)
     implementation "androidx.compose.runtime:runtime-livedata:$compose_ui_version"
+
+    implementation "androidx.compose.material:material-icons-extended:$compose_ui_version"
 
 }

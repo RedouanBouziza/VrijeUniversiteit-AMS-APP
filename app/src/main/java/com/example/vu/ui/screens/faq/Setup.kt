@@ -65,21 +65,21 @@ fun SetupInstructions(navController: NavHostController) {
         ) {
             Text(text = buttonText)
         }
-    }
-
-    when (currentStep) {
-        secondLastQuestion -> {
-            buttonText = stringResource(id = R.string.finish)
-        }
-        lastQuestion -> {
-            LaunchedEffect(Unit) {
-                navController.navigate(Screen.Home.route)
+        when (currentStep) {
+            secondLastQuestion -> {
+                buttonText = stringResource(id = R.string.finish)
+            }
+            lastQuestion -> {
+                LaunchedEffect(Unit) {
+                    navController.navigate(Screen.Home.route)
+                }
+            }
+            else -> {
+                buttonText = stringResource(id = R.string.next_step)
             }
         }
-        else -> {
-            buttonText = stringResource(id = R.string.next_step)
-        }
     }
+
 }
 
 /**

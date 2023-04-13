@@ -12,13 +12,13 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.vu.R
 import com.example.vu.data.model.MenuItem
-
 
 @Composable
 fun MenuHeader() {
@@ -52,19 +52,19 @@ fun MenuBody(
             id = "chart",
             title = "Chart",
             contentDescription = "Chart-screen",
-            icon = Icons.Default.Build
-        ),
-        MenuItem(
-            id = "faq",
-            title = "FAQ",
-            contentDescription = "Faq-screen",
-            icon = Icons.Default.Info
+            icon = Icons.Default.Assessment
         ),
         MenuItem(
             id = "breathing",
             title = "Breathing",
             contentDescription = "Breathing-screen",
-            icon = Icons.Default.Call
+            icon = Icons.Default.MonitorHeart
+        ),
+        MenuItem(
+            id = "faq",
+            title = "FAQ",
+            contentDescription = "Faq-screen",
+            icon = Icons.Default.Info,
         ),
         MenuItem(
             id = "system",
@@ -86,7 +86,8 @@ fun MenuBody(
             ) {
                 Icon(
                     imageVector = item.icon,
-                    contentDescription = item.contentDescription
+                    contentDescription = item.contentDescription,
+                    tint = colorResource(id = R.color.ams)
                 )
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(
