@@ -1,4 +1,4 @@
-package com.example.vu.ui.screens.menu
+package com.example.vu.data.model
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

@@ -10,6 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.vu.R
+import com.example.vu.data.model.Breathing
 import com.example.vu.ui.screens.Screen
 import java.util.*
 import kotlin.math.roundToInt
@@ -106,7 +107,10 @@ fun BreathingSettings(navController: NavController) {
         )
 
         Button(
-            onClick = { navController.navigate(Screen.BreathingExercise.route) },
+            onClick = {
+                Breathing(sliderInValue.roundToInt(), sliderOutValue.roundToInt(), pause.roundToInt(), maxDuration.roundToInt())
+                navController.navigate(Screen.BreathingExercise.route)
+            },
             colors = ButtonDefaults.buttonColors(colorResource(R.color.ams))
         ) {
             Text(stringResource(R.string.start).uppercase(Locale.ROOT))
