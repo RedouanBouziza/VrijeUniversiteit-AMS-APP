@@ -10,13 +10,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.vu.R
-import com.example.vu.data.model.Breathing
 import com.example.vu.ui.screens.Screen
 import java.util.*
 import kotlin.math.roundToInt
 
 @Composable
-fun BreathingSettings(navController: NavController) {
+fun BreathingSettings(navController: NavController, breathingViewModel: BreathingViewModel) {
     var sliderInValue by remember { mutableStateOf(1f) }
     var sliderOutValue by remember { mutableStateOf(1f) }
     var pause by remember { mutableStateOf(1f) }
@@ -87,28 +86,11 @@ fun BreathingSettings(navController: NavController) {
             modifier = Modifier.padding(bottom = 30.dp),
         )
 
-        Text(stringResource(R.string.max_duration))
-        Text("${maxDuration.roundToInt()} " + stringResource(R.string.minutes))
-        Slider(
-            value = maxDuration,
-            onValueChange = {
-                maxDuration = it
-            },
-            valueRange = 1f..10f,
-            steps = 10,
-            colors = SliderDefaults.colors(
-                thumbColor = colorResource(R.color.white),
-                activeTickColor = colorResource(R.color.ams),
-                inactiveTickColor = colorResource(R.color.white),
-                activeTrackColor = colorResource(R.color.white),
-                inactiveTrackColor = colorResource(R.color.ams),
-            ),
-            modifier = Modifier.padding(bottom = 30.dp),
-        )
-
         Button(
             onClick = {
-                Breathing(sliderInValue.roundToInt(), sliderOutValue.roundToInt(), pause.roundToInt(), maxDuration.roundToInt())
+                breathingViewModel.breathIn.value = sliderInValue.roundToInt()
+                breathingViewModel.breathOut.value = sliderOutValue.toInt()
+                breathingViewModel.pause.value = pause.toInt()
                 navController.navigate(Screen.BreathingExercise.route)
             },
             colors = ButtonDefaults.buttonColors(colorResource(R.color.ams))
