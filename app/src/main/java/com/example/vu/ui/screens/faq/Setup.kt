@@ -1,12 +1,9 @@
 package com.example.vu.ui.screens.faq
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,44 +13,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.vu.R
 import com.example.vu.ui.screens.Screen
-import com.example.vu.ui.screens.TopBar
-import com.example.vu.ui.screens.menu.MenuBody
-import com.example.vu.ui.screens.menu.MenuHeader
-import com.example.vu.ui.screens.menu.MenuItem
-import kotlinx.coroutines.launch
-
-/**
- * @author Kaan Uğur
- * @author Casey Kruijer
- * @author Redouan Bouziza
- */
-@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
-@Composable
-fun Setup(navController: NavHostController) {
-    val scaffoldState = rememberScaffoldState()
-    val scope = rememberCoroutineScope()
-
-    Scaffold(scaffoldState = scaffoldState, topBar = {
-        TopBar(onNavigationIconClick = {
-            scope.launch { scaffoldState.drawerState.open() }
-        })
-    },
-        drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
-        drawerContent = {
-            MenuHeader()
-            MenuBody(onItemClick = {
-                    when(it.id) {
-                        "home" -> navController.navigate(Screen.Home.route)
-                        "faq" -> navController.navigate(Screen.Setup.route)
-                        "chart" -> navController.navigate(Screen.Chart.route)
-                    }
-                }
-            )
-        }
-    ) {
-        SetupInstructions(navController)
-    }
-}
 
 /**
  * @author Kaan Uğur
@@ -61,13 +20,11 @@ fun Setup(navController: NavHostController) {
  * @author Redouan Bouziza
  */
 @Composable
-private fun SetupInstructions(navController: NavHostController) {
+fun SetupInstructions(navController: NavHostController) {
     var currentStep by remember { mutableStateOf(1) }
     var buttonText by remember { mutableStateOf("") }
     val secondLastQuestion = 4
     val lastQuestion = 5
-
-
 
     Column(
         Modifier

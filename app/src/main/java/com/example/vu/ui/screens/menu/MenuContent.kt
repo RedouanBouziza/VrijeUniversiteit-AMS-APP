@@ -43,7 +43,7 @@ fun MenuBody(
     itemTextStyle: TextStyle = TextStyle(fontSize = 18.sp),
     onItemClick: (MenuItem) -> Unit
 ) {
-    val menuItems = listOf<MenuItem>(
+    val menuItems = listOf(
         MenuItem(
             id = "home",
             title = "Home",
@@ -61,6 +61,12 @@ fun MenuBody(
             title = "FAQ",
             contentDescription = "Faq-screen",
             icon = Icons.Default.Info
+        ),
+        MenuItem(
+            id = "breathing",
+            title = "Breathing",
+            contentDescription = "Breathing-screen",
+            icon = Icons.Default.Call
         ),
         MenuItem(
             id = "system",

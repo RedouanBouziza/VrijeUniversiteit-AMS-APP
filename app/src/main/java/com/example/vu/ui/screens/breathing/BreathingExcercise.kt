@@ -20,7 +20,6 @@ enum class BreathingExcercisePosition {
 @Composable
 fun BreathingExercise() {
     var imageState by remember { mutableStateOf(BreathingExcercisePosition.Start) }
-
     val offsetAnimation: Dp by animateDpAsState(
         if (imageState == BreathingExcercisePosition.Start) 200.dp else 250.dp
     )
