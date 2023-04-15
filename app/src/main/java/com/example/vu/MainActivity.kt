@@ -23,6 +23,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.vu.data.udp.UDPConnection
 import com.example.vu.ui.screens.breathing.BreathingSettings
 import com.example.vu.ui.screens.Chart
 import com.example.vu.ui.screens.Home
