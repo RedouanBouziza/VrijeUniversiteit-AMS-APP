@@ -2,6 +2,7 @@ package com.example.vu
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -9,6 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
@@ -18,7 +20,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -34,8 +35,14 @@ import com.example.vu.ui.screens.faq.SetupInstructions
 import com.example.vu.ui.screens.menu.MenuBody
 import com.example.vu.ui.screens.menu.MenuHeader
 import com.example.vu.ui.theme.VUTheme
+import com.scichart.charting.visuals.SciChartSurface
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
+import com.example.vu.data.udp.UDPConnection
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 
 /**
  * @author Casey Kruijer
@@ -45,6 +52,13 @@ import kotlinx.coroutines.launch
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        try {
+            SciChartSurface.setRuntimeLicenseKey(BuildConfig.SCI_CHART_KEY)
+        } catch (e: Exception) {
+            Log.e("SciChart", e.toString())
+        }
+
         setContent()
     }
 
@@ -70,6 +84,8 @@ private fun ScreenContent(modifier: Modifier) {
     val scope = rememberCoroutineScope()
     val navController = rememberNavController()
     val breathingViewModel: BreathingViewModel = viewModel()
+
+    MyComposableFunction(modifier, scaffoldState, scope)
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -129,7 +145,7 @@ private fun ScreenContent(modifier: Modifier) {
 }
 
 @Composable
-fun TopBar(onNavigationIconClick: () -> Unit) {
+private fun TopBar(onNavigationIconClick: () -> Unit) {
     val udpViewModel: UDPViewModel = viewModel()
 
     TopAppBar(
@@ -203,7 +219,29 @@ private fun ConnectionEstablished(udpViewModel: UDPViewModel) {
     }
 }
 
-
-fun closeNavBar(scope: CoroutineScope, scaffoldState: ScaffoldState) {
+private fun closeNavBar(scope: CoroutineScope, scaffoldState: ScaffoldState) {
     scope.launch { scaffoldState.drawerState.close() }
 }
+
+//TODO: Check if this works with the new data
+@Composable
+fun MyComposableFunction(modifier: Modifier, scaffoldState: ScaffoldState, scope: CoroutineScope) {
+    val udpViewModel: UDPViewModel = viewModel()
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        scope.async(Dispatchers.IO) {
+            UDPConnection(
+                context = context,
+                3,
+                3,
+                setConnectedCallBack = { isConnected, isReceivingData ->
+                    udpViewModel.setIsReceivingData(isReceivingData)
+                    udpViewModel.setIsConnected(isConnected)
+                }
+            )
+        }
+    }
+
+}
+
