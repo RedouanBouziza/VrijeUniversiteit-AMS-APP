@@ -3,18 +3,13 @@ package com.example.vu.ui.screens.breathing
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.vu.R
-import java.util.Date
+import com.example.vu.data.viewmodel.BreathingViewModel
 
 @Composable
 fun BreathingExercise(breathingViewModel: BreathingViewModel) {

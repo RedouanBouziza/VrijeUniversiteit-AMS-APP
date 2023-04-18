@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 
 class UDPViewModel : ViewModel() {
 
-    private val isConnected = MutableLiveData(false)
-    private val isReceivingData = MutableLiveData(false)
+    internal val isConnected = MutableLiveData(false)
+    internal val isReceivingData = MutableLiveData(false)
 
     fun setIsConnected(isConnected: Boolean) {
         this.isConnected.value = isConnected

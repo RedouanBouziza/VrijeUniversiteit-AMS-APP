@@ -9,13 +9,16 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -25,7 +28,8 @@ import com.example.vu.ui.screens.chart.Chart
 import com.example.vu.ui.screens.home.Home
 import com.example.vu.ui.screens.Screen
 import com.example.vu.ui.screens.breathing.BreathingExercise
-import com.example.vu.ui.screens.breathing.BreathingViewModel
+import com.example.vu.data.viewmodel.BreathingViewModel
+import com.example.vu.data.viewmodel.UDPViewModel
 import com.example.vu.ui.screens.faq.SetupInstructions
 import com.example.vu.ui.screens.menu.MenuBody
 import com.example.vu.ui.screens.menu.MenuHeader
@@ -126,6 +130,8 @@ private fun ScreenContent(modifier: Modifier) {
 
 @Composable
 fun TopBar(onNavigationIconClick: () -> Unit) {
+    val udpViewModel: UDPViewModel = viewModel()
+
     TopAppBar(
         backgroundColor = colorResource(id = R.color.ams),
         contentColor = Color.White,
@@ -153,29 +159,50 @@ fun TopBar(onNavigationIconClick: () -> Unit) {
         },
         actions = {
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = 13.dp),
                 horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                Icon(
-                    imageVector = Icons.Default.Wifi,
-                    contentDescription = "Wifi",
-                    tint = Color.White
-                )
+
+                ConnectionEstablished(udpViewModel)
+            }
+        }
+    )
+}
+
+//TODO: Check if this works with the new data
+@Composable
+private fun ConnectionEstablished(udpViewModel: UDPViewModel) {
+    val isConnected by udpViewModel.isConnected.observeAsState()
+    val isReceivingData by udpViewModel.isReceivingData.observeAsState()
+
+    when (isConnected) {
+        true -> {
+            Icon(
+                imageVector = Icons.Default.Wifi,
+                contentDescription = "Wifi",
+                tint = Color.White
+            )
+            if (isReceivingData != true) {
                 Icon(
                     imageVector = Icons.Default.WifiProtectedSetup,
                     contentDescription = "WifiProtectedSetup",
                     tint = Color.White
                 )
-                Icon(
-                    imageVector = Icons.Default.WifiOff,
-                    contentDescription = "WifiOff",
-                    tint = Color.White
-                )
             }
         }
-    )
+        else -> {
+            Icon(
+                imageVector = Icons.Default.WifiOff,
+                contentDescription = "WifiOff",
+                tint = Color.White
+            )
+        }
+    }
 }
+
 
 fun closeNavBar(scope: CoroutineScope, scaffoldState: ScaffoldState) {
     scope.launch { scaffoldState.drawerState.close() }

@@ -1,4 +1,4 @@
-package com.example.vu.ui.screens.breathing
+package com.example.vu.data.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

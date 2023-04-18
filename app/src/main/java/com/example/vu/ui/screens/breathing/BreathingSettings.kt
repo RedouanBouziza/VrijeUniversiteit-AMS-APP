@@ -10,6 +10,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.vu.R
+import com.example.vu.data.viewmodel.BreathingViewModel
 import com.example.vu.ui.screens.Screen
 import java.util.*
 import kotlin.math.roundToInt
