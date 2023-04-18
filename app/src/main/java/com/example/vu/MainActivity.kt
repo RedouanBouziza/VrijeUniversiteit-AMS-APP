@@ -13,13 +13,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.vu.data.udp.UDPConnection
 import com.example.vu.ui.screens.breathing.BreathingSettings
 import com.example.vu.ui.screens.chart.Chart
 import com.example.vu.ui.screens.home.Home
@@ -106,7 +106,7 @@ private fun ScreenContent(modifier: Modifier) {
             modifier = modifier
         ) {
             composable(route = Screen.Home.route) {
-                Home()
+                Home(modifier, navController = navController)
             }
             composable(route = Screen.Chart.route) {
                 Chart(navController)
@@ -159,17 +159,17 @@ fun TopBar(onNavigationIconClick: () -> Unit) {
             ) {
                 Icon(
                     imageVector = Icons.Default.Wifi,
-                    contentDescription = "AccountBox",
+                    contentDescription = "Wifi",
                     tint = Color.White
                 )
                 Icon(
                     imageVector = Icons.Default.WifiProtectedSetup,
-                    contentDescription = "AccountBox",
+                    contentDescription = "WifiProtectedSetup",
                     tint = Color.White
                 )
                 Icon(
                     imageVector = Icons.Default.WifiOff,
-                    contentDescription = "AccountBox",
+                    contentDescription = "WifiOff",
                     tint = Color.White
                 )
             }
