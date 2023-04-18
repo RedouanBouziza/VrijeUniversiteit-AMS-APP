@@ -116,10 +116,10 @@ private fun ScreenContent(modifier: Modifier) {
                 Chart(navController)
             }
             composable(route = Screen.BreathingSettings.route) {
-                BreathingSettings(navController, breathingViewModel)
+                BreathingSettings(navController, scope, breathingViewModel)
             }
             composable(Screen.BreathingExercise.route) {
-                BreathingExercise(breathingViewModel)
+                BreathingExercise(scope, breathingViewModel)
             }
             composable(route = Screen.Setup.route) {
                 SetupInstructions(navController = navController)

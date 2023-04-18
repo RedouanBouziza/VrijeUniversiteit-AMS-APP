@@ -12,15 +12,19 @@ import androidx.navigation.NavController
 import com.example.vu.R
 import com.example.vu.data.viewmodel.BreathingViewModel
 import com.example.vu.ui.screens.Screen
+import kotlinx.coroutines.CoroutineScope
 import java.util.*
 import kotlin.math.roundToInt
 
 @Composable
-fun BreathingSettings(navController: NavController, breathingViewModel: BreathingViewModel) {
+fun BreathingSettings(
+    navController: NavController,
+    scope: CoroutineScope,
+    breathingViewModel: BreathingViewModel
+) {
     var sliderInValue by remember { mutableStateOf(1f) }
     var sliderOutValue by remember { mutableStateOf(1f) }
     var pause by remember { mutableStateOf(1f) }
-    var maxDuration by remember { mutableStateOf(1f) }
 
     Column(
         Modifier
