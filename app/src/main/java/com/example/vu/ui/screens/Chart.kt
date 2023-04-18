@@ -6,5 +6,5 @@ import androidx.navigation.NavHostController
 
 @Composable
 fun Chart(navController: NavHostController) {
-    Text(text = "Chart Page")
+
 }
