@@ -15,14 +15,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.vu.data.udp.UDPConnection
 import com.example.vu.ui.screens.breathing.BreathingSettings
 import com.example.vu.ui.screens.chart.Chart
 import com.example.vu.ui.screens.home.Home
 import com.example.vu.ui.screens.Screen
 import com.example.vu.ui.screens.breathing.BreathingExercise
+import com.example.vu.ui.screens.breathing.BreathingViewModel
 import com.example.vu.ui.screens.faq.SetupInstructions
 import com.example.vu.ui.screens.menu.MenuBody
 import com.example.vu.ui.screens.menu.MenuHeader
@@ -62,6 +65,7 @@ private fun ScreenContent(modifier: Modifier) {
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
     val navController = rememberNavController()
+    val breathingViewModel: BreathingViewModel = viewModel()
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -108,10 +112,10 @@ private fun ScreenContent(modifier: Modifier) {
                 Chart(navController)
             }
             composable(route = Screen.BreathingSettings.route) {
-                BreathingSettings(navController)
+                BreathingSettings(navController, breathingViewModel)
             }
-            composable(route = Screen.BreathingExercise.route) {
-                BreathingExercise()
+            composable(Screen.BreathingExercise.route) {
+                BreathingExercise(breathingViewModel)
             }
             composable(route = Screen.Setup.route) {
                 SetupInstructions(navController = navController)

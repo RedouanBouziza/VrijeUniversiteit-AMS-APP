@@ -64,9 +64,33 @@ dependencies {
     def nav_version = "2.5.3"
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
-    //LiveData for Compose (https://developer.android.com/jetpack/compose/state)
     implementation "androidx.compose.runtime:runtime-livedata:$compose_ui_version"
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.viewpager2:viewpager2:1.1.0-beta01'
 
-    implementation "androidx.compose.material:material-icons-extended:$compose_ui_version"
+    // Scichart modules
+//    implementation (group: 'com.scichart.library', name: 'core', version: '3.0.0.4253', ext: 'aar')
+//    implementation (group: 'com.scichart.library', name: 'data', version: '3.0.0.4253', ext: 'aar')
+//    implementation (group: 'com.scichart.library', name: 'drawing', version: '3.0.0.4253', ext: 'aar')
+//    implementation (group: 'com.scichart.library', name: 'charting3d', version: '3.0.0.4253', ext: 'aar')
+//    implementation (group: 'com.scichart.library', name: 'charting', version: '3.0.0.4253', ext: 'aar')
+//    implementation (group: 'com.scichart.library', name: 'extensions', version: '3.0.0.4253', ext: 'aar')
+//    implementation (group: 'com.scichart.library', name: 'extensions3d', version: '3.0.0.4253', ext: 'aar')
 
+    def sciChart_version = "4.4.0-nightly.4744"
+
+    // Declare SciChart libraries as module dependencies
+    implementation(group: 'com.scichart.library', name: 'core', version: sciChart_version, ext: 'aar')
+    implementation(group: 'com.scichart.library', name: 'data', version: sciChart_version, ext: 'aar')
+    implementation(group: 'com.scichart.library', name: 'drawing', version: sciChart_version, ext: 'aar')
+    implementation(group: 'com.scichart.library', name: 'charting', version: sciChart_version, ext: 'aar')
+    implementation(group: 'com.scichart.library', name: 'charting3d', version: sciChart_version, ext: 'aar')
+    // Declare SciChart extension library as module dependencies
+    implementation(group: 'com.scichart.library', name: 'extensions', version: sciChart_version, ext: 'aar')
+    implementation(group: 'com.scichart.library', name: 'extensions3d', version: sciChart_version, ext: 'aar')
+
+    implementation 'org.java-websocket:Java-WebSocket:1.5.3'
+    implementation "com.google.android.gms:play-services-location:21.0.1"
 }

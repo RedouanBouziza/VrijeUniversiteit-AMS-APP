@@ -5,8 +5,6 @@
     <string name="ams">AMS</string>
     <string name="breathe_out">Breathe out</string>
     <string name="pause">Pause</string>
-    <string name="max_duration">Max Duration</string>
-    <string name="minutes">Minutes</string>
     <string name="start">Start</string>
     <!--  String for Setup  -->
     <string name="title_setup">How to connect the electrodes</string>
