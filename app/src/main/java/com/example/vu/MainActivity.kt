@@ -42,6 +42,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import com.example.vu.data.udp.UDPConnection
 import com.example.vu.ui.screens.faq.Faq
+import com.example.vu.ui.screens.system.System
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 
@@ -116,6 +117,10 @@ private fun ScreenContent(modifier: Modifier) {
                         navController.navigate(Screen.BreathingSettings.route)
                         closeNavBar(scope, scaffoldState)
                     }
+                    "system" -> {
+                        navController.navigate(Screen.System.route)
+                        closeNavBar(scope, scaffoldState)
+                    }
                 }
             }
             )
@@ -127,7 +132,7 @@ private fun ScreenContent(modifier: Modifier) {
             modifier = modifier
         ) {
             composable(route = Screen.Home.route) {
-                Home(modifier, navController = navController)
+                Home(modifier, navController)
             }
             composable(route = Screen.Chart.route) {
                 Chart(navController)
@@ -139,10 +144,13 @@ private fun ScreenContent(modifier: Modifier) {
                 BreathingExercise(scope, breathingViewModel)
             }
             composable(route = Screen.Setup.route) {
-                SetupInstructions(navController = navController)
+                SetupInstructions(navController)
             }
             composable(route = Screen.Faq.route) {
-                Faq(navController = navController)
+                Faq(navController)
+            }
+            composable(route = Screen.System.route) {
+                System(navController)
             }
         }
     }
