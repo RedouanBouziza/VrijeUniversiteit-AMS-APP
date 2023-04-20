@@ -17,15 +17,16 @@ import com.example.vu.R
 
 @Composable
 fun BreathingExercise(breathingViewModel: BreathingViewModel) {
-    val infiniteTransition = rememberInfiniteTransition()
     val scale = remember { Animatable(1f) }
     val breathIn = breathingViewModel.breathIn.value!! * 1000
     val breathOut = breathingViewModel.breathOut.value!! * 1000
     val pause = breathingViewModel.pause.value!! * 1000
 
     LaunchedEffect(Unit) {
-        scale.animateTo(1.5f, tween(breathIn, pause, LinearEasing))
-        scale.animateTo(1f, tween(breathOut, pause, LinearEasing))
+        while (true) {
+            scale.animateTo(1.5f, tween(breathIn, pause, LinearEasing))
+            scale.animateTo(1f, tween(breathOut, pause, LinearEasing))
+        }
     }
 
     Column(
@@ -33,7 +34,8 @@ fun BreathingExercise(breathingViewModel: BreathingViewModel) {
             .fillMaxWidth()
             .fillMaxHeight()
             .padding(15.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
         ) {
             Image(
                 painter = painterResource(R.drawable.breathe),
