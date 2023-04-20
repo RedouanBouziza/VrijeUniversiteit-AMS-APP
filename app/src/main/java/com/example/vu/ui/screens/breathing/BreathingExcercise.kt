@@ -10,6 +10,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.vu.R
 import com.example.vu.data.viewmodel.BreathingViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+
+enum class ImageState {
+    Start,
+    End,
+}
 
 @Composable
 fun BreathingExercise(scope: CoroutineScope, breathingViewModel: BreathingViewModel) {
