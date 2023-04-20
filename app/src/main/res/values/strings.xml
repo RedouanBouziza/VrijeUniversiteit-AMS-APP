@@ -15,4 +15,7 @@
     <string name="step4_explanation">This is the explanation text of step 4</string>
     <string name="next_step">Next Step</string>
     <string name="finish">Finish</string>
+    <!--  String for Settings screen  -->
+    <string name="title_settings">App settings</string>
+    <string name="title_device">Device settings</string>
 </resources>
