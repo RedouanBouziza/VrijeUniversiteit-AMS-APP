@@ -2,18 +2,23 @@ package com.example.vu.ui.screens.breathing
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
-import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.vu.data.viewmodel.BreathingViewModel
 import com.example.vu.R
+import com.example.vu.ui.screens.chart.SciChartSurfaceView
+import com.example.vu.ui.theme.Shapes
 
 @Composable
 fun BreathingExercise(breathingViewModel: BreathingViewModel) {
@@ -29,18 +34,27 @@ fun BreathingExercise(breathingViewModel: BreathingViewModel) {
         }
     }
 
-    Column(
-        Modifier
-            .fillMaxWidth()
-            .fillMaxHeight()
-            .padding(15.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
+    Column {
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .height(270.dp)
+                .padding(15.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
         ) {
             Image(
                 painter = painterResource(R.drawable.breathe),
                 contentDescription = "",
                 modifier = Modifier.scale(scale.value)
             )
+        }
+
+        Column(
+            Modifier
+                .fillMaxHeight()
+        ) {
+            SciChartSurfaceView()
+        }
     }
 }
