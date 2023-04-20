@@ -6,26 +6,34 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.vu.R
 import com.example.vu.data.viewmodel.BreathingViewModel
-import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun BreathingExercise(scope: CoroutineScope, breathingViewModel: BreathingViewModel) {
-    val infiniteTransition = rememberInfiniteTransition()
+fun BreathingExercise(breathingViewModel: BreathingViewModel) {
+    val startProgress = rememberInfiniteTransition()
+    val endProgress = rememberInfiniteTransition()
     val breathIn = breathingViewModel.breathIn.value!! * 1000
     val breathOut = breathingViewModel.breathOut.value!! * 1000
     val pause = breathingViewModel.pause.value!! * 1000
 
-    val imageSize by infiniteTransition.animateFloat(
-        initialValue = 100.0f,
-        targetValue =250.0f ,
+    val startScale by startProgress.animateFloat(
+        initialValue = 1f,
+        targetValue = 1.5f,
         animationSpec = infiniteRepeatable(
-            tween(breathIn, pause, LinearEasing),
-            RepeatMode.Reverse
-        )
+            tween(breathIn, pause, LinearEasing)
+        ),
+    )
+
+    val endScale by endProgress.animateFloat(
+        initialValue = 1.5f,
+        targetValue = 1f,
+        animationSpec = infiniteRepeatable(
+            tween(breathOut, 0, LinearEasing)
+        ),
     )
 
     Column(
@@ -33,13 +41,14 @@ fun BreathingExercise(scope: CoroutineScope, breathingViewModel: BreathingViewMo
             .fillMaxHeight()
             .fillMaxWidth()
             .padding(15.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
             painter = painterResource(R.drawable.breathe),
             contentDescription = "",
             modifier = Modifier
-                .size(imageSize.dp)
+                .scale(endScale)
+                .scale(startScale)
         )
     }
 }
