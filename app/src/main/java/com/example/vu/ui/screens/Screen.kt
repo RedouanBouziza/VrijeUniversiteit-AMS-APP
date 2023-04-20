@@ -8,5 +8,6 @@ sealed class Screen(
     object BreathingSettings: Screen("breathingSettings")
     object BreathingExercise: Screen("BreathingExercise")
     object Setup: Screen("Setup")
+    object Faq: Screen("Faq")
 }
 

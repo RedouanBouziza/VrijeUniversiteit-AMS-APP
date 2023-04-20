@@ -41,6 +41,7 @@ import kotlinx.coroutines.launch
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import com.example.vu.data.udp.UDPConnection
+import com.example.vu.ui.screens.faq.Faq
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 
@@ -104,7 +105,7 @@ private fun ScreenContent(modifier: Modifier) {
                         closeNavBar(scope, scaffoldState)
                     }
                     "faq" -> {
-                        navController.navigate(Screen.Setup.route)
+                        navController.navigate(Screen.Faq.route)
                         closeNavBar(scope, scaffoldState)
                     }
                     "chart" -> {
@@ -139,6 +140,9 @@ private fun ScreenContent(modifier: Modifier) {
             }
             composable(route = Screen.Setup.route) {
                 SetupInstructions(navController = navController)
+            }
+            composable(route = Screen.Faq.route) {
+                Faq(navController = navController)
             }
         }
     }
