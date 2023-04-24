@@ -5,9 +5,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.vu.BuildConfig
-import com.example.vu.R
+import androidx.fragment.app.activityViewModels
+import com.example.vu.data.viewmodel.ChartViewModel
 import com.scichart.charting.model.dataSeries.XyDataSeries
 import com.scichart.charting.modifiers.*
 import com.scichart.charting.visuals.SciChartSurface
@@ -33,6 +35,7 @@ fun Chart(navController: NavHostController) {
 @Composable
 fun SciChartSurfaceView() {
     SciChartSurface.setRuntimeLicenseKey(BuildConfig.SCI_CHART_KEY)
+    val chartViewModel: ChartViewModel = viewModel()
 
     val twoEcgLineData = DoubleValues()
     val twoEcgLineDataSeries =
@@ -143,66 +146,66 @@ fun SciChartSurfaceView() {
                     Double::class.javaObjectType
                 )
 
-                for (i in 0 until 100) {
-                    val x = i.toDouble()
-                    val y = kotlin.math.sin(x * 0.2)
-                    twoEcgData.append(x, y)
-                }
-
-                for (i in 0 until 100) {
-                    val x = i.toDouble()
-                    val y = kotlin.math.sin(x * 0.9)
-                    isrcData.append(x, y)
-                }
-
-                for (i in 0 until 100) {
-                    val x = i.toDouble()
-                    val y = kotlin.math.sin(x * 0.2)
-                    ecgData.append(x, y)
-                }
-
-                for (i in 0 until 100) {
-                    val x = i.toDouble()
-                    val y = kotlin.math.sin(x * 0.2)
-                    icgData.append(x, y)
-                }
-
-                for (i in 0 until 100) {
-                    val x = i.toDouble()
-                    val y = kotlin.math.sin(x * 0.2)
-                    temperatureData.append(x, y)
-                }
-
-                twoEcgLineSeries.apply {
-                    dataSeries = twoEcgData
-                    strokeStyle = SolidPenStyle(ColorUtil.Green, true, 5f, null)
-                }
-
-                isrcLineSeries.apply {
-                    dataSeries = isrcData
-                    strokeStyle = SolidPenStyle(ColorUtil.Blue, true, 5f, null)
-                }
-
-                ecgLineSeries.apply {
-                    dataSeries = ecgData
-                    strokeStyle = SolidPenStyle(ColorUtil.LimeGreen, true, 5f, null)
-                }
-                icgLineSeries.apply {
-                    dataSeries = icgData
-                    strokeStyle = SolidPenStyle(ColorUtil.Yellow, true, 5f, null)
-                }
-
-                temperatureLineSeries.apply {
-                    dataSeries = temperatureData
-                    strokeStyle = SolidPenStyle(ColorUtil.Red, true, 5f, null)
-                }
+//                for (i in 0 until 100) {
+//                    val x = i.toDouble()
+//                    val y = kotlin.math.sin(x * 0.2)
+//                    twoEcgData.append(x, y)
+//                }
+//
+//                for (i in 0 until 100) {
+//                    val x = i.toDouble()
+//                    val y = kotlin.math.sin(x * 0.9)
+//                    isrcData.append(x, y)
+//                }
+//
+//                for (i in 0 until 100) {
+//                    val x = i.toDouble()
+//                    val y = kotlin.math.sin(x * 0.2)
+//                    ecgData.append(x, y)
+//                }
+//
+//                for (i in 0 until 100) {
+//                    val x = i.toDouble()
+//                    val y = kotlin.math.sin(x * 0.2)
+//                    icgData.append(x, y)
+//                }
+//
+//                for (i in 0 until 100) {
+//                    val x = i.toDouble()
+//                    val y = kotlin.math.sin(x * 0.2)
+//                    temperatureData.append(x, y)
+//                }
+//
+//                twoEcgLineSeries.apply {
+//                    dataSeries = twoEcgData
+//                    strokeStyle = SolidPenStyle(ColorUtil.Green, true, 5f, null)
+//                }
+//
+//                isrcLineSeries.apply {
+//                    dataSeries = isrcData
+//                    strokeStyle = SolidPenStyle(ColorUtil.Blue, true, 5f, null)
+//                }
+//
+//                ecgLineSeries.apply {
+//                    dataSeries = ecgData
+//                    strokeStyle = SolidPenStyle(ColorUtil.LimeGreen, true, 5f, null)
+//                }
+//                icgLineSeries.apply {
+//                    dataSeries = icgData
+//                    strokeStyle = SolidPenStyle(ColorUtil.Yellow, true, 5f, null)
+//                }
+//
+//                temperatureLineSeries.apply {
+//                    dataSeries = temperatureData
+//                    strokeStyle = SolidPenStyle(ColorUtil.Red, true, 5f, null)
+//                }
 
                 // Color of the line
-//                twoEcgLineSeries.strokeStyle = SolidPenStyle(ColorUtil.Green, true, 5f, null)
-//                isrcLineSeries.strokeStyle = SolidPenStyle(ColorUtil.Blue, true, 5f, null)
-//                ecgLineSeries.strokeStyle = SolidPenStyle(ColorUtil.LimeGreen, true, 5f, null)
-//                icgLineSeries.strokeStyle = SolidPenStyle(ColorUtil.Yellow, true, 5f, null)
-//                temperatureLineSeries.strokeStyle = SolidPenStyle(ColorUtil.Red, true, 5f, null)
+                twoEcgLineSeries.strokeStyle = SolidPenStyle(ColorUtil.Green, true, 5f, null)
+                isrcLineSeries.strokeStyle = SolidPenStyle(ColorUtil.Blue, true, 5f, null)
+                ecgLineSeries.strokeStyle = SolidPenStyle(ColorUtil.LimeGreen, true, 5f, null)
+                icgLineSeries.strokeStyle = SolidPenStyle(ColorUtil.Yellow, true, 5f, null)
+                temperatureLineSeries.strokeStyle = SolidPenStyle(ColorUtil.Red, true, 5f, null)
 
 
                 // Legend with all the data from the lines
@@ -237,5 +240,24 @@ fun SciChartSurfaceView() {
                 // add any update logic here
             }
         )
+    }
+    LaunchedEffect(Unit) {
+        chartViewModel.sectionAMeasurements.observeForever { data ->
+            // Loop through the properties in an 'A' section
+            data.values.forEach { section ->
+                // Append the values to the chart
+                // if the last timestamp on the x-axis is greater than the timestamp of this section, skip this section
+                // in the graph
+                if (twoEcgLineDataSeries.xMax <= section.tickCount && isrcLineDataSeries.xMax <= section.tickCount) {
+
+                    twoEcgLineDataSeries.append(section.tickCount, section.twoEcg)
+                    isrcLineDataSeries.append(section.tickCount, section.isrc)
+                    ecgLineDataSeries.append(section.tickCount, section.ecg)
+                    icgLineDataSeries.append(section.tickCount, section.icg)
+                    temperateLineDataSeries.append(section.tickCount, section.temperature)
+
+                }
+            }
+        }
     }
 }
