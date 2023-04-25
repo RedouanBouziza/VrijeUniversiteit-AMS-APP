@@ -143,7 +143,7 @@ private fun ScreenContent(modifier: Modifier) {
                 Chart(navController)
             }
             composable(route = Screen.BreathingSettings.route) {
-                BreathingSettings(navController, scope, breathingViewModel)
+                BreathingSettings(navController, breathingViewModel)
             }
             composable(Screen.BreathingExercise.route) {
                 BreathingExercise(breathingViewModel)
@@ -213,6 +213,8 @@ private fun TopBar(onNavigationIconClick: () -> Unit) {
 private fun ConnectionEstablished(udpViewModel: UDPViewModel) {
     val isConnected by udpViewModel.isConnected.observeAsState()
     val isReceivingData by udpViewModel.isReceivingData.observeAsState()
+    println("Receives data $isReceivingData")
+    println("Is connected to wifi $isConnected")
 
     when (isConnected) {
         true -> {
@@ -221,7 +223,7 @@ private fun ConnectionEstablished(udpViewModel: UDPViewModel) {
                 contentDescription = "Wifi",
                 tint = Color.White
             )
-            if (isReceivingData != true) {
+            if (!isReceivingData!!) {
                 Icon(
                     imageVector = Icons.Default.WifiProtectedSetup,
                     contentDescription = "WifiProtectedSetup",

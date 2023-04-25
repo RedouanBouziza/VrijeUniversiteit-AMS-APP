@@ -19,7 +19,6 @@ import kotlin.math.roundToInt
 @Composable
 fun BreathingSettings(
     navController: NavController,
-    scope: CoroutineScope,
     breathingViewModel: BreathingViewModel
 ) {
     var sliderInValue by remember { mutableStateOf(1f) }
