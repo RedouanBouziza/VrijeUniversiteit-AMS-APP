@@ -19,6 +19,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -89,9 +90,11 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            TopBar(onNavigationIconClick = {
-                scope.launch { scaffoldState.drawerState.open() }
-            })
+            TopBar(
+                onNavigationIconClick = {
+                    scope.launch { scaffoldState.drawerState.open() }
+                }, navController = navController
+            )
         },
         drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
         drawerContent = {
@@ -161,7 +164,7 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
 }
 
 @Composable
-private fun TopBar(onNavigationIconClick: () -> Unit) {
+private fun TopBar(navController: NavHostController, onNavigationIconClick: () -> Unit) {
     val udpViewModel: UDPViewModel = viewModel()
 
     TopAppBar(
@@ -191,13 +194,12 @@ private fun TopBar(onNavigationIconClick: () -> Unit) {
         actions = {
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(end = 13.dp),
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 IconButton(
-                    onClick = { /*TODO*/ }
+                    onClick = { navController.navigate("System") }
                 ) {
                     ConnectionEstablished(udpViewModel)
                 }
@@ -212,29 +214,30 @@ private fun ConnectionEstablished(udpViewModel: UDPViewModel) {
     val isConnected by udpViewModel.isConnected.observeAsState()
     val isReceivingData by udpViewModel.isReceivingData.observeAsState()
 
-    when(isConnected) {
-            true -> {
+    when (isConnected) {
+        true -> {
+            if (isReceivingData!!) {
+                Icon(
+                    imageVector = Icons.Default.WifiProtectedSetup,
+                    contentDescription = "WifiProtectedSetup",
+                    tint = Color.White
+                )
+            } else {
                 Icon(
                     imageVector = Icons.Default.Wifi,
                     contentDescription = "Wifi",
                     tint = Color.White
                 )
-                if (!isReceivingData!!) {
-                    Icon(
-                        imageVector = Icons.Default.WifiProtectedSetup,
-                        contentDescription = "WifiProtectedSetup",
-                        tint = Color.White
-                    )
-                }
-            }
-            else -> {
-                Icon(
-                    imageVector = Icons.Default.WifiOff,
-                    contentDescription = "WifiOff",
-                    tint = Color.White
-                )
             }
         }
+        else -> {
+            Icon(
+                imageVector = Icons.Default.WifiOff,
+                contentDescription = "WifiOff",
+                tint = Color.White
+            )
+        }
+    }
 }
 
 private fun closeNavBar(scope: CoroutineScope, scaffoldState: ScaffoldState) {
