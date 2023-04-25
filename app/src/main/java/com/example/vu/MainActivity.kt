@@ -78,6 +78,7 @@ class MainActivity : ComponentActivity() {
                     MyComposableFunction(scope)
                     ScreenContent(Modifier, scope)
                 }
+                
             }
         }
     }
