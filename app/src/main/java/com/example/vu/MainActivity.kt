@@ -180,8 +180,7 @@ private fun TopBar(onNavigationIconClick: () -> Unit) {
         },
         navigationIcon = {
             IconButton(
-                onClick =
-                onNavigationIconClick
+                onClick = onNavigationIconClick
             ) {
                 Icon(
                     Icons.Default.Menu,
@@ -197,8 +196,11 @@ private fun TopBar(onNavigationIconClick: () -> Unit) {
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-
-                ConnectionEstablished(udpViewModel)
+                IconButton(
+                    onClick = { /*TODO*/ }
+                ) {
+                    ConnectionEstablished(udpViewModel)
+                }
             }
         }
     )

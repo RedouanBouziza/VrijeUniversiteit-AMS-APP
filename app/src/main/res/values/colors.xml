@@ -9,4 +9,9 @@
     <color name="white">#FFFFFFFF</color>
     <color name="ams">#00b6cb</color>
     <color name="amsDark">#01A0B3</color>
+    <color name="pink">#BA8EFA</color>
+    <color name="babyBlue">#9DC3E6</color>
+    <color name="blue">#2E75B6</color>
+    <color name="purple">#4908A8</color>
+    <color name="darkBlue">#203864</color>
 </resources>
