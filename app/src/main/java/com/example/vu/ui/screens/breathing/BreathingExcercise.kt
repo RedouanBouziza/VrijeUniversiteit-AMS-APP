@@ -25,7 +25,7 @@ fun BreathingExercise(breathingViewModel: BreathingViewModel, scope: CoroutineSc
     val breathOut = breathingViewModel.breathOut.value!! * 1000
     val pauseBreatheIn = breathingViewModel.pauseBreatheIn.value!! * 1000
     val pauseBreatheOut = breathingViewModel.pauseBreatheOut.value!! * 1000
-    val breathePerMin = 60000 / (breathIn + pauseBreatheIn + breathOut + pauseBreatheOut)
+    val breathesPerMinute = 60000 / (breathIn + pauseBreatheIn + breathOut + pauseBreatheOut)
 
     LaunchedEffect(Unit) {
         while (true) {
@@ -54,10 +54,7 @@ fun BreathingExercise(breathingViewModel: BreathingViewModel, scope: CoroutineSc
             Modifier
                 .fillMaxHeight()
         ) {
-            Text(
-                "$breathePerMin " + stringResource(R.string.breathes_per_min),
-                Modifier.padding(15.dp),
-            )
+            Text(stringResource(R.string.breathes_per_min, breathesPerMinute))
             SciChartSurfaceView()
         }
     }

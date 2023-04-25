@@ -3,6 +3,7 @@ package com.example.vu.ui.screens.chart
 import android.view.Gravity
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -10,6 +11,7 @@ import androidx.navigation.NavHostController
 import com.example.vu.BuildConfig
 import androidx.fragment.app.activityViewModels
 import com.example.vu.data.viewmodel.ChartViewModel
+import com.example.vu.data.websocket.SocketService
 import com.scichart.charting.model.dataSeries.XyDataSeries
 import com.scichart.charting.modifiers.*
 import com.scichart.charting.visuals.SciChartSurface
@@ -20,6 +22,7 @@ import com.scichart.core.annotations.Orientation
 import com.scichart.core.framework.UpdateSuspender
 import com.scichart.core.model.DoubleValues
 import com.scichart.core.model.IntegerValues
+import com.scichart.core.utility.Dispatcher
 import com.scichart.data.model.DoubleRange
 import com.scichart.drawing.common.SolidPenStyle
 import com.scichart.drawing.utility.ColorUtil
@@ -34,7 +37,9 @@ fun Chart(navController: NavHostController) {
 
 @Composable
 fun SciChartSurfaceView() {
-    SciChartSurface.setRuntimeLicenseKey(BuildConfig.SCI_CHART_KEY)
+    val webSocket: SocketService by lazy { SocketService() }
+    webSocket.openConnection()
+
     val chartViewModel: ChartViewModel = viewModel()
 
     val twoEcgLineData = DoubleValues()
@@ -120,31 +125,31 @@ fun SciChartSurfaceView() {
                 val temperatureLineSeries: IRenderableSeries = FastLineRenderableSeries()
                 temperatureLineSeries.dataSeries = temperateLineDataSeries
 
-
-                val twoEcgData = XyDataSeries(
-                    Double::class.javaObjectType,
-                    Double::class.javaObjectType
-                )
-
-                val isrcData = XyDataSeries( // TODO: Maybe Integer
-                    Double::class.javaObjectType,
-                    Double::class.javaObjectType
-                )
-
-                val ecgData = XyDataSeries(
-                    Double::class.javaObjectType,
-                    Double::class.javaObjectType
-                )
-
-                val icgData = XyDataSeries(
-                    Double::class.javaObjectType,
-                    Double::class.javaObjectType
-                )
-
-                val temperatureData = XyDataSeries(
-                    Double::class.javaObjectType,
-                    Double::class.javaObjectType
-                )
+//
+//                val twoEcgData = XyDataSeries(
+//                    Double::class.javaObjectType,
+//                    Double::class.javaObjectType
+//                )
+//
+//                val isrcData = XyDataSeries( // TODO: Maybe Integer
+//                    Double::class.javaObjectType,
+//                    Double::class.javaObjectType
+//                )
+//
+//                val ecgData = XyDataSeries(
+//                    Double::class.javaObjectType,
+//                    Double::class.javaObjectType
+//                )
+//
+//                val icgData = XyDataSeries(
+//                    Double::class.javaObjectType,
+//                    Double::class.javaObjectType
+//                )
+//
+//                val temperatureData = XyDataSeries(
+//                    Double::class.javaObjectType,
+//                    Double::class.javaObjectType
+//                )
 
 //                for (i in 0 until 100) {
 //                    val x = i.toDouble()
@@ -242,22 +247,25 @@ fun SciChartSurfaceView() {
         )
     }
     LaunchedEffect(Unit) {
-        chartViewModel.sectionAMeasurements.observeForever { data ->
-            // Loop through the properties in an 'A' section
-            data.values.forEach { section ->
-                // Append the values to the chart
-                // if the last timestamp on the x-axis is greater than the timestamp of this section, skip this section
-                // in the graph
-                if (twoEcgLineDataSeries.xMax <= section.tickCount && isrcLineDataSeries.xMax <= section.tickCount) {
+        chartViewModel.sectionAMeasurements.observe() {
 
-                    twoEcgLineDataSeries.append(section.tickCount, section.twoEcg)
-                    isrcLineDataSeries.append(section.tickCount, section.isrc)
-                    ecgLineDataSeries.append(section.tickCount, section.ecg)
-                    icgLineDataSeries.append(section.tickCount, section.icg)
-                    temperateLineDataSeries.append(section.tickCount, section.temperature)
-
-                }
-            }
         }
+//        chartViewModel.sectionAMeasurements.observeForever { data ->
+//            // Loop through the properties in an 'A' section
+//            data.values.forEach { section ->
+//                // Append the values to the chart
+//                // if the last timestamp on the x-axis is greater than the timestamp of this section, skip this section
+//                // in the graph
+//                if (twoEcgLineDataSeries.xMax <= section.tickCount && isrcLineDataSeries.xMax <= section.tickCount) {
+//
+//                    twoEcgLineDataSeries.append(section.tickCount, section.twoEcg)
+//                    isrcLineDataSeries.append(section.tickCount, section.isrc)
+//                    ecgLineDataSeries.append(section.tickCount, section.ecg)
+//                    icgLineDataSeries.append(section.tickCount, section.icg)
+//                    temperateLineDataSeries.append(section.tickCount, section.temperature)
+//
+//                }
+//            }
+//        }
     }
 }
