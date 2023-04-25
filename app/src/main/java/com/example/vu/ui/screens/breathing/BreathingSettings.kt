@@ -19,12 +19,11 @@ import kotlin.math.roundToInt
 @Composable
 fun BreathingSettings(
     navController: NavController,
-    breathingViewModel: BreathingViewModel,
-    scope: CoroutineScope
+    breathingViewModel: BreathingViewModel
 ) {
-    var breatheIn by remember { mutableStateOf(2f) }
-    var breatheOut by remember { mutableStateOf(2f) }
-    var pauseBreatheIn by remember { mutableStateOf(0f) }
+    var sliderInValue by remember { mutableStateOf(1f) }
+    var sliderOutValue by remember { mutableStateOf(1f) }
+    var pauseBreatheIn by remember { mutableStateOf(1f) }
     var pauseBreatheOut by remember { mutableStateOf(1f) }
 
     Column(
@@ -36,11 +35,11 @@ fun BreathingSettings(
         verticalArrangement = Arrangement.Center,
     ) {
         Text(stringResource(R.string.breathe_in))
-        Text("${breatheIn.roundToInt()} " + stringResource(R.string.seconds))
+        Text("${sliderInValue.roundToInt()} " + stringResource(R.string.seconds))
         Slider(
-            value = breatheIn,
+            value = sliderInValue,
             onValueChange = {
-                breatheIn = it
+                sliderInValue = it
             },
             valueRange = 1f..10f,
             steps = 10,
@@ -55,11 +54,11 @@ fun BreathingSettings(
         )
 
         Text(stringResource(R.string.breathe_out))
-        Text("${breatheOut.roundToInt()} " + stringResource(R.string.seconds))
+        Text("${sliderOutValue.roundToInt()} " + stringResource(R.string.seconds))
         Slider(
-            value = breatheOut,
+            value = sliderOutValue,
             onValueChange = {
-                breatheOut = it
+                sliderOutValue = it
             },
             valueRange = 1f..10f,
             steps = 10,
@@ -80,7 +79,7 @@ fun BreathingSettings(
             onValueChange = {
                 pauseBreatheIn = it
             },
-            valueRange = 0f..10f,
+            valueRange = 1f..10f,
             steps = 10,
             colors = SliderDefaults.colors(
                 thumbColor = colorResource(R.color.white),
@@ -93,13 +92,13 @@ fun BreathingSettings(
         )
 
         Text(stringResource(R.string.pause_breathe_out))
-        Text("${pauseBreatheOut.roundToInt()} " + stringResource(R.string.seconds))
+        Text("${pauseBreatheIn.roundToInt()} " + stringResource(R.string.seconds))
         Slider(
             value = pauseBreatheOut,
             onValueChange = {
                 pauseBreatheOut = it
             },
-            valueRange = 0f..10f,
+            valueRange = 1f..10f,
             steps = 10,
             colors = SliderDefaults.colors(
                 thumbColor = colorResource(R.color.white),
@@ -113,8 +112,8 @@ fun BreathingSettings(
 
         Button(
             onClick = {
-                breathingViewModel.breathIn.value = breatheIn.roundToInt()
-                breathingViewModel.breathOut.value = breatheOut.toInt()
+                breathingViewModel.breathIn.value = sliderInValue.roundToInt()
+                breathingViewModel.breathOut.value = sliderOutValue.toInt()
                 breathingViewModel.pauseBreatheIn.value = pauseBreatheIn.toInt()
                 breathingViewModel.pauseBreatheOut.value = pauseBreatheOut.toInt()
                 navController.navigate(Screen.BreathingExercise.route)

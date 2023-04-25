@@ -24,5 +24,4 @@
     <string name="started_measuring">Started measuring</string>
     <string name="stopped_measuring">Stopped measuring</string>
     <string name="shutdown_device">Shutdown initiated</string>
-    <string name="breathes_per_min">breathes per minute</string>
 </resources>
