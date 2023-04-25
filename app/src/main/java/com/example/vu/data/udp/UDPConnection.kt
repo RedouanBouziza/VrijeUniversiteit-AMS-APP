@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.wifi.SupplicantState
+import android.net.wifi.WifiInfo
 import android.net.wifi.WifiManager
 import android.util.Log
 import com.example.vu.data.decoding.decoder.ASectionDecoder
@@ -59,7 +61,7 @@ class UDPConnection(
          * An array of network names to check for when determining if the user is connected to the
          * correct network.
          */
-        private val NETWORK_NAMES = arrayOf("AMS", "AndroidWifi", "VU", "Android")
+        private val NETWORK_NAMES = arrayOf("AMS", "AndroidWifi", "VU", "R")
 
         /**
          * The timeout in seconds for determining if the connection is stable.
@@ -111,13 +113,22 @@ class UDPConnection(
             val packet = DatagramPacket(buffer, buffer.size)
             val aDecoding = ASectionDecoder()
             val byteBuffer =
-                ByteBuffer.allocateDirect(BYTE_BUFFER_SIZE).order(ByteOrder.LITTLE_ENDIAN)
+                ByteBuffer.allocateDirect(BYTE_BUFFER_SIZE)
 
+            println("test")
             byteBuffer.order(ByteOrder.LITTLE_ENDIAN)
+            println("kaasnoot")
 
             while (true) {
                 udpSocket.receive(packet)
-                val uByteArray = packet.data.map { it.toUByte() }
+//                val uByteArray = packet.data.map { it.toUByte() }
+                val uByteArray = arrayListOf<UByte>()
+                packet.data.forEach {
+                    uByteArray.add(it.toUByte())
+                }
+
+                println("uByte array $uByteArray")
+                println("packet $packet")
 
                 setASectionMeasurement(aDecoding.convertBytes(uByteArray, byteBuffer))
 
@@ -132,19 +143,26 @@ class UDPConnection(
         }
     }
 
-
     @SuppressLint("ServiceCast")
     private fun userIsOnline(): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
         val capabilities =
             connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-        val wifiManager =
-            context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-        val wifiInfo = wifiManager.connectionInfo
-        val ssid = wifiInfo.ssid.replace("\"", "")
-        val foundNames = NETWORK_NAMES.filter { name -> ssid.contains(name) }
 
-        return foundNames.isNotEmpty() && capabilities?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == true
+        var ssid: String? = null
+        val wifiManager: WifiManager =
+            context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+        val wifiInfo: WifiInfo = wifiManager.connectionInfo
+        if (wifiInfo.supplicantState == SupplicantState.COMPLETED) {
+            // remove double quotes from ssid format
+            ssid = wifiInfo.ssid.replace("\"", "")
+        }
+
+        val foundNames = NETWORK_NAMES.filter { name -> ssid.toString().contains(name) }
+
+        return foundNames.isNotEmpty() &&
+                capabilities!!.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
     }
 }
