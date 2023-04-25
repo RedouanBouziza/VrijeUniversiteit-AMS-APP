@@ -278,6 +278,5 @@ fun Home(modifier: Modifier, navController: NavHostController) {
                     )
                 }
             }*/
-        }
     }
 }
