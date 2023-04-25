@@ -140,10 +140,10 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
                 Chart(navController)
             }
             composable(route = Screen.BreathingSettings.route) {
-                BreathingSettings(navController, breathingViewModel)
+                BreathingSettings(navController, breathingViewModel, scope)
             }
             composable(Screen.BreathingExercise.route) {
-                BreathingExercise(breathingViewModel)
+                BreathingExercise(breathingViewModel, scope)
             }
             composable(route = Screen.Setup.route) {
                 SetupInstructions(navController)
@@ -211,8 +211,16 @@ private fun ConnectionEstablished(udpViewModel: UDPViewModel) {
     val isConnected by udpViewModel.isConnected.observeAsState()
     val isReceivingData by udpViewModel.isReceivingData.observeAsState()
 
-    when(isConnected) {
-            true -> {
+    udpViewModel.isConnected.observeAsState()
+
+    when (isConnected) {
+        true -> {
+            Icon(
+                imageVector = Icons.Default.Wifi,
+                contentDescription = "Wifi",
+                tint = Color.White
+            )
+            if (!isReceivingData!!) {
                 Icon(
                     imageVector = Icons.Default.Wifi,
                     contentDescription = "Wifi",
