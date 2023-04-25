@@ -9,14 +9,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -24,28 +22,26 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.vu.ui.screens.breathing.BreathingSettings
-import com.example.vu.ui.screens.chart.Chart
-import com.example.vu.ui.screens.home.Home
-import com.example.vu.ui.screens.Screen
-import com.example.vu.ui.screens.breathing.BreathingExercise
+import com.example.vu.data.udp.UDPConnection
 import com.example.vu.data.viewmodel.BreathingViewModel
 import com.example.vu.data.viewmodel.UDPViewModel
+import com.example.vu.ui.screens.Screen
+import com.example.vu.ui.screens.breathing.BreathingExercise
+import com.example.vu.ui.screens.breathing.BreathingSettings
+import com.example.vu.ui.screens.chart.Chart
+import com.example.vu.ui.screens.faq.Faq
 import com.example.vu.ui.screens.faq.SetupInstructions
+import com.example.vu.ui.screens.home.Home
 import com.example.vu.ui.screens.menu.MenuBody
 import com.example.vu.ui.screens.menu.MenuHeader
+import com.example.vu.ui.screens.movement.Movement
+import com.example.vu.ui.screens.system.System
 import com.example.vu.ui.theme.VUTheme
 import com.scichart.charting.visuals.SciChartSurface
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
-import androidx.compose.runtime.*
-import androidx.compose.ui.platform.LocalContext
-import com.example.vu.data.udp.UDPConnection
-import com.example.vu.ui.screens.faq.Faq
-import com.example.vu.ui.screens.movement.Movement
-import com.example.vu.ui.screens.system.System
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import java.util.*
 
 /**
  * @author Casey Kruijer
@@ -214,29 +210,29 @@ private fun ConnectionEstablished(udpViewModel: UDPViewModel) {
     val isConnected by udpViewModel.isConnected.observeAsState()
     val isReceivingData by udpViewModel.isReceivingData.observeAsState()
 
-    when (isConnected) {
-        true -> {
-            Icon(
-                imageVector = Icons.Default.Wifi,
-                contentDescription = "Wifi",
-                tint = Color.White
-            )
-            if (!isReceivingData!!) {
+    when(isConnected) {
+            true -> {
                 Icon(
-                    imageVector = Icons.Default.WifiProtectedSetup,
-                    contentDescription = "WifiProtectedSetup",
+                    imageVector = Icons.Default.Wifi,
+                    contentDescription = "Wifi",
+                    tint = Color.White
+                )
+                if (!isReceivingData!!) {
+                    Icon(
+                        imageVector = Icons.Default.WifiProtectedSetup,
+                        contentDescription = "WifiProtectedSetup",
+                        tint = Color.White
+                    )
+                }
+            }
+            else -> {
+                Icon(
+                    imageVector = Icons.Default.WifiOff,
+                    contentDescription = "WifiOff",
                     tint = Color.White
                 )
             }
         }
-        else -> {
-            Icon(
-                imageVector = Icons.Default.WifiOff,
-                contentDescription = "WifiOff",
-                tint = Color.White
-            )
-        }
-    }
 }
 
 private fun closeNavBar(scope: CoroutineScope, scaffoldState: ScaffoldState) {
@@ -250,7 +246,7 @@ fun MyComposableFunction(scope: CoroutineScope) {
     val context = LocalContext.current
 
     LaunchedEffect(Unit) {
-        scope.launch(Dispatchers.IO) {
+        scope.launch(Dispatchers.Main) {
             UDPConnection(
                 context = context,
                 3,
