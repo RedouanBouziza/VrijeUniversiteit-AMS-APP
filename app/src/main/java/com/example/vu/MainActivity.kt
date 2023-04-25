@@ -212,16 +212,8 @@ private fun ConnectionEstablished(udpViewModel: UDPViewModel) {
     val isConnected by udpViewModel.isConnected.observeAsState()
     val isReceivingData by udpViewModel.isReceivingData.observeAsState()
 
-    udpViewModel.isConnected.observeAsState()
-
-    when (isConnected) {
-        true -> {
-            Icon(
-                imageVector = Icons.Default.Wifi,
-                contentDescription = "Wifi",
-                tint = Color.White
-            )
-            if (!isReceivingData!!) {
+    when(isConnected) {
+            true -> {
                 Icon(
                     imageVector = Icons.Default.Wifi,
                     contentDescription = "Wifi",
