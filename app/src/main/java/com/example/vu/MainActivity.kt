@@ -42,6 +42,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import com.example.vu.data.udp.UDPConnection
 import com.example.vu.ui.screens.faq.Faq
+import com.example.vu.ui.screens.movement.Movement
 import com.example.vu.ui.screens.system.System
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -117,6 +118,10 @@ private fun ScreenContent(modifier: Modifier) {
                         navController.navigate(Screen.BreathingSettings.route)
                         closeNavBar(scope, scaffoldState)
                     }
+                    "movement" -> {
+                        navController.navigate(Screen.Movement.route)
+                        closeNavBar(scope, scaffoldState)
+                    }
                     "system" -> {
                         navController.navigate(Screen.System.route)
                         closeNavBar(scope, scaffoldState)
@@ -145,6 +150,9 @@ private fun ScreenContent(modifier: Modifier) {
             }
             composable(route = Screen.Setup.route) {
                 SetupInstructions(navController)
+            }
+            composable(route = Screen.Movement.route) {
+                Movement(navController)
             }
             composable(route = Screen.Faq.route) {
                 Faq(navController)

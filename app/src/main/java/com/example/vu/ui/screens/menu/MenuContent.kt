@@ -61,6 +61,12 @@ fun MenuBody(
             icon = Icons.Default.MonitorHeart
         ),
         MenuItem(
+            id = "movement",
+            title = "Movement",
+            contentDescription = "Movement-screen",
+            icon = Icons.Default.Person,
+        ),
+        MenuItem(
             id = "faq",
             title = "FAQ",
             contentDescription = "Faq-screen",

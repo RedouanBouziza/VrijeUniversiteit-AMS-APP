@@ -9,6 +9,7 @@ sealed class Screen(
     object BreathingExercise: Screen("BreathingExercise")
     object Setup: Screen("Setup")
     object Faq: Screen("Faq")
+    object Movement: Screen("Movement")
     object System: Screen("System")
 }
 

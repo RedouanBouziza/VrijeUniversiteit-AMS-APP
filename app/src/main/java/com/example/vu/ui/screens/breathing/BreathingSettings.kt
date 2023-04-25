@@ -24,7 +24,8 @@ fun BreathingSettings(
 ) {
     var sliderInValue by remember { mutableStateOf(1f) }
     var sliderOutValue by remember { mutableStateOf(1f) }
-    var pause by remember { mutableStateOf(1f) }
+    var pauseBreatheIn by remember { mutableStateOf(1f) }
+    var pauseBreatheOut by remember { mutableStateOf(1f) }
 
     Column(
         Modifier
@@ -72,12 +73,31 @@ fun BreathingSettings(
             modifier = Modifier.padding(bottom = 30.dp),
         )
 
-        Text(stringResource(R.string.pause))
-        Text("${pause.roundToInt()} " + stringResource(R.string.seconds))
+        Text(stringResource(R.string.pause_breathe_in))
+        Text("${pauseBreatheIn.roundToInt()} " + stringResource(R.string.seconds))
         Slider(
-            value = pause,
+            value = pauseBreatheIn,
             onValueChange = {
-                pause = it
+                pauseBreatheIn = it
+            },
+            valueRange = 1f..10f,
+            steps = 10,
+            colors = SliderDefaults.colors(
+                thumbColor = colorResource(R.color.white),
+                activeTickColor = colorResource(R.color.ams),
+                inactiveTickColor = colorResource(R.color.white),
+                activeTrackColor = colorResource(R.color.white),
+                inactiveTrackColor = colorResource(R.color.ams),
+            ),
+            modifier = Modifier.padding(bottom = 30.dp),
+        )
+
+        Text(stringResource(R.string.pause_breathe_out))
+        Text("${pauseBreatheIn.roundToInt()} " + stringResource(R.string.seconds))
+        Slider(
+            value = pauseBreatheOut,
+            onValueChange = {
+                pauseBreatheOut = it
             },
             valueRange = 1f..10f,
             steps = 10,
@@ -95,7 +115,8 @@ fun BreathingSettings(
             onClick = {
                 breathingViewModel.breathIn.value = sliderInValue.roundToInt()
                 breathingViewModel.breathOut.value = sliderOutValue.toInt()
-                breathingViewModel.pause.value = pause.toInt()
+                breathingViewModel.pauseBreatheIn.value = pauseBreatheIn.toInt()
+                breathingViewModel.pauseBreatheOut.value = pauseBreatheOut.toInt()
                 navController.navigate(Screen.BreathingExercise.route)
             },
             colors = ButtonDefaults.buttonColors(colorResource(R.color.ams))
