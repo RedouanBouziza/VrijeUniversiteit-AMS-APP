@@ -73,7 +73,10 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    ScreenContent(modifier = Modifier)
+                    val scope = rememberCoroutineScope()
+
+                    MyComposableFunction(scope)
+                    ScreenContent(Modifier, scope)
                 }
             }
         }
@@ -82,13 +85,10 @@ class MainActivity : ComponentActivity() {
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-private fun ScreenContent(modifier: Modifier) {
+private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
     val scaffoldState = rememberScaffoldState()
-    val scope = rememberCoroutineScope()
     val navController = rememberNavController()
     val breathingViewModel: BreathingViewModel = viewModel()
-
-    MyComposableFunction(modifier, scaffoldState, scope)
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -213,8 +213,6 @@ private fun TopBar(onNavigationIconClick: () -> Unit) {
 private fun ConnectionEstablished(udpViewModel: UDPViewModel) {
     val isConnected by udpViewModel.isConnected.observeAsState()
     val isReceivingData by udpViewModel.isReceivingData.observeAsState()
-    println("Receives data $isReceivingData")
-    println("Is connected to wifi $isConnected")
 
     when (isConnected) {
         true -> {
@@ -247,12 +245,12 @@ private fun closeNavBar(scope: CoroutineScope, scaffoldState: ScaffoldState) {
 
 //TODO: Check if this works with the new data
 @Composable
-fun MyComposableFunction(modifier: Modifier, scaffoldState: ScaffoldState, scope: CoroutineScope) {
+fun MyComposableFunction(scope: CoroutineScope) {
     val udpViewModel: UDPViewModel = viewModel()
     val context = LocalContext.current
 
     LaunchedEffect(Unit) {
-        scope.async(Dispatchers.IO) {
+        scope.launch(Dispatchers.IO) {
             UDPConnection(
                 context = context,
                 3,

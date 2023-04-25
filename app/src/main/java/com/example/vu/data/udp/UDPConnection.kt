@@ -59,7 +59,7 @@ class UDPConnection(
          * An array of network names to check for when determining if the user is connected to the
          * correct network.
          */
-        private val NETWORK_NAMES = arrayOf("AMS", "AndroidWifi", "VU")
+        private val NETWORK_NAMES = arrayOf("AMS", "AndroidWifi", "VU", "Android")
 
         /**
          * The timeout in seconds for determining if the connection is stable.
