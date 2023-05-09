@@ -52,14 +52,14 @@ fun Home(modifier: Modifier, navController: NavHostController) {
                 contentDescription = "Logo",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 20.dp)
+                    .padding(top = 15.dp)
                     .clip(RoundedCornerShape(10.dp))
             )
 
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 25.dp),
+                    .padding(top = 20.dp),
                 onClick = {
                     navController.navigate("Setup")
                 },
@@ -104,7 +104,7 @@ fun Home(modifier: Modifier, navController: NavHostController) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 25.dp)
+                    .padding(top = 15.dp)
             ) {
                 Text(
                     text = "About VU-AMS",
@@ -113,14 +113,12 @@ fun Home(modifier: Modifier, navController: NavHostController) {
                     color = colorResource(id = R.color.amsDark)
                 )
                 Text(
-                    text = "The VU University Ambulatory Monitoring System was developed by the " +
-                            "department of Biological Psychology and the Technical Department of the " +
-                            "Faculty of Psychology and Education to allow recording of autonomic and " +
-                            "cardiovascular activity in a variety of research settings, including ambulatory " +
-                            "monitoring in naturalistic settings." +
-                            " The dedicated support of the ITM of the Faculty of Psychology and Education " +
-                            "guarantees high technical standards for the VU-AMS device and its " +
-                            "supporting software program."
+                    text = "The VU University Ambulatory Monitoring System, created by the department " +
+                            "of Biological Psychology and the Technical Department of the Faculty of " +
+                            "Psychology and Education, enables monitoring of autonomic and cardiovascular " +
+                            "activity in research settings, including ambulatory monitoring in naturalistic " +
+                            "environments. The device and its software program meet high technical standards, " +
+                            "with support from the ITM of the Faculty of Psychology and Education"
                 )
             }
         }
