@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import com.example.vu.R
 import com.example.vu.data.viewmodel.BreathingViewModel
 import com.example.vu.ui.screens.Screen
+import kotlinx.coroutines.CoroutineScope
 import java.util.*
 import kotlin.math.roundToInt
 
