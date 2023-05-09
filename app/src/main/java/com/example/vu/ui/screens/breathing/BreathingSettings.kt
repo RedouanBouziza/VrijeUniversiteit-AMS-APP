@@ -24,6 +24,7 @@ fun BreathingSettings(
     var breatheOut by remember { mutableStateOf(2f) }
     var pauseBreatheIn by remember { mutableStateOf(0f) }
     var pauseBreatheOut by remember { mutableStateOf(1f) }
+    val breathesPerMinute = 60000 / ((breatheIn * 1000) + (pauseBreatheIn * 1000) + (breatheOut * 1000) + (pauseBreatheOut * 1000))
 
     Column(
         Modifier.fillMaxWidth(),
@@ -153,6 +154,8 @@ fun BreathingSettings(
             ),
             modifier = Modifier.padding(bottom = 30.dp),
         )
+
+        Text("${breathesPerMinute.roundToInt()} breathes per minute")
 
         Button(
             onClick = {
