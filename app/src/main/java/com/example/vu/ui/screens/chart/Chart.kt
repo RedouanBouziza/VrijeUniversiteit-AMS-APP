@@ -247,25 +247,22 @@ fun SciChartSurfaceView() {
         )
     }
     LaunchedEffect(Unit) {
-        chartViewModel.sectionAMeasurements.observe() {
+        chartViewModel.sectionAMeasurements.observeForever { data ->
+            // Loop through the properties in an 'A' section
+            data.values.forEach { section ->
+                // Append the values to the chart
+                // if the last timestamp on the x-axis is greater than the timestamp of this section, skip this section
+                // in the graph
+                if (twoEcgLineDataSeries.xMax <= section.tickCount && isrcLineDataSeries.xMax <= section.tickCount) {
 
+                    twoEcgLineDataSeries.append(section.tickCount, section.twoEcg)
+                    isrcLineDataSeries.append(section.tickCount, section.isrc)
+                    ecgLineDataSeries.append(section.tickCount, section.ecg)
+                    icgLineDataSeries.append(section.tickCount, section.icg)
+                    temperateLineDataSeries.append(section.tickCount, section.temperature)
+
+                }
+            }
         }
-//        chartViewModel.sectionAMeasurements.observeForever { data ->
-//            // Loop through the properties in an 'A' section
-//            data.values.forEach { section ->
-//                // Append the values to the chart
-//                // if the last timestamp on the x-axis is greater than the timestamp of this section, skip this section
-//                // in the graph
-//                if (twoEcgLineDataSeries.xMax <= section.tickCount && isrcLineDataSeries.xMax <= section.tickCount) {
-//
-//                    twoEcgLineDataSeries.append(section.tickCount, section.twoEcg)
-//                    isrcLineDataSeries.append(section.tickCount, section.isrc)
-//                    ecgLineDataSeries.append(section.tickCount, section.ecg)
-//                    icgLineDataSeries.append(section.tickCount, section.icg)
-//                    temperateLineDataSeries.append(section.tickCount, section.temperature)
-//
-//                }
-//            }
-//        }
     }
 }
