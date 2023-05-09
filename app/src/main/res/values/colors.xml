@@ -7,19 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="success">#48BB78</color>
-    <color name="system_blue">#197BD2</color>
-    <color name="system_warning">#FDB707</color>
-    <color name="system_error">#E53E3E</color>
-    <color name="bg_red">#1AE53E3E</color>
-
-    <color name="bg_blue">#1A197BD2</color>
-    <color name="turquoise">#0DB1AD</color>
-    <color name="bg_turquoise">#1A0DB1AD</color>
-    <color name="purple">#7042C9</color>
-    <color name="bg_purple">#1A7042C9</color>
-    <color name="bg_black">#CC191919</color>
-    <color name="bg_house_blue">#1A00B6CB</color>
-    <color name="house_blue">#00B6CB</color>
-    <color name="house_yellow">#F7C80C</color>
+    <color name="ams">#00b6cb</color>
+    <color name="amsDark">#01A0B3</color>
+    <color name="pink">#BA8EFA</color>
+    <color name="babyBlue">#9DC3E6</color>
+    <color name="blue">#2E75B6</color>
+    <color name="purple">#4908A8</color>
+    <color name="darkBlue">#203864</color>
 </resources>
