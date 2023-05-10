@@ -20,6 +20,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import com.google.accompanist.pager.rememberPagerState
 import com.google.android.material.math.MathUtils.lerp
+import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
 /**
@@ -32,8 +33,12 @@ import kotlin.math.absoluteValue
 fun SetupInstructions(navController: NavHostController) {
     var currentStep by remember { mutableStateOf(1) }
     var buttonText by remember { mutableStateOf("") }
+    val images = imageForEachStep(currentStep)
+    val pagerState = rememberPagerState(initialPage = images.size)
+    val scope = rememberCoroutineScope()
     val secondLastQuestion = 6
     val lastQuestion = 7
+
 
     Column(
         Modifier
@@ -57,7 +62,37 @@ fun SetupInstructions(navController: NavHostController) {
             style = MaterialTheme.typography.subtitle2
         )
 
-        ImageSlideshow(currentImage = currentStep)
+        HorizontalPager(
+            count = images.size,
+            state = pagerState
+        ) { page ->
+            Card(
+                Modifier
+                    .graphicsLayer {
+                        // Calculate the absolute offset for the current page from the
+                        // scroll position. We use the absolute value which allows us to mirror
+                        // any effects for both directions
+                        val pageOffset = calculateCurrentOffsetForPage(page).absoluteValue
+
+                        // We animate the scaleX + scaleY, between 85% and 100%
+                        lerp(0.85f, 1f, 1f - pageOffset.coerceIn(0f, 1f)).also { scale ->
+                            scaleX = scale
+                            scaleY = scale
+                        }
+
+                        // We animate the alpha, between 50% and 100%
+                        alpha = lerp(0.5f, 1f, 1f - pageOffset.coerceIn(0f, 1f))
+                    }
+            ) {
+                Image(
+                    painter = painterResource(images[page]),
+                    contentDescription = "Steps images",
+                    contentScale = ContentScale.FillWidth,
+                    modifier = Modifier.fillMaxSize()
+                )
+
+            }
+        }
     }
 
 
@@ -67,7 +102,10 @@ fun SetupInstructions(navController: NavHostController) {
     ) {
         Button(
             shape = RoundedCornerShape(5.dp),
-            onClick = { currentStep++ }
+            onClick = {
+                currentStep++
+                scope.launch { pagerState.scrollToPage(0) }
+            }
         ) {
             Text(text = buttonText)
         }
@@ -85,7 +123,7 @@ fun SetupInstructions(navController: NavHostController) {
             }
         }
     }
-    
+
 }
 
 fun imageForEachStep(currentStep: Int): List<Int> {
@@ -132,46 +170,6 @@ fun imageForEachStep(currentStep: Int): List<Int> {
                 R.drawable.step6_3,
                 R.drawable.step6_4
             )
-        }
-    }
-}
-
-@OptIn(ExperimentalPagerApi::class)
-@Composable
-fun ImageSlideshow(currentImage: Int) {
-    val images = imageForEachStep(currentImage)
-    val pagerState = rememberPagerState(initialPage = images.size)
-
-
-    HorizontalPager(
-        count = images.size,
-        state = pagerState
-    ) { page ->
-        Card(
-            Modifier
-                .graphicsLayer {
-                    // Calculate the absolute offset for the current page from the
-                    // scroll position. We use the absolute value which allows us to mirror
-                    // any effects for both directions
-                    val pageOffset = calculateCurrentOffsetForPage(page).absoluteValue
-
-                    // We animate the scaleX + scaleY, between 85% and 100%
-                    lerp(0.85f, 1f, 1f - pageOffset.coerceIn(0f, 1f)).also { scale ->
-                        scaleX = scale
-                        scaleY = scale
-                    }
-
-                    // We animate the alpha, between 50% and 100%
-                    alpha = lerp(0.5f, 1f, 1f - pageOffset.coerceIn(0f, 1f))
-                }
-        ) {
-            Image(
-                painter = painterResource(images[page]),
-                contentDescription = "Steps images",
-                contentScale = ContentScale.FillWidth,
-                modifier = Modifier.fillMaxSize()
-            )
-
         }
     }
 }
