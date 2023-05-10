@@ -16,6 +16,8 @@
     <string name="step2_explanation">This is the explanation text of step 2</string>
     <string name="step3_explanation">This is the explanation text of step 3</string>
     <string name="step4_explanation">This is the explanation text of step 4</string>
+    <string name="step5_explanation">This is the explanation text of step 5</string>
+    <string name="step6_explanation">This is the explanation text of step 6</string>
     <string name="next_step">Next Step</string>
     <string name="finish">Finish</string>
     <!--  String for System screen  -->
