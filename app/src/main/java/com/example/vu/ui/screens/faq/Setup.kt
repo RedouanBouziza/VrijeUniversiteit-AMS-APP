@@ -125,6 +125,18 @@ fun SetupInstructions(navController: NavHostController) {
                         images.indexOf(R.drawable.step5_10) -> {
                             explanationForEachStep = R.string.step5d_explanation
                         }
+                        images.indexOf(R.drawable.step6_1) -> {
+                            explanationForEachStep = R.string.step6a_explanation
+                        }
+                        images.indexOf(R.drawable.step6_2) -> {
+                            explanationForEachStep = R.string.step6a_explanation
+                        }
+                        images.indexOf(R.drawable.step6_3) -> {
+                            explanationForEachStep = R.string.step6a_explanation
+                        }
+                        images.indexOf(R.drawable.step6_4) -> {
+                            explanationForEachStep = R.string.step6b_explanation
+                        }
                     }
                 }
 
@@ -223,6 +235,7 @@ fun currentStepExplanation(currentStep: Int): Int {
         3 -> R.string.step3_explanation
         4 -> R.string.step4_explanation
         5 -> R.string.step5a_explanation
-        else -> R.string.step6_explanation
+        6 -> R.string.step6a_explanation
+        else -> R.string.no_explanation
     }
 }

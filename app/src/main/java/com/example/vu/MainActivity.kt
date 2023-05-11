@@ -32,6 +32,7 @@ import com.example.vu.ui.screens.breathing.BreathingSettings
 import com.example.vu.ui.screens.chart.Chart
 import com.example.vu.ui.screens.faq.Faq
 import com.example.vu.ui.screens.faq.SetupInstructions
+import com.example.vu.ui.screens.faq.StartRecording
 import com.example.vu.ui.screens.home.Home
 import com.example.vu.ui.screens.menu.MenuBody
 import com.example.vu.ui.screens.menu.MenuHeader
@@ -158,6 +159,9 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
             }
             composable(route = Screen.System.route) {
                 System(navController)
+            }
+            composable(route = Screen.StartRecording.route) {
+                StartRecording(navController)
             }
         }
     }
