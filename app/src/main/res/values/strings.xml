@@ -16,10 +16,16 @@
     <string name="step2_explanation">Clean the site just below the suprasternal notch with alcohol.</string>
     <string name="step3_explanation">Click ECG electrode onto device</string>
     <string name="step4_explanation">Stick ECG electrode with device on cleaned site, so that yellow and black exit at the bottom and blue and green exit at the top. Press firmly for better attachment of the electrode to the skin. </string>
-    <string name="step5_explanation">
+    <string name="step5a_explanation">
         A.	Clean the site just below the neck with alcohol. Ensure the site is above the device on the sternum (chest). Press firmly on the electrode for better skin attachment. \n
+    </string>
+    <string name="step5b_explanation">
         B.	Clean the site at the lower back; in the middle axis of the body, or - when the back curves to much for easy and solid electrode attachment at this place - a bit to the site (see image). Clean with alcohol and press firmly on the electrode for better skin attachment.\n
+    </string>
+    <string name="step5c_explanation">
         C.	Clean the site at/just above diaphragm level; i.e., where the two rib cages end. Clean with alcohol and press firmly on the electrode for better skin attachment.\n
+    </string>
+    <string name="step5d_explanation">
         D.	Clean the lateral rib cage site, that is the bottom of the ribcage at the midclavicular axis (i.e., at the same line as the middle of the collarbone). Clean with alcohol and press firmly on the electrode for better skin attachment.\n
     </string>
     <string name="step6_explanation">Cable attachment.\n

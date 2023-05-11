@@ -33,9 +33,11 @@ import kotlin.math.absoluteValue
 fun SetupInstructions(navController: NavHostController) {
     var currentStep by remember { mutableStateOf(1) }
     var buttonText by remember { mutableStateOf("") }
+    var explanationForEachStep by remember { mutableStateOf(currentStepExplanation(currentStep)) }
     val images = imageForEachStep(currentStep)
     val pagerState = rememberPagerState(initialPage = images.size)
     val scope = rememberCoroutineScope()
+
     val secondLastQuestion = 6
     val lastQuestion = 7
 
@@ -52,12 +54,12 @@ fun SetupInstructions(navController: NavHostController) {
 
         Text(
             text = stringResource(id = R.string.step, currentStep),
-            Modifier.padding(top = 50.dp),
+            Modifier.padding(top = 10.dp),
             style = MaterialTheme.typography.subtitle1
         )
 
         Text(
-            text = stringResource(id = currentStepExplanation(currentStep)),
+            text = stringResource(id = explanationForEachStep),
             Modifier.padding(top = 10.dp),
             style = MaterialTheme.typography.subtitle2
         )
@@ -90,6 +92,41 @@ fun SetupInstructions(navController: NavHostController) {
                     contentScale = ContentScale.FillWidth,
                     modifier = Modifier.fillMaxSize()
                 )
+
+                SideEffect {
+                    when (pagerState.currentPage) {
+                        images.indexOf(R.drawable.step5_1) -> {
+                            explanationForEachStep = R.string.step5a_explanation
+                        }
+                        images.indexOf(R.drawable.step5_2) -> {
+                            explanationForEachStep = R.string.step5a_explanation
+                        }
+                        images.indexOf(R.drawable.step5_3) -> {
+                            explanationForEachStep = R.string.step5a_explanation
+                        }
+                        images.indexOf(R.drawable.step5_4) -> {
+                            explanationForEachStep = R.string.step5b_explanation
+                        }
+                        images.indexOf(R.drawable.step5_5) -> {
+                            explanationForEachStep = R.string.step5b_explanation
+                        }
+                        images.indexOf(R.drawable.step5_6) -> {
+                            explanationForEachStep = R.string.step5b_explanation
+                        }
+                        images.indexOf(R.drawable.step5_7) -> {
+                            explanationForEachStep = R.string.step5c_explanation
+                        }
+                        images.indexOf(R.drawable.step5_8) -> {
+                            explanationForEachStep = R.string.step5c_explanation
+                        }
+                        images.indexOf(R.drawable.step5_9) -> {
+                            explanationForEachStep = R.string.step5d_explanation
+                        }
+                        images.indexOf(R.drawable.step5_10) -> {
+                            explanationForEachStep = R.string.step5d_explanation
+                        }
+                    }
+                }
 
             }
         }
@@ -185,7 +222,7 @@ fun currentStepExplanation(currentStep: Int): Int {
         2 -> R.string.step2_explanation
         3 -> R.string.step3_explanation
         4 -> R.string.step4_explanation
-        5 -> R.string.step5_explanation
+        5 -> R.string.step5a_explanation
         else -> R.string.step6_explanation
     }
 }
