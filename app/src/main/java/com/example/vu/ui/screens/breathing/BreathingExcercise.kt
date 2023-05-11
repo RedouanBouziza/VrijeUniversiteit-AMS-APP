@@ -21,16 +21,16 @@ import kotlinx.coroutines.CoroutineScope
 @Composable
 fun BreathingExercise(breathingViewModel: BreathingViewModel, scope: CoroutineScope) {
     val scale = remember { Animatable(1f) }
-    val breathIn = breathingViewModel.breathIn.value!! * 1000
-    val breathOut = breathingViewModel.breathOut.value!! * 1000
+    val breatheIn = breathingViewModel.breathIn.value!! * 1000
+    val breatheOut = breathingViewModel.breathOut.value!! * 1000
     val pauseBreatheIn = breathingViewModel.pauseBreatheIn.value!! * 1000
     val pauseBreatheOut = breathingViewModel.pauseBreatheOut.value!! * 1000
-    val breathesPerMinute = 60000 / (breathIn + pauseBreatheIn + breathOut + pauseBreatheOut)
+    val breathesPerMinute = 60000 / (breatheIn + pauseBreatheIn + breatheOut + pauseBreatheOut)
 
     LaunchedEffect(Unit) {
         while (true) {
-            scale.animateTo(1.5f, tween(breathIn, pauseBreatheIn, LinearEasing))
-            scale.animateTo(1f, tween(breathOut, pauseBreatheOut, LinearEasing))
+            scale.animateTo(1.5f, tween(breatheIn, pauseBreatheIn, LinearEasing))
+            scale.animateTo(1f, tween(breatheOut, pauseBreatheOut, LinearEasing))
         }
     }
 
