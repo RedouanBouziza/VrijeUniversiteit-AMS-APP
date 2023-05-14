@@ -19,4 +19,5 @@ sealed class Screen(
     object Movement: Screen("Movement", R.string.movement, Icons.Default.Person)
     object System: Screen("System", R.string.system, Icons.Default.Settings)
     object Measurement: Screen("chart", R.string.measurement, Icons.Default.AccountTree)
+    object StartRecording: Screen("StartRecording", R.string.startRecording, Icons.Default.FiberManualRecord)
 }

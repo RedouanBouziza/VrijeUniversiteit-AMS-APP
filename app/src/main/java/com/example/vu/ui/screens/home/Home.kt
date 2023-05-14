@@ -56,6 +56,7 @@ fun Home(modifier: Modifier, navController: NavHostController) {
                     .clip(RoundedCornerShape(10.dp))
             )
 
+            //First button
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -92,7 +93,7 @@ fun Home(modifier: Modifier, navController: NavHostController) {
                             color = Color.White
                         )
                         Text(
-                            text = "Connect your device",
+                            text = "Find your device",
                             style = MaterialTheme.typography.body1,
                             color = Color.White
                         )
@@ -101,26 +102,120 @@ fun Home(modifier: Modifier, navController: NavHostController) {
 
             }
 
-            Column(
+            //Second button
+            Button(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 15.dp)
+                    .padding(top = 20.dp),
+                onClick = {
+                    //TODO: Add navigation for button
+//                    navController.navigate("Setup")
+                },
+                border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.ams)),
             ) {
-                Text(
-                    text = "About VU-AMS",
-                    style = MaterialTheme.typography.h5,
-                    fontWeight = FontWeight.Bold,
-                    color = colorResource(id = R.color.amsDark)
-                )
-                Text(
-                    text = "The VU University Ambulatory Monitoring System, created by the department " +
-                            "of Biological Psychology and the Technical Department of the Faculty of " +
-                            "Psychology and Education, enables monitoring of autonomic and cardiovascular " +
-                            "activity in research settings, including ambulatory monitoring in naturalistic " +
-                            "environments. The device and its software program meet high technical standards, " +
-                            "with support from the ITM of the Faculty of Psychology and Education"
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .size(50.dp),
+                        imageVector = Icons.Default.Filter2,
+                        contentDescription = "Help",
+                        tint = Color.White
+                    )
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp)
+                            .absolutePadding(left = 10.dp),
+                    ) {
+                        Text(
+                            text = "Lorem ipsum doloramet",
+                            style = MaterialTheme.typography.h5,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                        Text(
+                            text = "Lorem ipsum doloramet",
+                            style = MaterialTheme.typography.body1,
+                            color = Color.White
+                        )
+                    }
+                }
+
             }
+
+            //Third button
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 20.dp),
+                onClick = {
+                          //TODO: Add navigation for button
+//                    navController.navigate("Setup")
+                },
+                border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
+                shape = RoundedCornerShape(10.dp),
+                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.ams)),
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .size(50.dp),
+                        imageVector = Icons.Default.Filter3,
+                        contentDescription = "Help",
+                        tint = Color.White
+                    )
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(10.dp)
+                            .absolutePadding(left = 10.dp),
+                    ) {
+                        Text(
+                            text = "Lorem ipsum doloramet",
+                            style = MaterialTheme.typography.h5,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
+                        Text(
+                            text = "Lorem ipsum doloramet",
+                            style = MaterialTheme.typography.body1,
+                            color = Color.White
+                        )
+                    }
+                }
+
+            }
+
+//            Column(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(top = 15.dp)
+//            ) {
+//                Text(
+//                    text = "About VU-AMS",
+//                    style = MaterialTheme.typography.h5,
+//                    fontWeight = FontWeight.Bold,
+//                    color = colorResource(id = R.color.amsDark)
+//                )
+//                Text(
+//                    text = "The VU University Ambulatory Monitoring System, created by the department " +
+//                            "of Biological Psychology and the Technical Department of the Faculty of " +
+//                            "Psychology and Education, enables monitoring of autonomic and cardiovascular " +
+//                            "activity in research settings, including ambulatory monitoring in naturalistic " +
+//                            "environments. The device and its software program meet high technical standards, " +
+//                            "with support from the ITM of the Faculty of Psychology and Education"
+//                )
+//            }
         }
 
 /*        Column(

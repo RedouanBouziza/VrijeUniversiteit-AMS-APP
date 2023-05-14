@@ -55,5 +55,6 @@
     <string name="faq">FAQ</string>
     <string name="system">System</string>
     <string name="measurement">Measurement</string>
+    <string name="startRecording">Start Recording</string>
 
 </resources>
