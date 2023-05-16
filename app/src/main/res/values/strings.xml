@@ -8,7 +8,7 @@
     <string name="breathe_out">Breathe out</string>
     <string name="pause_breathe_in">Pause breathe in</string>
     <string name="pause_breathe_out">Pause breathe out</string>
-    <string name="breathes_per_min">%1$.1f breaths per minute</string>
+    <string name="breathes_per_min">%1$d breaths per minute</string>
     <string name="start">Start</string>
 
     <!--  String for Setup  -->
