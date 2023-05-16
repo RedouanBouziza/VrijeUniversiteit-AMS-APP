@@ -59,7 +59,9 @@ fun Home(modifier: Modifier, navController: NavHostController) {
                 },
                 border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
                 shape = RoundedCornerShape(10.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.ams)),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = colorResource(id = R.color.ams)
+                ),
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -106,7 +108,9 @@ fun Home(modifier: Modifier, navController: NavHostController) {
                 },
                 border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
                 shape = RoundedCornerShape(10.dp),
-                colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.ams)),
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = colorResource(id = R.color.ams)
+                ),
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -148,7 +152,7 @@ fun Home(modifier: Modifier, navController: NavHostController) {
                     .fillMaxWidth()
                     .padding(top = 20.dp),
                 onClick = {
-                          //TODO: Add navigation for button
+                    //TODO: Add navigation for button
 //                    navController.navigate("Setup")
                 },
                 border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
