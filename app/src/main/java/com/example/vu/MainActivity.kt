@@ -17,7 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -25,6 +24,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.vu.data.udp.UDPConnection
 import com.example.vu.data.viewmodel.BreathingViewModel
+import com.example.vu.data.viewmodel.ChartViewModel
 import com.example.vu.data.viewmodel.UDPViewModel
 import com.example.vu.ui.screens.Screen
 import com.example.vu.ui.screens.breathing.BreathingExercise
@@ -34,8 +34,10 @@ import com.example.vu.ui.screens.faq.Faq
 import com.example.vu.ui.screens.faq.SetupInstructions
 import com.example.vu.ui.screens.faq.StartRecording
 import com.example.vu.ui.screens.home.Home
-import com.example.vu.ui.screens.menu.MenuBody
-import com.example.vu.ui.screens.menu.MenuHeader
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.vu.ui.screens.movement.Movement
 import com.example.vu.ui.screens.system.System
 import com.example.vu.ui.theme.VUTheme
@@ -53,13 +55,14 @@ import java.util.*
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        val webSocket: SocketService by lazy { SocketService() }
+//        webSocket.openConnection()
 
         try {
             SciChartSurface.setRuntimeLicenseKey(BuildConfig.SCI_CHART_KEY)
         } catch (e: Exception) {
             Log.e("SciChart", e.toString())
         }
-
         setContent()
     }
 
@@ -73,7 +76,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val scope = rememberCoroutineScope()
 
-                    MyComposableFunction(scope)
+                    MyComposableFunction()
                     ScreenContent(Modifier, scope)
                 }
             }
@@ -87,48 +90,15 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
     val scaffoldState = rememberScaffoldState()
     val navController = rememberNavController()
     val breathingViewModel: BreathingViewModel = viewModel()
+    val chartViewModel: ChartViewModel = viewModel()
 
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            TopBar(
-                onNavigationIconClick = {
-                    scope.launch { scaffoldState.drawerState.open() }
-                }, navController = navController
-            )
+            TopBar(navController = navController)
         },
-        drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
-        drawerContent = {
-            MenuHeader()
-            MenuBody(onItemClick = {
-                when (it.id) {
-                    "home" -> {
-                        navController.navigate(Screen.Home.route)
-                        closeNavBar(scope, scaffoldState)
-                    }
-                    "faq" -> {
-                        navController.navigate(Screen.Faq.route)
-                        closeNavBar(scope, scaffoldState)
-                    }
-                    "chart" -> {
-                        navController.navigate(Screen.Chart.route)
-                        closeNavBar(scope, scaffoldState)
-                    }
-                    "breathing" -> {
-                        navController.navigate(Screen.BreathingSettings.route)
-                        closeNavBar(scope, scaffoldState)
-                    }
-                    "movement" -> {
-                        navController.navigate(Screen.Movement.route)
-                        closeNavBar(scope, scaffoldState)
-                    }
-                    "system" -> {
-                        navController.navigate(Screen.System.route)
-                        closeNavBar(scope, scaffoldState)
-                    }
-                }
-            }
-            )
+        bottomBar = {
+            BottomBar(navController = navController)
         }
     ) {
         NavHost(
@@ -140,13 +110,13 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
                 Home(modifier, navController)
             }
             composable(route = Screen.Chart.route) {
-                Chart(navController)
+                Chart(chartViewModel)
             }
             composable(route = Screen.BreathingSettings.route) {
                 BreathingSettings(navController, breathingViewModel)
             }
             composable(Screen.BreathingExercise.route) {
-                BreathingExercise(breathingViewModel, scope)
+                BreathingExercise(breathingViewModel, scope, chartViewModel)
             }
             composable(route = Screen.Setup.route) {
                 SetupInstructions(navController)
@@ -168,7 +138,9 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
 }
 
 @Composable
-private fun TopBar(navController: NavHostController, onNavigationIconClick: () -> Unit) {
+private fun TopBar(
+    navController: NavHostController
+) {
     val udpViewModel: UDPViewModel = viewModel()
 
     TopAppBar(
@@ -185,28 +157,11 @@ private fun TopBar(navController: NavHostController, onNavigationIconClick: () -
                 )
             }
         },
-        navigationIcon = {
-            IconButton(
-                onClick = onNavigationIconClick
-            ) {
-                Icon(
-                    Icons.Default.Menu,
-                    contentDescription = "Toggle menu",
-                )
-            }
-        },
         actions = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically,
+            IconButton(
+                onClick = { navController.navigate("System") }
             ) {
-                IconButton(
-                    onClick = { navController.navigate("System") }
-                ) {
-                    ConnectionEstablished(udpViewModel)
-                }
+                ConnectionEstablished(udpViewModel)
             }
         }
     )
@@ -244,29 +199,83 @@ private fun ConnectionEstablished(udpViewModel: UDPViewModel) {
     }
 }
 
-private fun closeNavBar(scope: CoroutineScope, scaffoldState: ScaffoldState) {
-    scope.launch { scaffoldState.drawerState.close() }
+@Composable
+private fun BottomBar(navController: NavController) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+    val homeScreens = listOf(
+        Screen.Home,
+        Screen.Measurement,
+        Screen.Faq,
+        Screen.System
+    )
+    val secondScreens = listOf(
+        Screen.Home,
+        Screen.Chart,
+        Screen.BreathingSettings,
+        Screen.Movement
+    )
+
+    if (currentDestination?.route in listOf(
+            Screen.Home.route,
+            Screen.Faq.route,
+            Screen.System.route,
+            Screen.Setup.route
+        )
+    ) {
+        BottomBarItems(navController, homeScreens)
+    } else {
+        BottomBarItems(navController, secondScreens)
+    }
 }
 
-//TODO: Check if this works with the new data
 @Composable
-fun MyComposableFunction(scope: CoroutineScope) {
+private fun BottomBarItems(navController: NavController, screens: List<Screen>) {
+    BottomNavigation {
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentDestination = navBackStackEntry?.destination
+        screens.forEach { screen ->
+            BottomNavigationItem(
+                icon = { Icon(screen.icon, contentDescription = null) },
+                label = { Text(stringResource(id = screen.titleId)) },
+                selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                unselectedContentColor = Color.White,
+                onClick = {
+                    navController.navigate(screen.route) {
+                        popUpTo(navController.graph.findStartDestination().id)
+                        launchSingleTop = true
+                    }
+                })
+        }
+    }
+}
+
+
+
+@Composable
+fun MyComposableFunction() {
     val udpViewModel: UDPViewModel = viewModel()
+    val chartViewModel: ChartViewModel = viewModel()
     val context = LocalContext.current
 
-    LaunchedEffect(Unit) {
-        scope.launch(Dispatchers.Main) {
-            UDPConnection(
-                context = context,
-                3,
-                3,
-                setConnectedCallBack = { isConnected, isReceivingData ->
+    Thread(
+        UDPConnection(
+            context = context,
+            3,
+            3,
+            setConnectedCallBack = { isConnected, isReceivingData ->
+                // Update the view model on the main thread
+                CoroutineScope(Dispatchers.Main).launch {
                     udpViewModel.setIsReceivingData(isReceivingData)
                     udpViewModel.setIsConnected(isConnected)
                 }
-            )
-        }
-    }
+            },
+            setASectionMeasurement = {
+                CoroutineScope(Dispatchers.Main).launch {
+                    chartViewModel.setASectionMeasurement(TreeMap(it))
 
+                }
+            })
+    ).start()
 }
 

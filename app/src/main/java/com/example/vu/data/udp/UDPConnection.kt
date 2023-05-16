@@ -114,10 +114,7 @@ class UDPConnection(
             val aDecoding = ASectionDecoder()
             val byteBuffer =
                 ByteBuffer.allocateDirect(BYTE_BUFFER_SIZE)
-
-            println("test")
             byteBuffer.order(ByteOrder.LITTLE_ENDIAN)
-            println("kaasnoot")
 
             while (true) {
                 udpSocket.receive(packet)
@@ -126,9 +123,6 @@ class UDPConnection(
                 packet.data.forEach {
                     uByteArray.add(it.toUByte())
                 }
-
-                println("uByte array $uByteArray")
-                println("packet $packet")
 
                 setASectionMeasurement(aDecoding.convertBytes(uByteArray, byteBuffer))
 
@@ -162,7 +156,8 @@ class UDPConnection(
 
         val foundNames = NETWORK_NAMES.filter { name -> ssid.toString().contains(name) }
 
-        return foundNames.isNotEmpty() &&
-                capabilities!!.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+        return true
+//        return foundNames.isNotEmpty() &&
+//                capabilities!!.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
     }
 }
