@@ -1,4 +1,4 @@
-package com.example.vu.ui.screens.menu
+package com.example.vu.ui.menu
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
