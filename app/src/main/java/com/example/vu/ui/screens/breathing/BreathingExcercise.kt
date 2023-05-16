@@ -15,11 +15,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.vu.R
 import com.example.vu.data.viewmodel.BreathingViewModel
-import com.example.vu.ui.screens.chart.SciChartSurfaceView
+import com.example.vu.data.viewmodel.ChartViewModel
+import com.example.vu.ui.screens.chart.Chart
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun BreathingExercise(breathingViewModel: BreathingViewModel, scope: CoroutineScope) {
+fun BreathingExercise(
+    breathingViewModel: BreathingViewModel,
+    scope: CoroutineScope,
+    chartViewModel: ChartViewModel
+) {
     val scale = remember { Animatable(1f) }
     val breatheIn = breathingViewModel.breathIn.value!! * 1000
     val breatheOut = breathingViewModel.breathOut.value!! * 1000
@@ -55,7 +60,7 @@ fun BreathingExercise(breathingViewModel: BreathingViewModel, scope: CoroutineSc
                 .fillMaxHeight()
         ) {
             Text(stringResource(R.string.breathes_per_min, breathesPerMinute))
-            SciChartSurfaceView()
+            Chart(chartViewModel)
         }
     }
 }
