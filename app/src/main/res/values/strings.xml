@@ -12,10 +12,29 @@
     <!--  String for Setup  -->
     <string name="title_setup">How to connect the electrodes</string>
     <string name="step">Step %s:</string>
-    <string name="step1_explanation">This is the explanation text of step 1</string>
-    <string name="step2_explanation">This is the explanation text of step 2</string>
-    <string name="step3_explanation">This is the explanation text of step 3</string>
-    <string name="step4_explanation">This is the explanation text of step 4</string>
+    <string name="step1_explanation">Find the suprasternal notch; i.e. look for the dimple between the two collarbones.</string>
+    <string name="step2_explanation">Clean the site just below the suprasternal notch with alcohol.</string>
+    <string name="step3_explanation">Click ECG electrode onto device</string>
+    <string name="step4_explanation">Stick ECG electrode with device on cleaned site, so that yellow and black exit at the bottom and blue and green exit at the top. Press firmly for better attachment of the electrode to the skin. </string>
+    <string name="step5a_explanation">
+        A.	Clean the site just below the neck with alcohol. Ensure the site is above the device on the sternum (chest). Press firmly on the electrode for better skin attachment.
+    </string>
+    <string name="step5b_explanation">
+        B.	Clean the site at the lower back; in the middle axis of the body, or - when the back curves to much for easy and solid electrode attachment at this place - a bit to the site (see image). Clean with alcohol and press firmly on the electrode for better skin attachment.
+    </string>
+    <string name="step5c_explanation">
+        C.	Clean the site at/just above diaphragm level; i.e., where the two rib cages end. Clean with alcohol and press firmly on the electrode for better skin attachment.
+    </string>
+    <string name="step5d_explanation">
+        D.	Clean the lateral rib cage site, that is the bottom of the ribcage at the midclavicular axis (i.e., at the same line as the middle of the collarbone). Clean with alcohol and press firmly on the electrode for better skin attachment.
+    </string>
+    <string name="step6a_explanation">
+        A.	Run the blue and green cables over separate shoulders (i.e., one cable over the left and the other over the right shoulder). Attach blue at top (neck) site and put the green cable underneath the blue one (see image) and attach at bottom (lower back) site.
+    </string>
+    <string name="step6b_explanation">
+        B.	Attach the yellow cable to the lower sternal site. Put the black cable below the yellow cable and attach to the left lateral rib site.
+    </string>
+    <string name="no_explanation">There is not explanation available please contact staff</string>
     <string name="next_step">Next Step</string>
     <string name="finish">Finish</string>
     <!--  String for System screen  -->

@@ -11,5 +11,6 @@ sealed class Screen(
     object Faq: Screen("Faq")
     object Movement: Screen("Movement")
     object System: Screen("System")
+    object StartRecording: Screen("StartRecording")
 }
 
