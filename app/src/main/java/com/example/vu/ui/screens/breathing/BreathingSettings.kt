@@ -14,6 +14,7 @@ import com.example.vu.data.viewmodel.BreathingViewModel
 import com.example.vu.ui.screens.Screen
 import java.util.*
 import kotlin.math.roundToInt
+import kotlin.math.roundToLong
 
 @Composable
 fun BreathingSettings(
@@ -80,14 +81,14 @@ fun BreathingSettings(
         verticalArrangement = Arrangement.Center,
     ) {
         Text(stringResource(R.string.breathe_in))
-        Text("${breatheIn.roundToInt()} " + stringResource(R.string.seconds))
+        Text("${(breatheIn * 10.0).roundToInt() / 10.0} " + stringResource(R.string.seconds))
         Slider(
             value = breatheIn,
             onValueChange = {
                 breatheIn = it
             },
             valueRange = 1f..20f,
-            steps = 10,
+            steps = 20,
             colors = SliderDefaults.colors(
                 thumbColor = colorResource(R.color.white),
                 activeTickColor = colorResource(R.color.ams),
@@ -99,14 +100,14 @@ fun BreathingSettings(
         )
 
         Text(stringResource(R.string.pause_breathe_in))
-        Text("${pauseBreatheIn.roundToInt()} " + stringResource(R.string.seconds))
+        Text("${(pauseBreatheIn * 10.0).roundToInt() / 10.0} " + stringResource(R.string.seconds))
         Slider(
             value = pauseBreatheIn,
             onValueChange = {
                 pauseBreatheIn = it
             },
             valueRange = 0f..20f,
-            steps = 10,
+            steps = 20,
             colors = SliderDefaults.colors(
                 thumbColor = colorResource(R.color.white),
                 activeTickColor = colorResource(R.color.ams),
@@ -118,14 +119,14 @@ fun BreathingSettings(
         )
 
         Text(stringResource(R.string.breathe_out))
-        Text("${breatheOut.roundToInt()} " + stringResource(R.string.seconds))
+        Text("${(breatheOut * 10.0).roundToInt() / 10.0} " + stringResource(R.string.seconds))
         Slider(
             value = breatheOut,
             onValueChange = {
                 breatheOut = it
             },
             valueRange = 1f..20f,
-            steps = 10,
+            steps = 20,
             colors = SliderDefaults.colors(
                 thumbColor = colorResource(R.color.white),
                 activeTickColor = colorResource(R.color.ams),
@@ -137,14 +138,14 @@ fun BreathingSettings(
         )
 
         Text(stringResource(R.string.pause_breathe_out))
-        Text("${pauseBreatheOut.roundToInt()} " + stringResource(R.string.seconds))
+        Text("${(pauseBreatheOut * 10.0).roundToInt() / 10.0} " + stringResource(R.string.seconds))
         Slider(
             value = pauseBreatheOut,
             onValueChange = {
                 pauseBreatheOut = it
             },
             valueRange = 0f..20f,
-            steps = 10,
+            steps = 20,
             colors = SliderDefaults.colors(
                 thumbColor = colorResource(R.color.white),
                 activeTickColor = colorResource(R.color.ams),
@@ -159,10 +160,10 @@ fun BreathingSettings(
 
         Button(
             onClick = {
-                breathingViewModel.breathIn.value = breatheIn.roundToInt()
-                breathingViewModel.breathOut.value = breatheOut.toInt()
-                breathingViewModel.pauseBreatheIn.value = pauseBreatheIn.toInt()
-                breathingViewModel.pauseBreatheOut.value = pauseBreatheOut.toInt()
+                breathingViewModel.breathIn.value = (breatheIn * 10.0).roundToInt() / 10.0
+                breathingViewModel.breathOut.value = (breatheOut * 10.0).roundToInt() / 10.0
+                breathingViewModel.pauseBreatheIn.value = (pauseBreatheIn * 10.0).roundToInt() / 10.0
+                breathingViewModel.pauseBreatheOut.value = (pauseBreatheOut * 10.0).roundToInt() / 10.0
                 navController.navigate(Screen.BreathingExercise.route)
             },
             colors = ButtonDefaults.buttonColors(colorResource(R.color.ams))
