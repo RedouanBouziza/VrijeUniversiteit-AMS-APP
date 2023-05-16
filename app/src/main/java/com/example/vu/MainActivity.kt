@@ -107,7 +107,7 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
             modifier = modifier
         ) {
             composable(route = Screen.Home.route) {
-                Home(modifier, navController)
+                Home(modifier, navController, chartViewModel)
             }
             composable(route = Screen.Chart.route) {
                 Chart(chartViewModel)
