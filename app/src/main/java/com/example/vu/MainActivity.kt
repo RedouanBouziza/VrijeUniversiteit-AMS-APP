@@ -34,8 +34,10 @@ import com.example.vu.ui.screens.faq.Faq
 import com.example.vu.ui.screens.faq.SetupInstructions
 import com.example.vu.ui.screens.faq.StartRecording
 import com.example.vu.ui.screens.home.Home
-import com.example.vu.ui.menu.MenuBody
-import com.example.vu.ui.menu.MenuHeader
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hierarchy
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.vu.ui.screens.movement.Movement
 import com.example.vu.ui.screens.system.System
 import com.example.vu.ui.theme.VUTheme
@@ -93,44 +95,10 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            TopBar(
-                onNavigationIconClick = {
-                    scope.launch { scaffoldState.drawerState.open() }
-                }, navController = navController
-            )
+            TopBar(navController = navController)
         },
-        drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
-        drawerContent = {
-            MenuHeader()
-            MenuBody(onItemClick = {
-                when (it.id) {
-                    "home" -> {
-                        navController.navigate(Screen.Home.route)
-                        closeNavBar(scope, scaffoldState)
-                    }
-                    "faq" -> {
-                        navController.navigate(Screen.Faq.route)
-                        closeNavBar(scope, scaffoldState)
-                    }
-                    "chart" -> {
-                        navController.navigate(Screen.Chart.route)
-                        closeNavBar(scope, scaffoldState)
-                    }
-                    "breathing" -> {
-                        navController.navigate(Screen.BreathingSettings.route)
-                        closeNavBar(scope, scaffoldState)
-                    }
-                    "movement" -> {
-                        navController.navigate(Screen.Movement.route)
-                        closeNavBar(scope, scaffoldState)
-                    }
-                    "system" -> {
-                        navController.navigate(Screen.System.route)
-                        closeNavBar(scope, scaffoldState)
-                    }
-                }
-            }
-            )
+        bottomBar = {
+            BottomBar(navController = navController)
         }
     ) {
         NavHost(
@@ -170,7 +138,9 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
 }
 
 @Composable
-private fun TopBar(navController: NavHostController, onNavigationIconClick: () -> Unit) {
+private fun TopBar(
+    navController: NavHostController
+) {
     val udpViewModel: UDPViewModel = viewModel()
 
     TopAppBar(
@@ -187,28 +157,11 @@ private fun TopBar(navController: NavHostController, onNavigationIconClick: () -
                 )
             }
         },
-        navigationIcon = {
-            IconButton(
-                onClick = onNavigationIconClick
-            ) {
-                Icon(
-                    Icons.Default.Menu,
-                    contentDescription = "Toggle menu",
-                )
-            }
-        },
         actions = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically,
+            IconButton(
+                onClick = { navController.navigate("System") }
             ) {
-                IconButton(
-                    onClick = { navController.navigate("System") }
-                ) {
-                    ConnectionEstablished(udpViewModel)
-                }
+                ConnectionEstablished(udpViewModel)
             }
         }
     )
@@ -246,9 +199,58 @@ private fun ConnectionEstablished(udpViewModel: UDPViewModel) {
     }
 }
 
-private fun closeNavBar(scope: CoroutineScope, scaffoldState: ScaffoldState) {
-    scope.launch { scaffoldState.drawerState.close() }
+@Composable
+private fun BottomBar(navController: NavController) {
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+    val homeScreens = listOf(
+        Screen.Home,
+        Screen.Measurement,
+        Screen.Faq,
+        Screen.System
+    )
+    val secondScreens = listOf(
+        Screen.Home,
+        Screen.Chart,
+        Screen.BreathingSettings,
+        Screen.Movement
+    )
+
+    if (currentDestination?.route in listOf(
+            Screen.Home.route,
+            Screen.Faq.route,
+            Screen.System.route,
+            Screen.Setup.route
+        )
+    ) {
+        BottomBarItems(navController, homeScreens)
+    } else {
+        BottomBarItems(navController, secondScreens)
+    }
 }
+
+@Composable
+private fun BottomBarItems(navController: NavController, screens: List<Screen>) {
+    BottomNavigation {
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentDestination = navBackStackEntry?.destination
+        screens.forEach { screen ->
+            BottomNavigationItem(
+                icon = { Icon(screen.icon, contentDescription = null) },
+                label = { Text(stringResource(id = screen.titleId)) },
+                selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                unselectedContentColor = Color.White,
+                onClick = {
+                    navController.navigate(screen.route) {
+                        popUpTo(navController.graph.findStartDestination().id)
+                        launchSingleTop = true
+                    }
+                })
+        }
+    }
+}
+
+
 
 @Composable
 fun MyComposableFunction() {
