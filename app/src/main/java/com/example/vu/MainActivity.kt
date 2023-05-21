@@ -219,12 +219,11 @@ private fun BottomBar(navController: NavController) {
     if (currentDestination?.route in listOf(
             Screen.Home.route,
             Screen.Faq.route,
-            Screen.System.route,
-            Screen.Setup.route
+            Screen.System.route
         )
     ) {
         BottomBarItems(navController, homeScreens)
-    } else {
+    } else if (currentDestination?.route !in listOf(Screen.Setup.route)) {
         BottomBarItems(navController, secondScreens)
     }
 }

@@ -49,7 +49,7 @@ fun SetupInstructions(navController: NavHostController) {
     ) {
         Text(
             text = stringResource(id = R.string.title_setup),
-            style = MaterialTheme.typography.h5
+            style = MaterialTheme.typography.h6
         )
 
         Text(
@@ -89,7 +89,6 @@ fun SetupInstructions(navController: NavHostController) {
                 Image(
                     painter = painterResource(images[page]),
                     contentDescription = "Steps images",
-                    contentScale = ContentScale.FillWidth,
                     modifier = Modifier.fillMaxSize()
                 )
 
@@ -144,17 +143,53 @@ fun SetupInstructions(navController: NavHostController) {
         }
     }
 
+    Row(
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.Bottom,
+        modifier = Modifier.padding(bottom = 50.dp).fillMaxSize()
+    ) {
+        images.forEachIndexed { index, _ ->
+            Icon(
+                painter = painterResource(if (pagerState.currentPage == index) R.drawable.baseline_circle_24 else R.drawable.outline_circle_24),
+                contentDescription = "Page Indicator",
+                modifier = Modifier.size(12.dp)
+            )
+            Spacer(modifier = Modifier.width(4.dp))
+        }
+    }
 
-    Box(
+
+    // Bottom left button
+    Row(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomCenter,
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.Bottom
+    ) {
+        if (currentStep > 1) {
+            Button(
+                onClick = {
+                    currentStep--
+                    scope.launch { pagerState.scrollToPage(0) }
+                },
+                modifier = Modifier.padding(start = 5.dp)
+            ) {
+                Text(text = "Previous")
+            }
+        }
+    }
+
+    Row(
+        modifier = Modifier.fillMaxSize(),
+        horizontalArrangement = Arrangement.End,
+        verticalAlignment = Alignment.Bottom
     ) {
         Button(
             shape = RoundedCornerShape(5.dp),
             onClick = {
                 currentStep++
                 scope.launch { pagerState.scrollToPage(0) }
-            }
+            },
+            modifier = Modifier.padding(end = 5.dp)
         ) {
             Text(text = buttonText)
         }

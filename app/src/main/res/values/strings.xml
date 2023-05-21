@@ -13,7 +13,7 @@
 
     <!--  String for Setup  -->
     <string name="title_setup">How to connect the electrodes</string>
-    <string name="step">Step %s:</string>
+    <string name="step">Step %s / 6:</string>
     <string name="step1_explanation">Find the suprasternal notch; i.e. look for the dimple between
         the two collarbones.</string>
     <string name="step2_explanation">Clean the site just below the suprasternal notch with
@@ -50,7 +50,7 @@
         cable and attach to the left lateral rib site.
     </string>
     <string name="no_explanation">There is not explanation available please contact staff</string>
-    <string name="next_step">Next Step</string>
+    <string name="next_step">Next</string>
     <string name="finish">Finish</string>
 
     <!--  String for System screen  -->
