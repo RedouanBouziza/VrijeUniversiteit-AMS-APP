@@ -88,7 +88,7 @@ fun SetupInstructions(navController: NavHostController) {
                 Image(
                     painter = painterResource(images[page]),
                     contentDescription = "Steps images",
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.size(400.dp)
                 )
 
                 SideEffect {
