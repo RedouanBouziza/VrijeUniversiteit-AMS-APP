@@ -386,53 +386,6 @@ private fun ConnectionEstablished(
 
                     }
 
-                    //Third button
-                    Button(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 20.dp)
-                            .height(90.dp),
-                        onClick = {
-                            //TODO: Add navigation for button
-//                    navController.navigate("Setup")
-                        },
-                        border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.ams)),
-                    ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                modifier = Modifier
-                                    .size(50.dp),
-                                imageVector = Icons.Default.Filter3,
-                                contentDescription = "Help",
-                                tint = Color.White
-                            )
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(10.dp)
-                                    .absolutePadding(left = 10.dp),
-                            ) {
-                                Text(
-                                    text = "Lorem ipsum doloramet",
-                                    style = MaterialTheme.typography.h5,
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.White
-                                )
-                                Text(
-                                    text = "Lorem ipsum doloramet",
-                                    style = MaterialTheme.typography.body1,
-                                    color = Color.White
-                                )
-                            }
-                        }
-
-                    }
                 }
             }
         }
