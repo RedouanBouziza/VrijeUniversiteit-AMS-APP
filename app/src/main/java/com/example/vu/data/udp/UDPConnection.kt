@@ -87,7 +87,7 @@ class UDPConnection(
                     return@scheduleAtFixedRate
                 }
 
-                if (lastReceivedPacketDate === null && userIsOnline()) {
+                if (lastReceivedPacketDate === null && !userIsOnline()) {
                     Log.i(UDP_TAG, "No stable connection")
                     setConnectedCallBack(false, false)
                     return@scheduleAtFixedRate

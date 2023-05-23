@@ -2,6 +2,7 @@ package com.example.vu.ui.screens.home
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -353,13 +354,13 @@ private fun ConnectionEstablished(
                                     .absolutePadding(left = 10.dp),
                             ) {
                                 Text(
-                                    text = "Lorem ipsum doloramet",
+                                    text = "Take your second step",
                                     style = MaterialTheme.typography.h5,
                                     fontWeight = FontWeight.Bold,
                                     color = Color.White
                                 )
                                 Text(
-                                    text = "Lorem ipsum doloramet",
+                                    text = "Find the device",
                                     style = MaterialTheme.typography.body1,
                                     color = Color.White
                                 )
