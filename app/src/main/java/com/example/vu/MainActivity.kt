@@ -1,10 +1,15 @@
 package com.example.vu
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -53,17 +58,42 @@ import java.util.*
  * @author Redouan Bouziza
  */
 class MainActivity : ComponentActivity() {
+    private lateinit var locationPermissionLauncher: ActivityResultLauncher<String>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        val webSocket: SocketService by lazy { SocketService() }
-//        webSocket.openConnection()
+        locationPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                // Permission granted, handle location logic
+                setContent()
+            } else {
+                // Permission denied, handle accordingly
+                Log.d("MainActivity", "Location permission denied")
+            }
+        }
+
+        requestLocationPermission()
 
         try {
             SciChartSurface.setRuntimeLicenseKey(BuildConfig.SCI_CHART_KEY)
         } catch (e: Exception) {
             Log.e("SciChart", e.toString())
         }
-        setContent()
+    }
+
+    private fun requestLocationPermission() {
+        if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) ==
+            PackageManager.PERMISSION_GRANTED
+        ) {
+            // Permission already granted
+            setContent {
+                setContent()
+            }
+        } else {
+            // Request location permission
+            locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
     }
 
     private fun setContent() {
