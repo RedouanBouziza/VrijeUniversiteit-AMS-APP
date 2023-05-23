@@ -24,6 +24,7 @@ import androidx.navigation.NavHostController
 import com.example.vu.R
 import com.example.vu.data.viewmodel.ChartViewModel
 import com.example.vu.data.viewmodel.UDPViewModel
+import com.example.vu.ui.screens.Screen
 import com.example.vu.ui.screens.chart.Chart
 
 @Composable
@@ -79,7 +80,7 @@ private fun ConnectionEstablished(
                     modifier
                         .padding(18.dp)
                         .fillMaxSize()
-                ){
+                ) {
                     Column(
                         modifier = modifier
                             .fillMaxSize()
@@ -107,7 +108,12 @@ private fun ConnectionEstablished(
                                 modifier
                                     .fillMaxWidth()
                                     .height(150.dp)
-                                    .clip(RoundedCornerShape(bottomEnd = 10.dp, bottomStart = 10.dp))
+                                    .clip(
+                                        RoundedCornerShape(
+                                            bottomEnd = 10.dp,
+                                            bottomStart = 10.dp
+                                        )
+                                    )
                             ) {
                                 Chart(chartViewModel)
                             }
@@ -132,7 +138,10 @@ private fun ConnectionEstablished(
                                     onClick = {
                                         //TODO: Stamp the time and the message
                                     },
-                                    border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
+                                    border = BorderStroke(
+                                        1.dp,
+                                        colorResource(id = R.color.amsDark)
+                                    ),
                                     shape = RoundedCornerShape(10.dp),
                                     colors = ButtonDefaults.buttonColors(
                                         backgroundColor = colorResource(id = R.color.babyBlue)
@@ -152,7 +161,10 @@ private fun ConnectionEstablished(
                                     onClick = {
                                         //TODO: Stamp the time and the message
                                     },
-                                    border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
+                                    border = BorderStroke(
+                                        1.dp,
+                                        colorResource(id = R.color.amsDark)
+                                    ),
                                     shape = RoundedCornerShape(10.dp),
                                     colors = ButtonDefaults.buttonColors(
                                         backgroundColor = colorResource(id = R.color.pink)
@@ -176,7 +188,10 @@ private fun ConnectionEstablished(
                                     onClick = {
                                         //TODO: Stamp the time and the message
                                     },
-                                    border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
+                                    border = BorderStroke(
+                                        1.dp,
+                                        colorResource(id = R.color.amsDark)
+                                    ),
                                     shape = RoundedCornerShape(10.dp),
                                     colors = ButtonDefaults.buttonColors(
                                         backgroundColor = colorResource(id = R.color.blue)
@@ -196,7 +211,10 @@ private fun ConnectionEstablished(
                                     onClick = {
                                         //TODO: Stamp the time and the message
                                     },
-                                    border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
+                                    border = BorderStroke(
+                                        1.dp,
+                                        colorResource(id = R.color.amsDark)
+                                    ),
                                     shape = RoundedCornerShape(10.dp),
                                     colors = ButtonDefaults.buttonColors(
                                         backgroundColor = colorResource(id = R.color.purple)
@@ -326,8 +344,7 @@ private fun ConnectionEstablished(
                             .padding(top = 20.dp)
                             .height(90.dp),
                         onClick = {
-                            //TODO: Add navigation for button
-//                    navController.navigate("Setup")
+                            navController.navigate(Screen.StartRecording.route)
                         },
                         border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
                         shape = RoundedCornerShape(10.dp),

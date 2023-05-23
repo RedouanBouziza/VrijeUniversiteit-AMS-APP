@@ -197,7 +197,6 @@ private fun TopBar(
     )
 }
 
-//TODO: Check if this works with the new data
 @Composable
 private fun ConnectionEstablished(udpViewModel: UDPViewModel) {
     val isConnected by udpViewModel.isConnected.observeAsState()
@@ -253,7 +252,7 @@ private fun BottomBar(navController: NavController) {
         )
     ) {
         BottomBarItems(navController, homeScreens)
-    } else if (currentDestination?.route !in listOf(Screen.Setup.route)) {
+    } else if (currentDestination?.route !in listOf(Screen.Setup.route, Screen.StartRecording.route)) {
         BottomBarItems(navController, secondScreens)
     }
 }

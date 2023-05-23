@@ -32,8 +32,8 @@ fun StartRecording(navController: NavHostController) {
     val pagerState = rememberPagerState(initialPage = images.size)
     val scope = rememberCoroutineScope()
 
-    val secondLastQuestion = 6
-    val lastQuestion = 7
+    val secondLastQuestion = 3
+    val lastQuestion = 4
 
 
     Column(
@@ -47,7 +47,7 @@ fun StartRecording(navController: NavHostController) {
         )
 
         Text(
-            text = stringResource(id = R.string.step, currentStep),
+            text = stringResource(id = R.string.step_recording, currentStep),
             Modifier.padding(top = 10.dp),
             style = MaterialTheme.typography.subtitle1
         )
@@ -88,48 +88,48 @@ fun StartRecording(navController: NavHostController) {
 
                 SideEffect {
                     when (pagerState.currentPage) {
-                        images.indexOf(R.drawable.step5_1) -> {
-                            explanationForEachStep = R.string.step5a_explanation
+                        images.indexOf(R.drawable.recording2_1) -> {
+                            explanationForEachStep = R.string.step2_recording
                         }
-                        images.indexOf(R.drawable.step5_2) -> {
-                            explanationForEachStep = R.string.step5a_explanation
+                        images.indexOf(R.drawable.recording2_1) -> {
+                            explanationForEachStep = R.string.step2_recording
                         }
-                        images.indexOf(R.drawable.step5_3) -> {
-                            explanationForEachStep = R.string.step5a_explanation
+                        images.indexOf(R.drawable.recording2_2) -> {
+                            explanationForEachStep = R.string.step2_recording
                         }
-                        images.indexOf(R.drawable.step5_4) -> {
-                            explanationForEachStep = R.string.step5b_explanation
-                        }
-                        images.indexOf(R.drawable.step5_5) -> {
-                            explanationForEachStep = R.string.step5b_explanation
-                        }
-                        images.indexOf(R.drawable.step5_6) -> {
-                            explanationForEachStep = R.string.step5b_explanation
-                        }
-                        images.indexOf(R.drawable.step5_7) -> {
-                            explanationForEachStep = R.string.step5c_explanation
-                        }
-                        images.indexOf(R.drawable.step5_8) -> {
-                            explanationForEachStep = R.string.step5c_explanation
-                        }
-                        images.indexOf(R.drawable.step5_9) -> {
-                            explanationForEachStep = R.string.step5d_explanation
-                        }
-                        images.indexOf(R.drawable.step5_10) -> {
-                            explanationForEachStep = R.string.step5d_explanation
-                        }
-                        images.indexOf(R.drawable.step6_1) -> {
-                            explanationForEachStep = R.string.step6a_explanation
-                        }
-                        images.indexOf(R.drawable.step6_2) -> {
-                            explanationForEachStep = R.string.step6a_explanation
-                        }
-                        images.indexOf(R.drawable.step6_3) -> {
-                            explanationForEachStep = R.string.step6a_explanation
-                        }
-                        images.indexOf(R.drawable.step6_4) -> {
-                            explanationForEachStep = R.string.step6b_explanation
-                        }
+//                        images.indexOf(R.drawable.recording2_3) -> {
+//                            explanationForEachStep = R.string.step2a_recording
+//                        }
+//                        images.indexOf(R.drawable.step5_5) -> {
+//                            explanationForEachStep = R.string.step5b_explanation
+//                        }
+//                        images.indexOf(R.drawable.step5_6) -> {
+//                            explanationForEachStep = R.string.step5b_explanation
+//                        }
+//                        images.indexOf(R.drawable.step5_7) -> {
+//                            explanationForEachStep = R.string.step5c_explanation
+//                        }
+//                        images.indexOf(R.drawable.step5_8) -> {
+//                            explanationForEachStep = R.string.step5c_explanation
+//                        }
+//                        images.indexOf(R.drawable.step5_9) -> {
+//                            explanationForEachStep = R.string.step5d_explanation
+//                        }
+//                        images.indexOf(R.drawable.step5_10) -> {
+//                            explanationForEachStep = R.string.step5d_explanation
+//                        }
+//                        images.indexOf(R.drawable.step6_1) -> {
+//                            explanationForEachStep = R.string.step6a_explanation
+//                        }
+//                        images.indexOf(R.drawable.step6_2) -> {
+//                            explanationForEachStep = R.string.step6a_explanation
+//                        }
+//                        images.indexOf(R.drawable.step6_3) -> {
+//                            explanationForEachStep = R.string.step6a_explanation
+//                        }
+//                        images.indexOf(R.drawable.step6_4) -> {
+//                            explanationForEachStep = R.string.step6b_explanation
+//                        }
                     }
                 }
 
@@ -140,7 +140,9 @@ fun StartRecording(navController: NavHostController) {
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.Bottom,
-        modifier = Modifier.padding(bottom = 50.dp).fillMaxSize()
+        modifier = Modifier
+            .padding(bottom = 50.dp)
+            .fillMaxSize()
     ) {
         images.forEachIndexed { index, _ ->
             Icon(
@@ -208,45 +210,19 @@ fun imageForEachStepRecording(currentStep: Int): List<Int> {
     return when (currentStep) {
         1 -> {
             listOf(
-                R.drawable.step1
+                R.drawable.recording1
             )
         }
         2 -> {
             listOf(
-                R.drawable.step2
-            )
-        }
-        3 -> {
-            listOf(
-                R.drawable.step3
-            )
-        }
-        4 -> {
-            listOf(
-                R.drawable.step4
-            )
-
-        }
-        5 -> {
-            listOf(
-                R.drawable.step5_1,
-                R.drawable.step5_2,
-                R.drawable.step5_3,
-                R.drawable.step5_4,
-                R.drawable.step5_5,
-                R.drawable.step5_6,
-                R.drawable.step5_7,
-                R.drawable.step5_8,
-                R.drawable.step5_9,
-                R.drawable.step5_10
+                R.drawable.recording2_1,
+                R.drawable.recording2_2,
+                R.drawable.recording2_3
             )
         }
         else -> {
             listOf(
-                R.drawable.step6_1,
-                R.drawable.step6_2,
-                R.drawable.step6_3,
-                R.drawable.step6_4
+
             )
         }
     }
@@ -259,8 +235,8 @@ fun imageForEachStepRecording(currentStep: Int): List<Int> {
  */
 fun currentStepExplanationRecording(currentStep: Int): Int {
     return when (currentStep) {
-        1 -> R.string.step1_explanation
-        2 -> R.string.step2_explanation
+        1 -> R.string.step1_recording
+        2 -> R.string.step2_recording
         3 -> R.string.step3_explanation
         4 -> R.string.step4_explanation
         5 -> R.string.step5a_explanation

@@ -8,7 +8,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -53,7 +52,7 @@ fun SetupInstructions(navController: NavHostController) {
         )
 
         Text(
-            text = stringResource(id = R.string.step, currentStep),
+            text = stringResource(id = R.string.step_explanation, currentStep),
             Modifier.padding(top = 10.dp),
             style = MaterialTheme.typography.subtitle1
         )
