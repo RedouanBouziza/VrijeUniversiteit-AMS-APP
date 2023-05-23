@@ -2,6 +2,7 @@ package com.example.vu.ui.screens.home
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -23,6 +24,7 @@ import androidx.navigation.NavHostController
 import com.example.vu.R
 import com.example.vu.data.viewmodel.ChartViewModel
 import com.example.vu.data.viewmodel.UDPViewModel
+import com.example.vu.ui.screens.Screen
 import com.example.vu.ui.screens.chart.Chart
 
 @Composable
@@ -78,7 +80,7 @@ private fun ConnectionEstablished(
                     modifier
                         .padding(18.dp)
                         .fillMaxSize()
-                ){
+                ) {
                     Column(
                         modifier = modifier
                             .fillMaxSize()
@@ -106,7 +108,12 @@ private fun ConnectionEstablished(
                                 modifier
                                     .fillMaxWidth()
                                     .height(150.dp)
-                                    .clip(RoundedCornerShape(bottomEnd = 10.dp, bottomStart = 10.dp))
+                                    .clip(
+                                        RoundedCornerShape(
+                                            bottomEnd = 10.dp,
+                                            bottomStart = 10.dp
+                                        )
+                                    )
                             ) {
                                 Chart(chartViewModel)
                             }
@@ -131,7 +138,10 @@ private fun ConnectionEstablished(
                                     onClick = {
                                         //TODO: Stamp the time and the message
                                     },
-                                    border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
+                                    border = BorderStroke(
+                                        1.dp,
+                                        colorResource(id = R.color.amsDark)
+                                    ),
                                     shape = RoundedCornerShape(10.dp),
                                     colors = ButtonDefaults.buttonColors(
                                         backgroundColor = colorResource(id = R.color.babyBlue)
@@ -151,7 +161,10 @@ private fun ConnectionEstablished(
                                     onClick = {
                                         //TODO: Stamp the time and the message
                                     },
-                                    border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
+                                    border = BorderStroke(
+                                        1.dp,
+                                        colorResource(id = R.color.amsDark)
+                                    ),
                                     shape = RoundedCornerShape(10.dp),
                                     colors = ButtonDefaults.buttonColors(
                                         backgroundColor = colorResource(id = R.color.pink)
@@ -175,7 +188,10 @@ private fun ConnectionEstablished(
                                     onClick = {
                                         //TODO: Stamp the time and the message
                                     },
-                                    border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
+                                    border = BorderStroke(
+                                        1.dp,
+                                        colorResource(id = R.color.amsDark)
+                                    ),
                                     shape = RoundedCornerShape(10.dp),
                                     colors = ButtonDefaults.buttonColors(
                                         backgroundColor = colorResource(id = R.color.blue)
@@ -195,7 +211,10 @@ private fun ConnectionEstablished(
                                     onClick = {
                                         //TODO: Stamp the time and the message
                                     },
-                                    border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
+                                    border = BorderStroke(
+                                        1.dp,
+                                        colorResource(id = R.color.amsDark)
+                                    ),
                                     shape = RoundedCornerShape(10.dp),
                                     colors = ButtonDefaults.buttonColors(
                                         backgroundColor = colorResource(id = R.color.purple)
@@ -325,8 +344,7 @@ private fun ConnectionEstablished(
                             .padding(top = 20.dp)
                             .height(90.dp),
                         onClick = {
-                            //TODO: Add navigation for button
-//                    navController.navigate("Setup")
+                            navController.navigate(Screen.StartRecording.route)
                         },
                         border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
                         shape = RoundedCornerShape(10.dp),
@@ -353,13 +371,13 @@ private fun ConnectionEstablished(
                                     .absolutePadding(left = 10.dp),
                             ) {
                                 Text(
-                                    text = "Lorem ipsum doloramet",
+                                    text = "Take your second step",
                                     style = MaterialTheme.typography.h5,
                                     fontWeight = FontWeight.Bold,
                                     color = Color.White
                                 )
                                 Text(
-                                    text = "Lorem ipsum doloramet",
+                                    text = "Find the device",
                                     style = MaterialTheme.typography.body1,
                                     color = Color.White
                                 )
