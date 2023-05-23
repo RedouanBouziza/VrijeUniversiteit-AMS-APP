@@ -43,6 +43,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.vu.ui.screens.faq.AboutUs
 import com.example.vu.ui.screens.movement.Movement
 import com.example.vu.ui.screens.system.System
 import com.example.vu.ui.theme.VUTheme
@@ -163,6 +164,9 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
             composable(route = Screen.StartRecording.route) {
                 StartRecording(navController)
             }
+            composable(route = Screen.AboutUs.route){
+                AboutUs(navController)
+            }
         }
     }
 }
@@ -236,7 +240,8 @@ private fun BottomBar(navController: NavController) {
         Screen.Home,
         Screen.Measurement,
         Screen.Faq,
-        Screen.System
+        Screen.System,
+        Screen.AboutUs
     )
     val secondScreens = listOf(
         Screen.Home,
