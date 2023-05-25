@@ -15,6 +15,7 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
@@ -42,7 +43,7 @@ fun Chart(chartViewModel: ChartViewModel) {
 
 
     Column {
-        val tabs = listOf("Custom", "Tab 1", "Tab 2", "Tab 3", "Tab 4", "Tab 5", "Tab 6", "Tab 7")
+        val tabs = listOf("Custom", "2ECG", "ISRC", "ECG", "ICG", "TEMP", "Tab 6", "Tab 7")
         val selectedTabIndex = remember { mutableStateOf(0) }
 
         HorizontalScrollableTabs(tabs = tabs, selectedTabIndex = selectedTabIndex)
@@ -65,7 +66,7 @@ fun Chart(chartViewModel: ChartViewModel) {
                 ChartType(chartViewModel, lineName = "ICG")
             }
             5 -> {
-                // Content for Tab 5
+                ChartType(chartViewModel, lineName = "T")
             }
             6 -> {
                 // Content for Tab 6
@@ -103,6 +104,7 @@ fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
             factory = { context ->
                 // Create Android View with SciChartSurface
                 val sciChartSurfaceView = SciChartSurface(context)
+                sciChartSurface.setBackgroundColor(ColorUtil.White)
 
                 // Configure SciChartSurface with chart data and options here
                 val xAxis: IAxis = NumericAxis(context)
@@ -357,7 +359,7 @@ fun HorizontalScrollableTabs(
                     onClick = { selectedTabIndex.value = index },
                     modifier = Modifier.padding(16.dp)
                 ) {
-                    Text(text = title)
+                    Text(text = title, color = Color.White)
                 }
             }
         }
