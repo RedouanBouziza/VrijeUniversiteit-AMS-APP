@@ -24,6 +24,7 @@ import com.example.vu.data.viewmodel.ChartViewModel
 import com.scichart.charting.model.dataSeries.XyDataSeries
 import com.scichart.charting.modifiers.*
 import com.scichart.charting.visuals.SciChartSurface
+import com.scichart.charting.visuals.axes.AutoRange
 import com.scichart.charting.visuals.axes.IAxis
 import com.scichart.charting.visuals.axes.NumericAxis
 import com.scichart.charting.visuals.renderableSeries.FastLineRenderableSeries
@@ -107,43 +108,44 @@ fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
                 sciChartSurface.setBackgroundColor(ColorUtil.White)
 
                 // Configure SciChartSurface with chart data and options here
-                val xAxis: IAxis = NumericAxis(context)
-                val yAxis: IAxis = NumericAxis(context)
+                val xAxis: IAxis = NumericAxis(context).apply {
+                    growBy = DoubleRange(0.3, 0.3)
+                    autoRange = AutoRange.Always
+                }
+                val yAxis: IAxis = NumericAxis(context).apply {
+                    growBy = DoubleRange(0.3, 0.3)
+                    autoRange = AutoRange.Always
+                }
 
                 lineDataSeries.seriesName = lineName
 
                 // How much it will show on the screen
                 lineDataSeries.fifoCapacity = 5000
 
-                yAxis.growBy = DoubleRange(0.3, 0.3)
-
-                val xValues = IntegerValues()
-
                 // Append data to initialise the data series
                 lineDataSeries.append(xValues, lineData)
 
                 // Type of line
-                val lineSeries: IRenderableSeries = FastLineRenderableSeries()
-                lineSeries.dataSeries = lineDataSeries
+
+                val lineSeries: IRenderableSeries = FastLineRenderableSeries().apply {
+                    dataSeries = lineDataSeries
+                    strokeStyle = SolidPenStyle(ColorUtil.Blue, true, 5f, null)
+                }
 
                 // Set the stroke style and color for the line
-                lineSeries.strokeStyle = SolidPenStyle(ColorUtil.Green, true, 5f, null)
-
-                // Legend with all the data from the lines
-                val legendModifier = LegendModifier(context)
-                legendModifier.setOrientation(Orientation.VERTICAL)
-                legendModifier.setLegendPosition(Gravity.START, 0, 0, 0, 10)
 
                 // Add all those data and modifiers
                 UpdateSuspender.using(sciChartSurfaceView) {
-                    sciChartSurfaceView.renderableSeries.add(lineSeries)
+                    Collections.addAll(
+                        sciChartSurfaceView.renderableSeries,
+                        lineSeries
+                    )
                     Collections.addAll(
                         sciChartSurfaceView.chartModifiers,
                         PinchZoomModifier(),
                         ZoomPanModifier(),
                         ZoomExtentsModifier(),
                     )
-                    sciChartSurfaceView.chartModifiers.add(legendModifier)
                     sciChartSurfaceView.chartModifiers.add(RolloverModifier())
                 }
 
@@ -151,8 +153,6 @@ fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
                 UpdateSuspender.using(sciChartSurfaceView) {
                     sciChartSurfaceView.xAxes.add(xAxis)
                     sciChartSurfaceView.yAxes.add(yAxis)
-                    sciChartSurfaceView.zoomExtentsX()
-                    sciChartSurfaceView.zoomExtentsY()
                 }
 
                 sciChartSurfaceView // return the SciChartSurface instance
@@ -162,7 +162,6 @@ fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
                         if (lineDataSeries.xMax > section.tickCount) {
                             return@let
                         }
-
                         when (lineName) {
                             "2ECG" -> lineDataSeries.append(section.tickCount, section.twoEcg)
                             "ISRC" -> lineDataSeries.append(
@@ -174,8 +173,12 @@ fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
                             "T" -> lineDataSeries.append(section.tickCount, section.temperature)
                         }
 
-                        sciChartSurface.zoomExtentsX()
-                        sciChartSurface.zoomExtentsY()
+//                        UpdateSuspender.using(sciChartSurface) {
+//                            lineDataSeries.updateRangeYAt(0, lineData)
+//
+//                            // zoom series to fit viewport size into X-Axis direction
+//                            sciChartSurface.zoomExtentsX()
+//                        }
                     }
                 }
             }
@@ -184,7 +187,7 @@ fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
 }
 
 @Composable
-fun AllCharts(chartViewModel: ChartViewModel){
+fun AllCharts(chartViewModel: ChartViewModel) {
     val context = LocalContext.current
     val sciChartSurface = SciChartSurface(context)
 
@@ -309,10 +312,10 @@ fun AllCharts(chartViewModel: ChartViewModel){
 
                 // Add the x and y axis to the chart
                 UpdateSuspender.using(sciChartSurfaceView) {
-                    Collections.addAll(sciChartSurfaceView.xAxes, xAxis)
-                    Collections.addAll(sciChartSurfaceView.yAxes, yAxis)
+                    sciChartSurfaceView.xAxes.add(xAxis)
+                    sciChartSurfaceView.yAxes.add(yAxis)
                     sciChartSurfaceView.zoomExtentsX()
-                    sciChartSurface.zoomExtentsY()
+                    sciChartSurfaceView.zoomExtentsY()
                 }
                 sciChartSurfaceView // return the SciChartSurface instance
             }, update = {
