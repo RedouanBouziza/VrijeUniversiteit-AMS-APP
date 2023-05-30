@@ -23,4 +23,6 @@ sealed class Screen(
     object Measurement : Screen("chart", R.string.measure, Icons.Default.AccountTree)
     object StartRecording :
         Screen("StartRecording", R.string.startRecording, Icons.Default.FiberManualRecord)
+
+    object AboutUs : Screen("AboutUs", R.string.about_us, Icons.Default.Info)
 }

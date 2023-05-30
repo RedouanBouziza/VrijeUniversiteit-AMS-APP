@@ -61,7 +61,7 @@ class UDPConnection(
          * An array of network names to check for when determining if the user is connected to the
          * correct network.
          */
-        private val NETWORK_NAMES = arrayOf("AMS", "AndroidWifi", "VU", "R")
+        private val NETWORK_NAMES = arrayOf("AMS", "AndroidWifi", "VU", "R", "WHITE")
 
         /**
          * The timeout in seconds for determining if the connection is stable.
@@ -87,7 +87,7 @@ class UDPConnection(
                     return@scheduleAtFixedRate
                 }
 
-                if (lastReceivedPacketDate === null && userIsOnline()) {
+                if (lastReceivedPacketDate === null && !userIsOnline()) {
                     Log.i(UDP_TAG, "No stable connection")
                     setConnectedCallBack(false, false)
                     return@scheduleAtFixedRate
@@ -152,12 +152,12 @@ class UDPConnection(
         if (wifiInfo.supplicantState == SupplicantState.COMPLETED) {
             // remove double quotes from ssid format
             ssid = wifiInfo.ssid.replace("\"", "")
+            println("ssid - $ssid")
         }
 
         val foundNames = NETWORK_NAMES.filter { name -> ssid.toString().contains(name) }
 
-        return true
-//        return foundNames.isNotEmpty() &&
-//                capabilities!!.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+        return foundNames.isNotEmpty() &&
+                capabilities!!.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
     }
 }

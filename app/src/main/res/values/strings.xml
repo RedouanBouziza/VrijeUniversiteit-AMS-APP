@@ -13,7 +13,7 @@
 
     <!--  String for Setup  -->
     <string name="title_setup">How to connect the electrodes</string>
-    <string name="step">Step %s:</string>
+    <string name="step_explanation">Step %s / 6:</string>
     <string name="step1_explanation">Find the suprasternal notch; i.e. look for the dimple between
         the two collarbones.</string>
     <string name="step2_explanation">Clean the site just below the suprasternal notch with
@@ -50,8 +50,18 @@
         cable and attach to the left lateral rib site.
     </string>
     <string name="no_explanation">There is not explanation available please contact staff</string>
-    <string name="next_step">Next Step</string>
+    <string name="next_step">Next</string>
     <string name="finish">Finish</string>
+
+    <!--  Strings for StartRecording  -->
+    <string name="about_us">About Us</string>
+    <string name="step_recording">Step %s / 3:</string>
+    <string name="step1_recording">Turn on Wifi on VU-AMS 7 by double-tapping the device twice (tick-tick – tick-tick, LED status will change from single blink to short double blink indicating Wifi is on</string>
+    <string name="step2_recording">Connect to Wifi through your Operating System; network name is VU-AMS_[5 digit device id]  and Wifi password: nextgen2022</string>
+    <string name="step3a_recording">In your browser navigate to 192.168.4.1 to access the web interface</string>
+    <string name="step3b_recording">Click ‘update time’ button</string>
+    <string name="step3c_recording">Click ‘Live XXX datastream’ button</string>
+    <string name="step3d_recording">Click ‘Start’ under the Control heading at the top</string>
 
     <!--  String for System screen  -->
     <string name="title_settings">App settings</string>
