@@ -152,7 +152,6 @@ class UDPConnection(
         if (wifiInfo.supplicantState == SupplicantState.COMPLETED) {
             // remove double quotes from ssid format
             ssid = wifiInfo.ssid.replace("\"", "")
-            println("ssid - $ssid")
         }
 
         val foundNames = NETWORK_NAMES.filter { name -> ssid.toString().contains(name) }
