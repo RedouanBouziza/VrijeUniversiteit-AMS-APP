@@ -47,7 +47,7 @@ fun Home(
 }
 
 @Composable
-private fun ConnectionEstablished(
+fun ConnectionEstablished(
     udpViewModel: UDPViewModel,
     modifier: Modifier,
     chartViewModel: ChartViewModel,
