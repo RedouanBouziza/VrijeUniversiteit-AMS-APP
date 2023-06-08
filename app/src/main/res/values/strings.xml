@@ -63,6 +63,16 @@
     <string name="step3c_recording">Click ‘Live XXX datastream’ button</string>
     <string name="step3d_recording">Click ‘Start’ under the Control heading at the top</string>
 
+    <!--  Strings for SetupConnection screen  -->
+    <string name="step_connection">Step %s / 7:</string>
+    <string name="step1_connection">Turn on Wifi on VU-AMS 7 by double-tapping the device twice (tick-tick – tick-tick)</string>
+    <string name="step2_connection">LED status will change from single blink to short double blink indicating Wifi is on</string>
+    <string name="step3_connection">Connect to Wifi through your Operating System; network name is VU-AMS_[5 digit device id]  and Wifi password: nextgen2022</string>
+    <string name="step4_connection">In your browser navigate to 192.168.4.1 to access the web interface</string>
+    <string name="step5_connection">Click ‘update time’ button</string>
+    <string name="step6_connection">Click ‘Live XXX data stream’ button</string>
+    <string name="step7_connection">Click ‘Start’ under the Control heading at the top</string>
+
     <!--  String for System screen  -->
     <string name="title_settings">App settings</string>
     <string name="title_device">Device settings</string>
