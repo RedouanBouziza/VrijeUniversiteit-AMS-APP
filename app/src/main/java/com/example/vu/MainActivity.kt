@@ -2,13 +2,14 @@ package com.example.vu
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -122,6 +123,7 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
     val navController = rememberNavController()
     val breathingViewModel: BreathingViewModel = viewModel()
     val chartViewModel: ChartViewModel = viewModel()
+    val udpViewModel: UDPViewModel = viewModel()
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -138,7 +140,7 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
             modifier = modifier
         ) {
             composable(route = Screen.Home.route) {
-                Home(modifier, navController, chartViewModel)
+                Home(modifier, navController, chartViewModel, udpViewModel)
             }
             composable(route = Screen.Chart.route) {
                 Chart(chartViewModel)
@@ -176,6 +178,7 @@ private fun TopBar(
     navController: NavHostController
 ) {
     val udpViewModel: UDPViewModel = viewModel()
+    val context = LocalContext.current
 
     TopAppBar(
         backgroundColor = colorResource(id = R.color.ams),
@@ -193,7 +196,11 @@ private fun TopBar(
         },
         actions = {
             IconButton(
-                onClick = { navController.navigate("System") }
+                onClick = {
+                    // Wifi settings screen.
+                    val i = Intent(Settings.ACTION_WIFI_SETTINGS)
+                    context.startActivity(i)
+                }
             ) {
                 ConnectionEstablished(udpViewModel)
             }
@@ -207,6 +214,24 @@ private fun ConnectionEstablished(udpViewModel: UDPViewModel) {
     val isReceivingData by udpViewModel.isReceivingData.observeAsState()
 
     when (isConnected) {
+        true -> {
+            Icon(
+                imageVector = Icons.Default.Wifi,
+                contentDescription = "Wifi",
+                tint = Color.White
+            )
+        }
+        else -> {
+            Icon(
+                imageVector = Icons.Default.WifiOff,
+                contentDescription = "WifiOff",
+                tint = Color.White
+            )
+        }
+    }
+
+    //TODO: old code, remove when new code is working
+    /*when (isConnected) {
         true -> {
             if (isReceivingData!!) {
                 Icon(
@@ -229,7 +254,7 @@ private fun ConnectionEstablished(udpViewModel: UDPViewModel) {
                 tint = Color.White
             )
         }
-    }
+    }*/
 }
 
 @Composable
@@ -253,7 +278,8 @@ private fun BottomBar(navController: NavController) {
     if (currentDestination?.route in listOf(
             Screen.Home.route,
             Screen.Faq.route,
-            Screen.System.route
+            Screen.System.route,
+            Screen.AboutUs.route
         )
     ) {
         BottomBarItems(navController, homeScreens)
