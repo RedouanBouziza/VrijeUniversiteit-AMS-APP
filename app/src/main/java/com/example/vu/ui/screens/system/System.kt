@@ -22,11 +22,10 @@ import androidx.navigation.NavHostController
 import com.example.vu.R
 import com.example.vu.data.websocket.SocketService
 
-const val LIVE_DATA_START = "3a"
-const val LIVE_DATA_STOP = "0a"
-const val MEASUREMENT_START = "r"
-const val MEASUREMENT_STOP = "s"
-const val SHUT_DOWN_DEVICE = "Q"
+const val LIVE_DATA_START = "cmd 3a"
+const val MEASUREMENT_START = "cmd r"
+const val MEASUREMENT_STOP = "cmd s"
+const val SHUT_DOWN_DEVICE = "cmd Q"
 
 @Composable
 fun System(navController: NavHostController) {
@@ -111,34 +110,18 @@ fun System(navController: NavHostController) {
         Spacer(modifier = Modifier.height(10.dp))
 
         Button(onClick = {
+            webSocket.sendMessage(MEASUREMENT_START)
             webSocket.sendMessage(LIVE_DATA_START)
             Toast.makeText(context, R.string.start_receiving_data, Toast.LENGTH_SHORT).show()
         }, modifier = Modifier.width(300.dp)) {
             // on below line adding a text for our button.
-            Text(text = "Start Live Data")
-        }
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        Button(onClick = {
-            webSocket.sendMessage(LIVE_DATA_STOP)
-            Toast.makeText(context, R.string.stopped_receiving_data, Toast.LENGTH_SHORT).show()
-        }, modifier = Modifier.width(300.dp)) {
-            Text(text = "Stop Live Data")
+            Text(stringResource(R.string.start_device))
         }
 
         Spacer(modifier = Modifier.height(10.dp))
 
 
         if (isLoggedIn) {
-            Button(onClick = {
-                webSocket.sendMessage(MEASUREMENT_START)
-                Toast.makeText(context, R.string.started_measuring, Toast.LENGTH_SHORT)
-                    .show()
-            }, modifier = Modifier.width(300.dp)) {
-                Text(text = "Start Measuring")
-            }
-
             Button(onClick = {
                 webSocket.sendMessage(MEASUREMENT_STOP)
                 Toast.makeText(context, R.string.stopped_measuring, Toast.LENGTH_SHORT)
