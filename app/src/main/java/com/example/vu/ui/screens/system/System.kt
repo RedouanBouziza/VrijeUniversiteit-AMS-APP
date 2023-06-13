@@ -22,6 +22,7 @@ import androidx.navigation.NavHostController
 import com.example.vu.R
 import com.example.vu.data.websocket.SocketService
 
+// the commands send to device
 const val LIVE_DATA_START = "cmd 3a"
 const val MEASUREMENT_START = "cmd r"
 const val MEASUREMENT_STOP = "cmd s"
