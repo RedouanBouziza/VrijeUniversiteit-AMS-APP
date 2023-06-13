@@ -278,7 +278,8 @@ private fun BottomBar(navController: NavController) {
     if (currentDestination?.route in listOf(
             Screen.Home.route,
             Screen.Faq.route,
-            Screen.System.route
+            Screen.System.route,
+            Screen.AboutUs.route
         )
     ) {
         BottomBarItems(navController, homeScreens)

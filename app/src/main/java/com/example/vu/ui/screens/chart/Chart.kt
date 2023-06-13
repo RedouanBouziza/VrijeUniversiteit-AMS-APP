@@ -1,6 +1,5 @@
 package com.example.vu.ui.screens.chart
 
-import android.view.Gravity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
@@ -29,7 +28,6 @@ import com.scichart.charting.visuals.axes.IAxis
 import com.scichart.charting.visuals.axes.NumericAxis
 import com.scichart.charting.visuals.renderableSeries.FastLineRenderableSeries
 import com.scichart.charting.visuals.renderableSeries.IRenderableSeries
-import com.scichart.core.annotations.Orientation
 import com.scichart.core.framework.UpdateSuspender
 import com.scichart.core.model.DoubleValues
 import com.scichart.core.model.IntegerValues
@@ -226,7 +224,6 @@ fun AllCharts(chartViewModel: ChartViewModel) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 55.dp)
     ) {
         AndroidView(
             factory = { context ->
@@ -284,11 +281,11 @@ fun AllCharts(chartViewModel: ChartViewModel) {
                 icgLineSeries.strokeStyle = SolidPenStyle(ColorUtil.Yellow, true, 5f, null)
                 temperatureLineSeries.strokeStyle = SolidPenStyle(ColorUtil.Red, true, 5f, null)
 
-
-                // Legend with all the data from the lines
+                //TODO: See if this is needed
+                /*// Legend with all the data from the lines
                 val legendModifier = LegendModifier(context)
                 legendModifier.setOrientation(Orientation.VERTICAL)
-                legendModifier.setLegendPosition(Gravity.START, 0, 0, 0, 10)
+                legendModifier.setLegendPosition(Gravity.START, 0, 0, 0, 10)*/
 
                 // Add all those data and modifiers
                 UpdateSuspender.using(sciChartSurfaceView) {
@@ -306,7 +303,8 @@ fun AllCharts(chartViewModel: ChartViewModel) {
                         ZoomPanModifier(),
                         ZoomExtentsModifier(),
                     )
-                    Collections.addAll(sciChartSurfaceView.chartModifiers, legendModifier)
+                    //TODO: See if this is needed
+                    /*Collections.addAll(sciChartSurfaceView.chartModifiers, legendModifier)*/
                     Collections.addAll(sciChartSurfaceView.chartModifiers, RolloverModifier())
                 }
 
