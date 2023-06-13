@@ -34,7 +34,7 @@ fun Home(
     navController: NavHostController,
     chartViewModel: ChartViewModel,
     udpViewModel: UDPViewModel
-) {9
+) {
 
     ConnectionEstablished(
         udpViewModel = udpViewModel,
