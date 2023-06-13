@@ -19,11 +19,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.example.vu.R
 import com.example.vu.data.viewmodel.ChartViewModel
 import com.scichart.charting.model.dataSeries.XyDataSeries
 import com.scichart.charting.modifiers.*
 import com.scichart.charting.visuals.SciChartSurface
 import com.scichart.charting.visuals.axes.AutoRange
+import com.scichart.charting.visuals.axes.AxisAlignment
 import com.scichart.charting.visuals.axes.IAxis
 import com.scichart.charting.visuals.axes.NumericAxis
 import com.scichart.charting.visuals.renderableSeries.FastLineRenderableSeries
@@ -104,15 +106,15 @@ fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
             factory = { context ->
                 // Create Android View with SciChartSurface
                 val sciChartSurfaceView = SciChartSurface(context)
-                sciChartSurface.setBackgroundColor(ColorUtil.White)
+                sciChartSurfaceView.theme = com.scichart.charting.R.style.SciChart_ChromeStyle
 
                 // Configure SciChartSurface with chart data and options here
                 val xAxis: IAxis = NumericAxis(context).apply {
-                    growBy = DoubleRange(0.3, 0.3)
+                    growBy = DoubleRange(0.0, 0.0)
                     autoRange = AutoRange.Always
                 }
                 val yAxis: IAxis = NumericAxis(context).apply {
-                    growBy = DoubleRange(0.3, 0.3)
+                    growBy = DoubleRange(0.0, 0.0)
                     autoRange = AutoRange.Always
                 }
 
@@ -221,14 +223,16 @@ fun AllCharts(chartViewModel: ChartViewModel) {
             factory = { context ->
                 // Create Android View with SciChartSurface
                 val sciChartSurfaceView = SciChartSurface(context)
+                sciChartSurfaceView.theme = com.scichart.charting.R.style.SciChart_ChromeStyle
+
 
                 // Configure SciChartSurface with chart data and options here
                 val xAxis: IAxis = NumericAxis(context).apply {
-                    growBy = DoubleRange(0.3, 0.3)
+                    growBy = DoubleRange(0.0, 0.0)
                     autoRange = AutoRange.Always
                 }
                 val yAxis: IAxis = NumericAxis(context).apply {
-                    growBy = DoubleRange(0.3, 0.3)
+                    growBy = DoubleRange(0.0, 0.0)
                     autoRange = AutoRange.Always
                 }
 
@@ -249,8 +253,8 @@ fun AllCharts(chartViewModel: ChartViewModel) {
 
                 // Append data to initialise the data series
                 twoEcgLineDataSeries.append(xValues, twoEcgLineData)
-                isrcLineDataSeries.append(xValues, isrcLineData)
-//                ecgLineDataSeries.append(xValues, ecgLineData)
+//                isrcLineDataSeries.append(xValues, isrcLineData)
+                ecgLineDataSeries.append(xValues, ecgLineData)
 //                icgLineDataSeries.append(xValues, icgLineData)
 //                temperateLineDataSeries.append(xValues, temperatureLineData)
 
@@ -321,8 +325,8 @@ fun AllCharts(chartViewModel: ChartViewModel) {
                         }
 
                         twoEcgLineDataSeries.append(section.tickCount, section.twoEcg)
-                        isrcLineDataSeries.append(section.tickCount, section.isrc)
-//                        ecgLineDataSeries.append(section.tickCount, section.ecg)
+//                        isrcLineDataSeries.append(section.tickCount, section.isrc)
+                        ecgLineDataSeries.append(section.tickCount, section.ecg)
 //                        icgLineDataSeries.append(section.tickCount, section.icg)
 //                        temperateLineDataSeries.append(section.tickCount, section.temperature)
 

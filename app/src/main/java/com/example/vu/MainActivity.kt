@@ -36,15 +36,12 @@ import com.example.vu.ui.screens.Screen
 import com.example.vu.ui.screens.breathing.BreathingExercise
 import com.example.vu.ui.screens.breathing.BreathingSettings
 import com.example.vu.ui.screens.chart.Chart
-import com.example.vu.ui.screens.faq.Faq
-import com.example.vu.ui.screens.faq.SetupInstructions
-import com.example.vu.ui.screens.faq.StartRecording
 import com.example.vu.ui.screens.home.Home
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.vu.ui.screens.faq.AboutUs
+import com.example.vu.ui.screens.faq.*
 import com.example.vu.ui.screens.movement.Movement
 import com.example.vu.ui.screens.system.System
 import com.example.vu.ui.theme.VUTheme
@@ -163,8 +160,8 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
             composable(route = Screen.System.route) {
                 System(navController)
             }
-            composable(route = Screen.StartRecording.route) {
-                StartRecording(navController)
+            composable(route = Screen.SetupConnection.route){
+                SetupConnection(navController)
             }
             composable(route = Screen.AboutUs.route){
                 AboutUs(navController)
@@ -283,7 +280,7 @@ private fun BottomBar(navController: NavController) {
         )
     ) {
         BottomBarItems(navController, homeScreens)
-    } else if (currentDestination?.route !in listOf(Screen.Setup.route, Screen.StartRecording.route)) {
+    } else if (currentDestination?.route !in listOf(Screen.Setup.route, Screen.SetupConnection.route)) {
         BottomBarItems(navController, secondScreens)
     }
 }

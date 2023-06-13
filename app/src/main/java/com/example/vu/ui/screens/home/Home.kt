@@ -47,7 +47,7 @@ fun Home(
 }
 
 @Composable
-private fun ConnectionEstablished(
+fun ConnectionEstablished(
     udpViewModel: UDPViewModel,
     modifier: Modifier,
     chartViewModel: ChartViewModel,
@@ -313,7 +313,7 @@ private fun ConnectionEstablished(
                             .padding(top = 20.dp)
                             .height(90.dp),
                         onClick = {
-                            navController.navigate(Screen.StartRecording.route)
+                            navController.navigate(Screen.SetupConnection.route)
                         },
                         border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
                         shape = RoundedCornerShape(10.dp),
