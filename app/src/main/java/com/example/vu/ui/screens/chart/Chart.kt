@@ -260,8 +260,8 @@ fun ChartTypeHome(chartViewModel: ChartViewModel, lineName: String) {
                             )
                             "ECG" -> lineDataSeries.append(section.tickCount, section.ecg)
                             "ICG" -> lineDataSeries.append(section.tickCount, section.icg)
-                            "GYRO" -> lineDataSeries.append(section.tickCount, section.temperature)
-                            "ACC" -> lineDataSeries.append(section.tickCount, section.temperature)
+                            "GYRO" -> lineDataSeries.append(section.tickCount, section.gyro)
+                            "ACC" -> lineDataSeries.append(section.tickCount, section.acc)
                         }
                     }
                 }

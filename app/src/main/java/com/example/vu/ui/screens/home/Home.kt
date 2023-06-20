@@ -2,7 +2,6 @@ package com.example.vu.ui.screens.home
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,9 +26,6 @@ import com.example.vu.data.viewmodel.ChartViewModel
 import com.example.vu.data.viewmodel.UDPViewModel
 import com.example.vu.ui.screens.Screen
 import com.example.vu.ui.screens.chart.AllCharts
-import com.example.vu.ui.screens.chart.Chart
-import com.example.vu.ui.screens.chart.ChartType
-import com.example.vu.ui.screens.chart.ChartTypeHome
 
 @Composable
 fun Home(

@@ -41,6 +41,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.vu.data.websocket.SocketService
 import com.example.vu.ui.screens.faq.*
 import com.example.vu.ui.screens.home.HomeConnected
 import com.example.vu.ui.screens.movement.Movement
@@ -49,6 +50,7 @@ import com.example.vu.ui.theme.VUTheme
 import com.scichart.charting.visuals.SciChartSurface
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -117,6 +119,14 @@ class MainActivity : ComponentActivity() {
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
+    val webSocket: SocketService by lazy { SocketService() }
+
+    DisposableEffect(key1 = webSocket) {
+        webSocket.openConnection()
+        onDispose {
+            webSocket.closeConnection()
+        }
+    }
     val scaffoldState = rememberScaffoldState()
     val navController = rememberNavController()
     val breathingViewModel: BreathingViewModel = viewModel()
@@ -161,7 +171,7 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
                 Faq(navController)
             }
             composable(route = Screen.System.route) {
-                System(navController)
+                System(navController, webSocket)
             }
             composable(route = Screen.SetupConnection.route){
                 SetupInstructions(navController)

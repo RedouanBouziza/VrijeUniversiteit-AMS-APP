@@ -9,7 +9,6 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -19,25 +18,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.vu.R
 import com.example.vu.data.viewmodel.ChartViewModel
-import com.example.vu.data.websocket.SocketService
 import com.example.vu.ui.screens.chart.ChartTypeHome
-import com.example.vu.ui.screens.system.MEASUREMENT_STOP
 
 @Composable
 fun HomeConnected(
     modifier: Modifier,
     chartViewModel: ChartViewModel
 ) {
-
-//    val webSocket: SocketService by lazy { SocketService() }
-//
-//    DisposableEffect(key1 = webSocket) {
-//        webSocket.openConnection()
-//        onDispose {
-//            webSocket.closeConnection()
-//        }
-//    }
-
     val stringResource = "Cigarette"
 
     val MARKER = "cmd !MARKER=$stringResource;"
