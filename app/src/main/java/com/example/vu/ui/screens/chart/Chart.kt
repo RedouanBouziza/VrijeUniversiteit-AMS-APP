@@ -324,10 +324,10 @@ fun AllCharts(chartViewModel: ChartViewModel) {
                             return@let
                         }
 
-                        twoEcgLineDataSeries.append(section.tickCount, section.twoEcg)
+//                        twoEcgLineDataSeries.append(section.tickCount, section.twoEcg)
 //                        isrcLineDataSeries.append(section.tickCount, section.isrc)
                         ecgLineDataSeries.append(section.tickCount, section.ecg)
-//                        icgLineDataSeries.append(section.tickCount, section.icg)
+                        icgLineDataSeries.append(section.tickCount, section.icg)
 //                        temperateLineDataSeries.append(section.tickCount, section.temperature)
 
                         sciChartSurface.zoomExtentsX()

@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.example.vu.R
 import com.example.vu.data.viewmodel.BreathingViewModel
 import com.example.vu.data.viewmodel.ChartViewModel
+import com.example.vu.ui.screens.chart.AllCharts
 import com.example.vu.ui.screens.chart.Chart
 import kotlinx.coroutines.CoroutineScope
 import kotlin.math.roundToInt
@@ -61,7 +62,7 @@ fun BreathingExercise(
                 .fillMaxHeight()
         ) {
             Text(stringResource(R.string.breathes_per_min, breathesPerMinute))
-            Chart(chartViewModel)
+            AllCharts(chartViewModel)
         }
     }
 }
