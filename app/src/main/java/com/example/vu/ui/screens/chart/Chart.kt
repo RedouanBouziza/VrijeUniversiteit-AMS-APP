@@ -51,47 +51,10 @@ fun Chart(chartViewModel: ChartViewModel) {
         val selectedTabIndex = remember { mutableStateOf(0) }
 
 //        HorizontalScrollableTabs(tabs = tabs, selectedTabIndex = selectedTabIndex)
-        HorizontalTabs(tabs = tabs, selectedTabIndex = selectedTabIndex)
-        // Rest of your screen content based on the selected tab
-        when (selectedTabIndex.value) {
-//            0 -> {
-//                Text(text = "Preferences screen")
-//            }
-            1 -> {
-                ChartType(chartViewModel, lineName = "ECG")
-            }
-            2 -> {
-                ChartType(chartViewModel, lineName = "RES")
-            }
-            3 -> {
-                ChartType(chartViewModel, lineName = "ICG")
-            }
-            4 -> {
-                ChartType(chartViewModel, lineName = "GYRO")
-            }
-            5 -> {
-                ChartType(chartViewModel, lineName = "ACC")
-            }
-            6 -> {
-                AllCharts(chartViewModel)
-            }
-        }
-
-
-    }
-}
-
-@Composable
-fun HorizontalTabs(
-    tabs: List<String>,
-    selectedTabIndex: MutableState<Int>
-) {
-    TabRow(
-        selectedTabIndex.value,
-        modifier = Modifier.fillMaxWidth().wrapContentWidth(Alignment.CenterHorizontally)
-    ) {
         LazyRow(
-            modifier = Modifier.fillMaxWidth().wrapContentWidth(Alignment.CenterHorizontally),
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentWidth(Alignment.CenterHorizontally),
             contentPadding = PaddingValues(start = 8.dp, end = 8.dp)
         ) {
             itemsIndexed(tabs) { index, title ->
@@ -102,6 +65,26 @@ fun HorizontalTabs(
                 )
             }
         }
+
+        // Rest of your screen content based on the selected tab
+        when (selectedTabIndex.value) {
+            0 -> {
+                ChartType(chartViewModel, lineName = "ECG")
+            }
+            1 -> {
+                ChartType(chartViewModel, lineName = "RES")
+            }
+            2 -> {
+                ChartType(chartViewModel, lineName = "ICG")
+            }
+            3 -> {
+                ChartType(chartViewModel, lineName = "GYRO")
+            }
+            4 -> {
+                ChartType(chartViewModel, lineName = "ACC")
+            }
+        }
+
     }
 }
 
