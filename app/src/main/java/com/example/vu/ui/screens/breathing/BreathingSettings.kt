@@ -156,7 +156,7 @@ fun BreathingSettings(
             modifier = Modifier.padding(bottom = 30.dp),
         )
 
-        Text("${breathesPerMinute.roundToInt()} breathes per minute")
+        Text("${breathesPerMinute.roundToInt()} breaths per minute")
 
         Button(
             onClick = {
