@@ -7,6 +7,7 @@ import android.net.NetworkCapabilities
 import android.net.wifi.SupplicantState
 import android.net.wifi.WifiInfo
 import android.net.wifi.WifiManager
+import android.text.format.Formatter.formatIpAddress
 import android.util.Log
 import com.example.vu.data.decoding.decoder.ASectionDecoder
 import com.example.vu.data.decoding.models.ASection
@@ -61,12 +62,13 @@ class UDPConnection(
          * An array of network names to check for when determining if the user is connected to the
          * correct network.
          */
-        private val NETWORK_NAMES = arrayOf("AMS", "AndroidWifi", "VU", "R", "WHITE")
+//        uncomment when the ssid has a default name
+//        private val NETWORK_NAMES = arrayOf("AMS", "AndroidWifi", "VU", "R", "WHITE", "v")
 
         /**
          * The timeout in seconds for determining if the connection is stable.
          */
-        private const val CONNECTION_TIMEOUT_SECONDS = 3
+        private const val CONNECTION_TIMEOUT_SECONDS = 5
 
         /**
          * The size of the byte buffer used to decode ASections.
@@ -139,6 +141,7 @@ class UDPConnection(
 
     @SuppressLint("ServiceCast")
     private fun userIsOnline(): Boolean {
+        var checkConnection = false
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
@@ -149,14 +152,22 @@ class UDPConnection(
         val wifiManager: WifiManager =
             context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
         val wifiInfo: WifiInfo = wifiManager.connectionInfo
-        if (wifiInfo.supplicantState == SupplicantState.COMPLETED) {
-            // remove double quotes from ssid format
-            ssid = wifiInfo.ssid.replace("\"", "")
+
+//        uncomment when the ssid has a default name
+//        if (wifiInfo.supplicantState == SupplicantState.COMPLETED) {
+//            // remove double quotes from ssid format
+//            ssid = wifiInfo.ssid.replace("\"", "")
+//        }
+
+        if (formatIpAddress(wifiInfo.ipAddress).equals("192.168.4.2")) {
+            checkConnection = true
         }
 
-        val foundNames = NETWORK_NAMES.filter { name -> ssid.toString().contains(name) }
+//        uncomment when the ssid has a default name
+//        val foundNames = NETWORK_NAMES.filter { name -> ssid.toString().contains(name) }
+//        return foundNames.isNotEmpty() &&
+//                capabilities!!.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
 
-        return foundNames.isNotEmpty() &&
-                capabilities!!.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
+        return checkConnection && capabilities!!.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)
     }
 }
