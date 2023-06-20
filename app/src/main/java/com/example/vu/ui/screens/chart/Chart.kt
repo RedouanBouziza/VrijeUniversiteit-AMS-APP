@@ -3,11 +3,14 @@ package com.example.vu.ui.screens.chart
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Tab
+import androidx.compose.material.TabRow
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
@@ -44,37 +47,33 @@ fun Chart(chartViewModel: ChartViewModel) {
 
 
     Column {
-        val tabs = listOf("Custom", "2ECG", "ISRC", "ECG", "ICG", "TEMP", "Tab 6", "Tab 7")
+        val tabs = listOf("RES", "ECG", "ICG", "GYRO", "ACC")
         val selectedTabIndex = remember { mutableStateOf(0) }
 
-        HorizontalScrollableTabs(tabs = tabs, selectedTabIndex = selectedTabIndex)
-
+//        HorizontalScrollableTabs(tabs = tabs, selectedTabIndex = selectedTabIndex)
+        HorizontalTabs(tabs = tabs, selectedTabIndex = selectedTabIndex)
         // Rest of your screen content based on the selected tab
         when (selectedTabIndex.value) {
-            0 -> {
-                Text(text = "Preferences screen")
-            }
+//            0 -> {
+//                Text(text = "Preferences screen")
+//            }
             1 -> {
-                ChartType(chartViewModel, lineName = "2ECG")
-            }
-            2 -> {
-                ChartType(chartViewModel, lineName = "ISRC")
-            }
-            3 -> {
                 ChartType(chartViewModel, lineName = "ECG")
             }
-            4 -> {
+            2 -> {
+                ChartType(chartViewModel, lineName = "RES")
+            }
+            3 -> {
                 ChartType(chartViewModel, lineName = "ICG")
             }
+            4 -> {
+                ChartType(chartViewModel, lineName = "GYRO")
+            }
             5 -> {
-                ChartType(chartViewModel, lineName = "T")
+                ChartType(chartViewModel, lineName = "ACC")
             }
             6 -> {
-                // Content for Tab 6
                 AllCharts(chartViewModel)
-            }
-            7 -> {
-                // Content for Tab 7
             }
         }
 
@@ -83,10 +82,31 @@ fun Chart(chartViewModel: ChartViewModel) {
 }
 
 @Composable
-fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
-    val context = LocalContext.current
-    val sciChartSurface = SciChartSurface(context)
+fun HorizontalTabs(
+    tabs: List<String>,
+    selectedTabIndex: MutableState<Int>
+) {
+    TabRow(
+        selectedTabIndex.value,
+        modifier = Modifier.fillMaxWidth().wrapContentWidth(Alignment.CenterHorizontally)
+    ) {
+        LazyRow(
+            modifier = Modifier.fillMaxWidth().wrapContentWidth(Alignment.CenterHorizontally),
+            contentPadding = PaddingValues(start = 8.dp, end = 8.dp)
+        ) {
+            itemsIndexed(tabs) { index, title ->
+                Tab(
+                    selected = selectedTabIndex.value == index,
+                    onClick = { selectedTabIndex.value = index },
+                    text = { Text(text = title) }
+                )
+            }
+        }
+    }
+}
 
+@Composable
+fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
     val sectionAMeasurements by chartViewModel.sectionAMeasurements.observeAsState()
 
     val lineData = DoubleValues()
@@ -162,14 +182,14 @@ fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
                             return@let
                         }
                         when (lineName) {
-                            "2ECG" -> lineDataSeries.append(section.tickCount, section.twoEcg)
-                            "ISRC" -> lineDataSeries.append(
+                            "RES" -> lineDataSeries.append(
                                 section.tickCount,
                                 section.isrc.toDouble()
                             )
                             "ECG" -> lineDataSeries.append(section.tickCount, section.ecg)
                             "ICG" -> lineDataSeries.append(section.tickCount, section.icg)
-                            "T" -> lineDataSeries.append(section.tickCount, section.temperature)
+                            "GYRO" -> lineDataSeries.append(section.tickCount, section.temperature)
+                            "ACC" -> lineDataSeries.append(section.tickCount, section.temperature)
                         }
                     }
                 }
