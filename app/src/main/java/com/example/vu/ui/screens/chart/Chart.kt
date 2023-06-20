@@ -47,7 +47,7 @@ fun Chart(chartViewModel: ChartViewModel) {
 
 
     Column {
-        val tabs = listOf("RES", "ECG", "ICG", "GYRO", "ACC")
+        val tabs = listOf("RES", "ECG", "ICG", "GYRO", "ACC", "M")
         val selectedTabIndex = remember { mutableStateOf(0) }
 
 //        HorizontalScrollableTabs(tabs = tabs, selectedTabIndex = selectedTabIndex)
@@ -82,6 +82,9 @@ fun Chart(chartViewModel: ChartViewModel) {
             }
             4 -> {
                 ChartType(chartViewModel, lineName = "ACC")
+            }
+            5 -> {
+                ChartType(chartViewModel, lineName = "M")
             }
         }
 
@@ -173,6 +176,7 @@ fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
                             "ICG" -> lineDataSeries.append(section.tickCount, section.icg)
                             "GYRO" -> lineDataSeries.append(section.tickCount, section.temperature)
                             "ACC" -> lineDataSeries.append(section.tickCount, section.temperature)
+                            "M" -> lineDataSeries.append(section.tickCount, section.temperature)
                         }
                     }
                 }
