@@ -11,6 +11,7 @@ sealed class Screen(
     val icon: ImageVector
 ) {
     object Home : Screen("home", R.string.home, Icons.Default.Home)
+    object HomeConnected : Screen("homeConnected", R.string.homeConnected, Icons.Default.Home)
     object Chart : Screen("chart", R.string.chart, Icons.Default.Assessment)
     object BreathingSettings :
         Screen("breathingSettings", R.string.breathingSettings, Icons.Default.MonitorHeart)
@@ -22,5 +23,5 @@ sealed class Screen(
     object System : Screen("System", R.string.system, Icons.Default.Settings)
     object Measurement : Screen("chart", R.string.measure, Icons.Default.AccountTree)
     object SetupConnection : Screen("SetupConnection", R.string.about_us, Icons.Default.Info)
-    object AboutUs : Screen("AboutUs", R.string.about_us, Icons.Default.Info)
+    object AboutUs : Screen("AboutUs", R.string.about_us, Icons.Default.Group)
 }

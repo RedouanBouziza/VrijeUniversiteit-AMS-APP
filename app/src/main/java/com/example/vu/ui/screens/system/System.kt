@@ -39,13 +39,15 @@ fun System(navController: NavHostController) {
     val measurementGroupVisibility = if (isLoggedIn) View.VISIBLE else View.INVISIBLE
     val shutdownGroupVisibility = if (isLoggedIn) View.VISIBLE else View.INVISIBLE
 
-
     DisposableEffect(key1 = webSocket) {
         webSocket.openConnection()
         onDispose {
             webSocket.closeConnection()
         }
     }
+
+    val stringResource = ""
+    val MARKER = "cmd !MARKER=$stringResource;"
 
     Column(
         modifier = Modifier
