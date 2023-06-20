@@ -47,7 +47,7 @@ fun Chart(chartViewModel: ChartViewModel) {
 
 
     Column {
-        val tabs = listOf("RES", "ECG", "ICG", "GYRO", "ACC", "M")
+        val tabs = listOf("ECG", "RES", "GYRO", "ACC", "PRESS")
         val selectedTabIndex = remember { mutableStateOf(0) }
 
 //        HorizontalScrollableTabs(tabs = tabs, selectedTabIndex = selectedTabIndex)
@@ -75,16 +75,13 @@ fun Chart(chartViewModel: ChartViewModel) {
                 ChartType(chartViewModel, lineName = "RES")
             }
             2 -> {
-                ChartType(chartViewModel, lineName = "ICG")
-            }
-            3 -> {
                 ChartType(chartViewModel, lineName = "GYRO")
             }
-            4 -> {
+            3 -> {
                 ChartType(chartViewModel, lineName = "ACC")
             }
-            5 -> {
-                ChartType(chartViewModel, lineName = "M")
+            4 -> {
+                ChartType(chartViewModel, lineName = "PRES")
             }
         }
 
@@ -168,15 +165,11 @@ fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
                             return@let
                         }
                         when (lineName) {
-                            "RES" -> lineDataSeries.append(
-                                section.tickCount,
-                                section.isrc.toDouble()
-                            )
                             "ECG" -> lineDataSeries.append(section.tickCount, section.ecg)
-                            "ICG" -> lineDataSeries.append(section.tickCount, section.icg)
+                            "RES" -> lineDataSeries.append(section.tickCount, section.icg)
                             "GYRO" -> lineDataSeries.append(section.tickCount, section.temperature)
                             "ACC" -> lineDataSeries.append(section.tickCount, section.temperature)
-                            "M" -> lineDataSeries.append(section.tickCount, section.temperature)
+                            "PRES" -> lineDataSeries.append(section.tickCount, section.temperature)
                         }
                     }
                 }
