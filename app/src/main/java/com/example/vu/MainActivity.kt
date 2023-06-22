@@ -11,6 +11,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -22,7 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -173,10 +176,10 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
             composable(route = Screen.System.route) {
                 System(navController, webSocket)
             }
-            composable(route = Screen.SetupConnection.route){
+            composable(route = Screen.SetupConnection.route) {
                 SetupInstructions(navController)
             }
-            composable(route = Screen.AboutUs.route){
+            composable(route = Screen.AboutUs.route) {
                 AboutUs(navController)
             }
         }
@@ -216,9 +219,17 @@ private fun TopBar(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = "",
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ams),
+                        contentDescription = "Logo",
+                        modifier = Modifier.size(100.dp)
+                    )
+                }
             }
         },
         actions = {
@@ -291,7 +302,9 @@ private fun BottomBar(navController: NavController) {
 
     when (currentDestination?.route) {
         (Screen.HomeConnected.route) -> {
-            BottomBarItems(navController, homeScreens.filterNot { it.route == currentDestination.route })
+            BottomBarItems(
+                navController,
+                homeScreens.filterNot { it.route == currentDestination.route })
         }
         in listOf(
             Screen.Faq.route,
@@ -299,7 +312,9 @@ private fun BottomBar(navController: NavController) {
             Screen.AboutUs.route
         ) -> {
             if (currentDestination != null) {
-                BottomBarItems(navController, homeScreensWithHomeButton.filterNot { it.route == currentDestination.route })
+                BottomBarItems(
+                    navController,
+                    homeScreensWithHomeButton.filterNot { it.route == currentDestination.route })
             }
         }
         !in listOf(
@@ -308,7 +323,9 @@ private fun BottomBar(navController: NavController) {
             Screen.SetupConnection.route
         ) -> {
             if (currentDestination != null) {
-                BottomBarItems(navController, secondScreens.filterNot { it.route == currentDestination.route })
+                BottomBarItems(
+                    navController,
+                    secondScreens.filterNot { it.route == currentDestination.route })
             }
         }
     }
@@ -335,7 +352,6 @@ private fun BottomBarItems(navController: NavController, screens: List<Screen>) 
         }
     }
 }
-
 
 
 @Composable

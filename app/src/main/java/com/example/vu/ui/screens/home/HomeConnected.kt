@@ -9,6 +9,7 @@ import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -72,7 +73,7 @@ fun HomeConnected(
 
                     Text(
                         text = "TIMESTAMPS",
-                        style = MaterialTheme.typography.h4,
+                        style = MaterialTheme.typography.h6,
                         fontWeight = FontWeight.Bold,
                         color = colorResource(id = R.color.amsDark),
                         modifier = Modifier.padding(top = 20.dp)
@@ -80,7 +81,7 @@ fun HomeConnected(
 
                     Column(
                         modifier
-                            .padding(top = 16.dp),
+                            .padding(top = 16.dp)
                     ) {
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(10.dp),
@@ -98,8 +99,8 @@ fun HomeConnected(
                                     backgroundColor = colorResource(id = R.color.babyBlue)
                                 ),
                                 modifier = Modifier
-                                    .width(181.dp)
-                                    .height(60.dp),
+                                    .width(150.dp)
+                                    .height(50.dp),
                             ) {
                                 Text(
                                     text = "Cigarette",
@@ -121,8 +122,8 @@ fun HomeConnected(
                                     backgroundColor = colorResource(id = R.color.pink)
                                 ),
                                 modifier = Modifier
-                                    .width(181.dp)
-                                    .height(60.dp),
+                                    .width(150.dp)
+                                    .height(50.dp),
                             ) {
                                 Text(
                                     text = "Intense Activity",
@@ -148,8 +149,8 @@ fun HomeConnected(
                                     backgroundColor = colorResource(id = R.color.blue)
                                 ),
                                 modifier = Modifier
-                                    .width(181.dp)
-                                    .height(60.dp),
+                                    .width(150.dp)
+                                    .height(50.dp),
                             ) {
                                 Text(
                                     text = "Relaxing",
@@ -171,8 +172,8 @@ fun HomeConnected(
                                     backgroundColor = colorResource(id = R.color.purple)
                                 ),
                                 modifier = Modifier
-                                    .width(181.dp)
-                                    .height(60.dp),
+                                    .width(150.dp)
+                                    .height(50.dp),
                             ) {
                                 Text(
                                     text = "Cycling",
@@ -191,7 +192,7 @@ fun HomeConnected(
                                 backgroundColor = colorResource(id = R.color.darkBlue)
                             ),
                             modifier = Modifier
-                                .width(372.dp)
+                                .width(310.dp)
                                 .height(70.dp)
                                 .padding(top = 10.dp),
                         ) {
