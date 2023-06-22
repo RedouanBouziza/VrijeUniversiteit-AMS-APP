@@ -2,8 +2,8 @@ package com.example.vu.ui.screens.home
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -26,23 +26,192 @@ import com.example.vu.data.viewmodel.ChartViewModel
 import com.example.vu.data.viewmodel.UDPViewModel
 import com.example.vu.ui.screens.Screen
 import com.example.vu.ui.screens.chart.AllCharts
-import com.example.vu.ui.screens.chart.Chart
 
 @Composable
 fun Home(
     modifier: Modifier,
     navController: NavHostController,
-    chartViewModel: ChartViewModel,
-    udpViewModel: UDPViewModel
-) {9
+) {
+    LazyColumn(content = {
+        item {
+            Column(
+                modifier
+                    .padding(18.dp)
+                    .fillMaxSize()
+            ) {
 
-    ConnectionEstablished(
-        udpViewModel = udpViewModel,
-        modifier = modifier,
-        chartViewModel = chartViewModel,
-        navController = navController
-    )
+                Column(
+                    modifier
+                        .fillMaxSize()
+                ) {
+                    Text(
+                        text = "WELCOME",
+                        style = MaterialTheme.typography.h3,
+                        fontWeight = FontWeight.Bold,
+                        fontStyle = FontStyle.Italic,
+                        color = colorResource(id = R.color.amsDark)
+                    )
 
+                    Image(
+                        painter = painterResource(id = R.drawable.logo),
+                        contentDescription = "Logo",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 15.dp)
+                            .clip(RoundedCornerShape(10.dp))
+                    )
+
+                    //First button
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 20.dp)
+                            .height(90.dp),
+                        onClick = {
+                            navController.navigate("Setup")
+                        },
+                        border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
+                        shape = RoundedCornerShape(10.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = colorResource(id = R.color.ams)
+                        ),
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                modifier = Modifier
+                                    .size(50.dp),
+                                imageVector = Icons.Default.Filter1,
+                                contentDescription = "Help",
+                                tint = Color.White
+                            )
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(10.dp)
+                                    .absolutePadding(left = 10.dp),
+                            ) {
+                                Text(
+                                    text = "First step",
+                                    style = MaterialTheme.typography.h5,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.White
+                                )
+                                Text(
+                                    text = "Find your device",
+                                    style = MaterialTheme.typography.body1,
+                                    color = Color.White
+                                )
+                            }
+                        }
+
+                    }
+
+                    //Second button
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 20.dp)
+                            .height(90.dp),
+                        onClick = {
+                            navController.navigate(Screen.SetupConnection.route)
+                        },
+                        border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
+                        shape = RoundedCornerShape(10.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = colorResource(id = R.color.ams)
+                        ),
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                modifier = Modifier
+                                    .size(50.dp),
+                                imageVector = Icons.Default.Filter2,
+                                contentDescription = "Help",
+                                tint = Color.White
+                            )
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(10.dp)
+                                    .absolutePadding(left = 10.dp),
+                            ) {
+                                Text(
+                                    text = "Second step",
+                                    style = MaterialTheme.typography.h5,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.White
+                                )
+                                Text(
+                                    text = "Find the device",
+                                    style = MaterialTheme.typography.body1,
+                                    color = Color.White
+                                )
+                            }
+                        }
+
+                    }
+
+                    //Third button
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 20.dp)
+                            .height(90.dp),
+                        onClick = {
+                            navController.navigate(Screen.HomeConnected.route)
+                        },
+                        border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
+                        shape = RoundedCornerShape(10.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = colorResource(id = R.color.ams)
+                        ),
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                modifier = Modifier
+                                    .size(50.dp),
+                                imageVector = Icons.Default.Filter3,
+                                contentDescription = "Help",
+                                tint = Color.White
+                            )
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(10.dp)
+                                    .absolutePadding(left = 10.dp),
+                            ) {
+                                Text(
+                                    text = "Final step",
+                                    style = MaterialTheme.typography.h5,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.White
+                                )
+                                Text(
+                                    text = "Go to the home page",
+                                    style = MaterialTheme.typography.body1,
+                                    color = Color.White
+                                )
+                            }
+                        }
+
+                    }
+
+                }
+            }
+        }
+    })
 
 }
 
@@ -75,17 +244,11 @@ fun ConnectionEstablished(
                         Box(
                             modifier
                                 .fillMaxWidth()
-                                .height(150.dp)
-                                .clip(RoundedCornerShape(topEnd = 10.dp, topStart = 10.dp))
-                        ) {
-                            AllCharts(chartViewModel)
-                        }
-                        Box(
-                            modifier
-                                .fillMaxWidth()
-                                .height(150.dp)
+                                .height(300.dp)
                                 .clip(
                                     RoundedCornerShape(
+                                        topEnd = 10.dp,
+                                        topStart = 10.dp,
                                         bottomEnd = 10.dp,
                                         bottomStart = 10.dp
                                     )
@@ -231,132 +394,7 @@ fun ConnectionEstablished(
             }
         }
         else -> {
-            Column(
-                modifier
-                    .padding(18.dp)
-                    .fillMaxSize()
-            ) {
-                Column(
-                    modifier = modifier
-                        .fillMaxSize()
-                ) {
-                    Text(
-                        text = "WELCOME",
-                        style = MaterialTheme.typography.h3,
-                        fontWeight = FontWeight.Bold,
-                        fontStyle = FontStyle.Italic,
-                        color = colorResource(id = R.color.amsDark)
-                    )
 
-                    Image(
-                        painter = painterResource(id = R.drawable.logo),
-                        contentDescription = "Logo",
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 15.dp)
-                            .clip(RoundedCornerShape(10.dp))
-                    )
-
-                    //First button
-                    Button(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 20.dp)
-                            .height(90.dp),
-                        onClick = {
-                            navController.navigate("Setup")
-                        },
-                        border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = colorResource(id = R.color.ams)
-                        ),
-                    ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                modifier = Modifier
-                                    .size(50.dp),
-                                imageVector = Icons.Default.Filter1,
-                                contentDescription = "Help",
-                                tint = Color.White
-                            )
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(10.dp)
-                                    .absolutePadding(left = 10.dp),
-                            ) {
-                                Text(
-                                    text = "Take your first step",
-                                    style = MaterialTheme.typography.h5,
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.White
-                                )
-                                Text(
-                                    text = "Find your device",
-                                    style = MaterialTheme.typography.body1,
-                                    color = Color.White
-                                )
-                            }
-                        }
-
-                    }
-
-                    //Second button
-                    Button(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 20.dp)
-                            .height(90.dp),
-                        onClick = {
-                            navController.navigate(Screen.StartRecording.route)
-                        },
-                        border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
-                        shape = RoundedCornerShape(10.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = colorResource(id = R.color.ams)
-                        ),
-                    ) {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Icon(
-                                modifier = Modifier
-                                    .size(50.dp),
-                                imageVector = Icons.Default.Filter2,
-                                contentDescription = "Help",
-                                tint = Color.White
-                            )
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(10.dp)
-                                    .absolutePadding(left = 10.dp),
-                            ) {
-                                Text(
-                                    text = "Take your second step",
-                                    style = MaterialTheme.typography.h5,
-                                    fontWeight = FontWeight.Bold,
-                                    color = Color.White
-                                )
-                                Text(
-                                    text = "Find the device",
-                                    style = MaterialTheme.typography.body1,
-                                    color = Color.White
-                                )
-                            }
-                        }
-
-                    }
-
-                }
-            }
         }
     }
 }

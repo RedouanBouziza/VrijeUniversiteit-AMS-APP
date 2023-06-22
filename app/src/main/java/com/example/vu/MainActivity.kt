@@ -36,21 +36,21 @@ import com.example.vu.ui.screens.Screen
 import com.example.vu.ui.screens.breathing.BreathingExercise
 import com.example.vu.ui.screens.breathing.BreathingSettings
 import com.example.vu.ui.screens.chart.Chart
-import com.example.vu.ui.screens.faq.Faq
-import com.example.vu.ui.screens.faq.SetupInstructions
-import com.example.vu.ui.screens.faq.StartRecording
 import com.example.vu.ui.screens.home.Home
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.example.vu.ui.screens.faq.AboutUs
+import com.example.vu.data.websocket.SocketService
+import com.example.vu.ui.screens.faq.*
+import com.example.vu.ui.screens.home.HomeConnected
 import com.example.vu.ui.screens.movement.Movement
 import com.example.vu.ui.screens.system.System
 import com.example.vu.ui.theme.VUTheme
 import com.scichart.charting.visuals.SciChartSurface
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -119,11 +119,18 @@ class MainActivity : ComponentActivity() {
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
+    val webSocket: SocketService by lazy { SocketService() }
+
+    DisposableEffect(key1 = webSocket) {
+        webSocket.openConnection()
+        onDispose {
+            webSocket.closeConnection()
+        }
+    }
     val scaffoldState = rememberScaffoldState()
     val navController = rememberNavController()
     val breathingViewModel: BreathingViewModel = viewModel()
     val chartViewModel: ChartViewModel = viewModel()
-    val udpViewModel: UDPViewModel = viewModel()
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -140,7 +147,10 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
             modifier = modifier
         ) {
             composable(route = Screen.Home.route) {
-                Home(modifier, navController, chartViewModel, udpViewModel)
+                Home(modifier, navController)
+            }
+            composable(route = Screen.HomeConnected.route) {
+                HomeConnected(modifier, chartViewModel)
             }
             composable(route = Screen.Chart.route) {
                 Chart(chartViewModel)
@@ -161,10 +171,10 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
                 Faq(navController)
             }
             composable(route = Screen.System.route) {
-                System(navController)
+                System(navController, webSocket)
             }
-            composable(route = Screen.StartRecording.route) {
-                StartRecording(navController)
+            composable(route = Screen.SetupConnection.route){
+                SetupInstructions(navController)
             }
             composable(route = Screen.AboutUs.route){
                 AboutUs(navController)
@@ -179,10 +189,27 @@ private fun TopBar(
 ) {
     val udpViewModel: UDPViewModel = viewModel()
     val context = LocalContext.current
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
 
     TopAppBar(
         backgroundColor = colorResource(id = R.color.ams),
         contentColor = Color.White,
+        navigationIcon = {
+            if (currentDestination?.route == (Screen.HomeConnected.route)
+            ) {
+                IconButton(
+                    onClick = {
+                        navController.navigateUp()
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "Back"
+                    )
+                }
+            }
+        },
         title = {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -190,7 +217,7 @@ private fun TopBar(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = stringResource(id = R.string.ams),
+                    text = "",
                 )
             }
         },
@@ -213,11 +240,18 @@ private fun ConnectionEstablished(udpViewModel: UDPViewModel) {
     val isConnected by udpViewModel.isConnected.observeAsState()
     val isReceivingData by udpViewModel.isReceivingData.observeAsState()
 
-    when (isConnected) {
-        true -> {
+    when {
+        isConnected == true -> {
             Icon(
                 imageVector = Icons.Default.Wifi,
                 contentDescription = "Wifi",
+                tint = Color.White
+            )
+        }
+        isReceivingData == true && isConnected == false -> {
+            Icon(
+                imageVector = Icons.Default.WifiProtectedSetup,
+                contentDescription = "AnotherIcon",
                 tint = Color.White
             )
         }
@@ -229,32 +263,6 @@ private fun ConnectionEstablished(udpViewModel: UDPViewModel) {
             )
         }
     }
-
-    //TODO: old code, remove when new code is working
-    /*when (isConnected) {
-        true -> {
-            if (isReceivingData!!) {
-                Icon(
-                    imageVector = Icons.Default.WifiProtectedSetup,
-                    contentDescription = "WifiProtectedSetup",
-                    tint = Color.White
-                )
-            } else {
-                Icon(
-                    imageVector = Icons.Default.Wifi,
-                    contentDescription = "Wifi",
-                    tint = Color.White
-                )
-            }
-        }
-        else -> {
-            Icon(
-                imageVector = Icons.Default.WifiOff,
-                contentDescription = "WifiOff",
-                tint = Color.White
-            )
-        }
-    }*/
 }
 
 @Composable
@@ -262,30 +270,50 @@ private fun BottomBar(navController: NavController) {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     val homeScreens = listOf(
-        Screen.Home,
         Screen.Measurement,
+        Screen.AboutUs,
         Screen.Faq,
-        Screen.System,
-        Screen.AboutUs
+        Screen.System
+    )
+    val homeScreensWithHomeButton = listOf(
+        Screen.HomeConnected,
+        Screen.Measurement,
+        Screen.AboutUs,
+        Screen.Faq,
+        Screen.System
     )
     val secondScreens = listOf(
-        Screen.Home,
+        Screen.HomeConnected,
         Screen.Chart,
         Screen.BreathingSettings,
         Screen.Movement
     )
 
-    if (currentDestination?.route in listOf(
-            Screen.Home.route,
+    when (currentDestination?.route) {
+        (Screen.HomeConnected.route) -> {
+            BottomBarItems(navController, homeScreens.filterNot { it.route == currentDestination.route })
+        }
+        in listOf(
             Screen.Faq.route,
-            Screen.System.route
-        )
-    ) {
-        BottomBarItems(navController, homeScreens)
-    } else if (currentDestination?.route !in listOf(Screen.Setup.route, Screen.StartRecording.route)) {
-        BottomBarItems(navController, secondScreens)
+            Screen.System.route,
+            Screen.AboutUs.route
+        ) -> {
+            if (currentDestination != null) {
+                BottomBarItems(navController, homeScreensWithHomeButton.filterNot { it.route == currentDestination.route })
+            }
+        }
+        !in listOf(
+            Screen.Home.route,
+            Screen.Setup.route,
+            Screen.SetupConnection.route
+        ) -> {
+            if (currentDestination != null) {
+                BottomBarItems(navController, secondScreens.filterNot { it.route == currentDestination.route })
+            }
+        }
     }
 }
+
 
 @Composable
 private fun BottomBarItems(navController: NavController, screens: List<Screen>) {
