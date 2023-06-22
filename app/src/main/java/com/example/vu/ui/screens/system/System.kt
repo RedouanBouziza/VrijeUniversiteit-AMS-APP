@@ -85,14 +85,15 @@ fun System(navController: NavHostController) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Button(onClick = {
+        //TODO: uncomment when bluetooth is implemented
+        /*Button(onClick = {
             val i = Intent(ACTION_BLUETOOTH_SETTINGS)
             context.startActivity(i)
         }, modifier = Modifier.width(300.dp)) {
             Text(text = "Open Bluetooth Settings")
         }
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(10.dp))*/
 
         Button(onClick = {
             // Location settings screen.
@@ -132,6 +133,8 @@ fun System(navController: NavHostController) {
             }, modifier = Modifier.width(300.dp)) {
                 Text(text = "Stop Measuring")
             }
+
+            Spacer(modifier = Modifier.height(10.dp))
 
             Button(onClick = {
                 webSocket.sendMessage(SHUT_DOWN_DEVICE)
