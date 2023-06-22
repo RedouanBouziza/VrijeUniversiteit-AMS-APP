@@ -11,7 +11,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.Group
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
@@ -29,22 +28,15 @@ const val MEASUREMENT_STOP = "cmd s"
 const val SHUT_DOWN_DEVICE = "cmd Q"
 
 @Composable
-fun System(navController: NavHostController) {
+fun System(navController: NavHostController, webSocket: SocketService) {
 
     val context = LocalContext.current
-    val webSocket: SocketService by lazy { SocketService() }
     val isLoggedIn = true
 //    val isLoggedIn by loginViewModel.isLoggedIn.collectAsState()
 
     val measurementGroupVisibility = if (isLoggedIn) View.VISIBLE else View.INVISIBLE
     val shutdownGroupVisibility = if (isLoggedIn) View.VISIBLE else View.INVISIBLE
 
-    DisposableEffect(key1 = webSocket) {
-        webSocket.openConnection()
-        onDispose {
-            webSocket.closeConnection()
-        }
-    }
 
     val stringResource = ""
     val MARKER = "cmd !MARKER=$stringResource;"
