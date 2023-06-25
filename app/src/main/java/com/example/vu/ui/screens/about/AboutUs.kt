@@ -1,51 +1,80 @@
-package com.example.vu.ui.screens.faq
+package com.example.vu.ui.screens.about
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.vu.R
 
 @Composable
-fun AboutUs(navController: NavHostController) {
+fun AboutUs(modifier: Modifier, navController: NavHostController) {
 
     Column(
-        modifier = Modifier
-            .padding(18.dp)
+        modifier
+            .padding(start = 32.dp, end = 32.dp)
             .fillMaxSize()
-    ){
+    ) {
         Column(
-            modifier = Modifier
+            modifier
                 .fillMaxSize()
+                .padding(vertical = 32.dp)
         ) {
+
             Text(
-                text = "ABOUT",
+                text = stringResource(id = R.string.about_us_title),
+                modifier
+                    .align(Alignment.CenterHorizontally),
                 style = MaterialTheme.typography.h4,
-                fontWeight = FontWeight.Bold,
+                fontSize = 32.sp,
                 color = colorResource(id = R.color.amsDark)
             )
+
             Column(
-                modifier = Modifier
+                modifier
                     .padding(top = 20.dp)
             ) {
                 Text(
-                    text = "The VU University Ambulatory Monitoring System, created by the department " +
-                            "of Biological Psychology and the Technical Department of the Faculty of " +
-                            "Psychology and Education, enables monitoring of autonomic and cardiovascular " +
-                            "activity in research settings, including ambulatory monitoring in naturalistic " +
-                            "environments. The device and its software program meet high technical standards, " +
-                            "with support from the ITM of the Faculty of Psychology and Education"
+                    text = stringResource(id = R.string.vu_university_ams),
                 )
+            }
+
+            Spacer(
+                modifier
+                    .height(30.dp)
+            )
+
+            Text(
+                text = stringResource(id = R.string.about_app_title),
+                modifier
+                    .align(Alignment.CenterHorizontally),
+                style = MaterialTheme.typography.h4,
+                fontSize = 32.sp,
+                color = colorResource(id = R.color.amsDark)
+            )
+
+            Column(
+                modifier
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Column(
+                    modifier
+                        .padding(top = 20.dp)
+                        .width(150.dp),
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.version_info),
+                    )
+                }
             }
         }
     }
-
 }

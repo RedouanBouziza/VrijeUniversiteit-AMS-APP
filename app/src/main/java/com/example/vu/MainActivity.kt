@@ -42,6 +42,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.vu.data.websocket.SocketService
+import com.example.vu.ui.screens.about.AboutUs
 import com.example.vu.ui.screens.faq.*
 import com.example.vu.ui.screens.home.HomeConnected
 import com.example.vu.ui.screens.movement.Movement
@@ -50,7 +51,6 @@ import com.example.vu.ui.theme.VUTheme
 import com.scichart.charting.visuals.SciChartSurface
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -171,13 +171,13 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
                 Faq(navController)
             }
             composable(route = Screen.System.route) {
-                System(navController, webSocket)
+                System(modifier, navController, webSocket)
             }
             composable(route = Screen.SetupConnection.route){
                 SetupInstructions(navController)
             }
             composable(route = Screen.AboutUs.route){
-                AboutUs(navController)
+                AboutUs(modifier, navController)
             }
         }
     }

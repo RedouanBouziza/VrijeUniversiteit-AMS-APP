@@ -29,7 +29,11 @@ fun HomeConnected(
 
     val MARKER = "cmd !MARKER=$stringResource;"
 
-    LazyColumn(content = {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = 55.dp),
+        content = {
         item {
             Column(
                 modifier
@@ -44,7 +48,7 @@ fun HomeConnected(
                         Box(
                             modifier
                                 .fillMaxWidth()
-                                .height(150.dp)
+                                .height(190.dp)
                                 .clip(
                                     RoundedCornerShape(
                                         topEnd = 10.dp,
@@ -58,7 +62,7 @@ fun HomeConnected(
                         Box(
                             modifier
                                 .fillMaxWidth()
-                                .height(150.dp)
+                                .height(190.dp)
                                 .clip(
                                     RoundedCornerShape(
                                         bottomEnd = 10.dp,
@@ -84,6 +88,7 @@ fun HomeConnected(
                     ) {
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            modifier = Modifier.fillMaxWidth()
                         ) {
                             Button(
                                 onClick = {
