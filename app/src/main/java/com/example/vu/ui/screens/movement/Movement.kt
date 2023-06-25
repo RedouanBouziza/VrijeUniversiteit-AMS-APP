@@ -2,19 +2,47 @@ package com.example.vu.ui.screens.movement
 
 import android.content.Context
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import kotlin.math.min
 
 @Composable
 fun Movement(navController: NavHostController) {
-    Box(modifier = Modifier.fillMaxSize()) {
+
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(668.dp)
+                .padding(16.dp)
+                .clip(RoundedCornerShape(10.dp)),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                modifier = Modifier.padding(10.dp),
+                text = "Not available for now",)
+        }
+    }
+
+    //TODO: Implement movement with right values and add 3d image of the body
+    /*Box(modifier = Modifier.fillMaxSize()) {
         val pitch = remember { mutableStateOf(0f) }
         val roll = remember { mutableStateOf(0f) }
         val yaw = remember { mutableStateOf(0f) }
@@ -62,7 +90,7 @@ fun Movement(navController: NavHostController) {
                 center = Offset(ballX, centerY)
             )
         }
-    }
+    }*/
 }
 
 

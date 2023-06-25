@@ -83,6 +83,17 @@
     <string name="shutdown_device">Shutdown initiated</string>
     <string name="breathes_per_min1">breathes per minute</string>
 
+    <string name="vu_university_ams">The VU University Ambulatory Monitoring System, created by the
+        department of Biological Psychology and the Technical Department of the Faculty of
+        Psychology and Education, enables monitoring of autonomic and cardiovascular activity in
+        research settings, including ambulatory monitoring in naturalistic environments. The device
+        and its software program meet high technical standards, with support from the ITM of the
+        Faculty of Psychology and Education.</string>
+    <string name="version_info">Version:        2.0 \n\nSciChart:      2.5631 \n\nDeveloped by \n\n
+        • R. Bouziza \n • C. Kruijer \n • K. Uğur </string>
+    <string name="about_us_title">ABOUT US</string>
+    <string name="about_app_title">ABOUT THE APP</string>
+
     <!--  Strings for Bottom Bar-->
     <string name="home">Home</string>
     <string name="homeConnected">Home</string>
