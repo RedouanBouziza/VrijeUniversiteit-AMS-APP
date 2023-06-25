@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -28,18 +29,9 @@ const val MEASUREMENT_STOP = "cmd s"
 const val SHUT_DOWN_DEVICE = "cmd Q"
 
 @Composable
-fun System(navController: NavHostController, webSocket: SocketService) {
+fun System(modifier: Modifier, navController: NavHostController, webSocket: SocketService) {
 
     val context = LocalContext.current
-    val isLoggedIn = true
-//    val isLoggedIn by loginViewModel.isLoggedIn.collectAsState()
-
-    val measurementGroupVisibility = if (isLoggedIn) View.VISIBLE else View.INVISIBLE
-    val shutdownGroupVisibility = if (isLoggedIn) View.VISIBLE else View.INVISIBLE
-
-
-    val stringResource = ""
-    val MARKER = "cmd !MARKER=$stringResource;"
 
     Column(
         modifier = Modifier
@@ -50,7 +42,12 @@ fun System(navController: NavHostController, webSocket: SocketService) {
 
         Text(
             text = stringResource(id = R.string.title_settings),
-            color = colorResource(id = R.color.ams), fontSize = 20.sp, fontWeight = FontWeight.Bold
+            modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(top = 20.dp),
+            style = MaterialTheme.typography.h4,
+            fontSize = 32.sp,
+            color = colorResource(id = R.color.amsDark)
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -59,8 +56,7 @@ fun System(navController: NavHostController, webSocket: SocketService) {
             // Wireless settings screen.
             val i = Intent(ACTION_WIRELESS_SETTINGS)
             context.startActivity(i)
-        }, modifier = Modifier.width(300.dp))
-        {
+        }, modifier = Modifier.width(300.dp)) {
 
             Text(text = "Open Wireless Settings")
         }
@@ -96,14 +92,17 @@ fun System(navController: NavHostController, webSocket: SocketService) {
             Text(text = "Open Location Settings", color = Color.White)
         }
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(50.dp))
 
         Text(
             text = stringResource(id = R.string.title_device),
-            color = colorResource(id = R.color.ams), fontSize = 20.sp, fontWeight = FontWeight.Bold
+            modifier.align(Alignment.CenterHorizontally),
+            style = MaterialTheme.typography.h4,
+            fontSize = 32.sp,
+            color = colorResource(id = R.color.amsDark)
         )
 
-        Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         Button(onClick = {
             webSocket.sendMessage(MEASUREMENT_START)
@@ -116,25 +115,20 @@ fun System(navController: NavHostController, webSocket: SocketService) {
 
         Spacer(modifier = Modifier.height(10.dp))
 
+        Button(onClick = {
+            webSocket.sendMessage(MEASUREMENT_STOP)
+            Toast.makeText(context, R.string.stopped_measuring, Toast.LENGTH_SHORT).show()
+        }, modifier = Modifier.width(300.dp)) {
+            Text(text = "Stop Measuring")
+        }
 
-        if (isLoggedIn) {
-            Button(onClick = {
-                webSocket.sendMessage(MEASUREMENT_STOP)
-                Toast.makeText(context, R.string.stopped_measuring, Toast.LENGTH_SHORT)
-                    .show()
-            }, modifier = Modifier.width(300.dp)) {
-                Text(text = "Stop Measuring")
-            }
+        Spacer(modifier = Modifier.height(10.dp))
 
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Button(onClick = {
-                webSocket.sendMessage(SHUT_DOWN_DEVICE)
-                Toast.makeText(context, R.string.shutdown_device, Toast.LENGTH_SHORT)
-                    .show()
-            }, modifier = Modifier.width(300.dp)) {
-                Text(text = "Shutdown Device")
-            }
+        Button(onClick = {
+            webSocket.sendMessage(SHUT_DOWN_DEVICE)
+            Toast.makeText(context, R.string.shutdown_device, Toast.LENGTH_SHORT).show()
+        }, modifier = Modifier.width(300.dp)) {
+            Text(text = "Shutdown Device")
         }
     }
 }
