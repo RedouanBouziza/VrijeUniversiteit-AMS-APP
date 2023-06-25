@@ -177,7 +177,7 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
                 SetupInstructions(navController)
             }
             composable(route = Screen.AboutUs.route){
-                AboutUs(modifier, navController)
+                AboutUs()
             }
         }
     }

@@ -8,7 +8,8 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.performClick
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
-import com.example.vu.ui.screens.faq.AboutUs
+import com.example.vu.ui.screens.about.AboutUs
+
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -26,13 +27,13 @@ class AboutTest {
             navController = TestNavHostController(LocalContext.current)
             // Adding navigator that navigates through composable
             navController.navigatorProvider.addNavigator(ComposeNavigator())
-            AboutUs(navController)
+            AboutUs()
         }
     }
 
     @Test
     fun checkAboutTitle(){
-        composeTestRule.onNodeWithText("ABOUT").assertIsDisplayed()
+        composeTestRule.onNodeWithText("ABOUT US").assertIsDisplayed()
     }
 
 }

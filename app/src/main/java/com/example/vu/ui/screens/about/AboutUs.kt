@@ -14,22 +14,22 @@ import androidx.navigation.NavHostController
 import com.example.vu.R
 
 @Composable
-fun AboutUs(modifier: Modifier, navController: NavHostController) {
+fun AboutUs() {
 
     Column(
-        modifier
+        modifier = Modifier
             .padding(start = 32.dp, end = 32.dp)
             .fillMaxSize()
     ) {
         Column(
-            modifier
+            modifier = Modifier
                 .fillMaxSize()
                 .padding(vertical = 32.dp)
         ) {
 
             Text(
                 text = stringResource(id = R.string.about_us_title),
-                modifier
+                modifier = Modifier
                     .align(Alignment.CenterHorizontally),
                 style = MaterialTheme.typography.h4,
                 fontSize = 32.sp,
@@ -37,7 +37,7 @@ fun AboutUs(modifier: Modifier, navController: NavHostController) {
             )
 
             Column(
-                modifier
+                modifier = Modifier
                     .padding(top = 20.dp)
             ) {
                 Text(
@@ -46,13 +46,13 @@ fun AboutUs(modifier: Modifier, navController: NavHostController) {
             }
 
             Spacer(
-                modifier
+                modifier = Modifier
                     .height(30.dp)
             )
 
             Text(
                 text = stringResource(id = R.string.about_app_title),
-                modifier
+                modifier = Modifier
                     .align(Alignment.CenterHorizontally),
                 style = MaterialTheme.typography.h4,
                 fontSize = 32.sp,
@@ -60,13 +60,13 @@ fun AboutUs(modifier: Modifier, navController: NavHostController) {
             )
 
             Column(
-                modifier
+                modifier = Modifier
                     .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
                 Column(
-                    modifier
+                    modifier = Modifier
                         .padding(top = 20.dp)
                         .width(150.dp),
                 ) {
