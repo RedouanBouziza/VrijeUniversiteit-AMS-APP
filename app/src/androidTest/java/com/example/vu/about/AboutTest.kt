@@ -14,6 +14,10 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+/**
+ *
+ * @author Kaan Ugur
+ */
 class AboutTest {
 
     @get:Rule
