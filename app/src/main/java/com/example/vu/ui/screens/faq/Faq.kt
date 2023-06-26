@@ -24,7 +24,7 @@ import com.example.vu.R
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun Faq(navController: NavHostController) {
+fun Faq() {
     Column(
         modifier = Modifier
             .background(Color.White)

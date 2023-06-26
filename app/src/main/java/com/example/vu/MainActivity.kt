@@ -168,7 +168,7 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
                 Movement(navController)
             }
             composable(route = Screen.Faq.route) {
-                Faq(navController)
+                Faq()
             }
             composable(route = Screen.System.route) {
                 System(modifier, navController, webSocket)
