@@ -150,7 +150,7 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
                 Home(modifier, navController)
             }
             composable(route = Screen.HomeConnected.route) {
-                HomeConnected(modifier, chartViewModel)
+                HomeConnected(modifier, chartViewModel, webSocket)
             }
             composable(route = Screen.Chart.route) {
                 Chart(chartViewModel)
