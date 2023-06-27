@@ -24,7 +24,7 @@ import com.example.vu.R
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun Faq(navController: NavHostController) {
+fun Faq() {
     Column(
         modifier = Modifier
             .background(Color.White)
@@ -41,25 +41,33 @@ fun Faq(navController: NavHostController) {
             LazyColumn(modifier = Modifier.padding(horizontal = 24.dp)){
                 item {
                     FaqItem(
-                        "What is Lorem Ipsum?",
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
+                        "Why is the LED on the VU-AMS 5fs blinking rapidly?",
+                        "A slow blink is a sign of standby, a faster blink means the " +
+                                "VU-AMS is recording. A rapid blink means there is a problem. " +
+                                "Please contact us at"
                     )
                     FaqItem(
-                        "Where does it come from?",
-                        "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old."
+                        "Why does the VU-AMS 5fs make a beeping sound?",
+                        "See our status indicators page, you can find a list " +
+                                "of all the status indicators and what they mean."
                     )
                     FaqItem(
-                        "Why do we use it?",
-                        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here."
+                        "How do I interface with stimulus presentation software?",
+                        "You can send markers from the stimulus computer to be recorded " +
+                                "into the VU-AMS 5fs data file. "
                     )
                     FaqItem(
-                        "Where can I get some?",
-                        "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable."
+                        "Can I export my ECG data for use in the Kubios HRV analysis " +
+                                "software package?",
+                        "Many of the metrics available in Kubios are also available " +
+                                "through VU-DAMS. To export your data in a Kubios-compatible" +
+                                " format follow the procedure on the Compatible third parties page" +
+                                " in the VU-DAMS user manual."
                     )
-                    FaqItem(
-                        "What is Lorem Ipsum?",
-                        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."
-                    )
+                    /*FaqItem(
+                        "Put your question here",
+                        "Put your answer here"
+                    )*/
                 }
             }
         }

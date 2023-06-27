@@ -1,5 +1,6 @@
-package com.example.vu.ui.screens.faq
+package com.example.vu.ui.screens.setup
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -7,9 +8,12 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.vu.R
@@ -35,6 +39,7 @@ fun SetupInstructions(navController: NavHostController) {
     var explanationForEachStep by remember { mutableStateOf(currentStepExplanation(currentStep)) }
     val images = imageForEachStep(currentStep)
     val pagerState = rememberPagerState(initialPage = images.size)
+    val showDialog = remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
     val secondLastQuestion = 6
@@ -145,7 +150,9 @@ fun SetupInstructions(navController: NavHostController) {
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.Bottom,
-        modifier = Modifier.padding(bottom = 50.dp).fillMaxSize()
+        modifier = Modifier
+            .padding(bottom = 50.dp)
+            .fillMaxSize()
     ) {
         images.forEachIndexed { index, _ ->
             Icon(
@@ -197,14 +204,46 @@ fun SetupInstructions(navController: NavHostController) {
                 buttonText = stringResource(id = R.string.finish)
             }
             lastQuestion -> {
-                LaunchedEffect(Unit) {
-                    navController.navigate(Screen.Home.route)
-                }
+                showDialog.value = true
             }
             else -> {
                 buttonText = stringResource(id = R.string.next_step)
             }
         }
+    }
+
+    if (showDialog.value) {
+        AlertDialog(
+            backgroundColor = Color.White,
+            shape = RoundedCornerShape(16.dp),
+            onDismissRequest = {
+                showDialog.value = true
+            },
+            title = {
+                Text(
+                    text = "Congratulations!",
+                    fontWeight = FontWeight.Bold
+                )
+            },
+            text = {
+                Text(
+                    text = "When you press the button you will be send to the next step"
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showDialog.value = false
+                        navController.navigate(Screen.Home.route)
+                    },
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth()
+                ) {
+                    Text(text = "Next step")
+                }
+            }
+        )
     }
 
 }

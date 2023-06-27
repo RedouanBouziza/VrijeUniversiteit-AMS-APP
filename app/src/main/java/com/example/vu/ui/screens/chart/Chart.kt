@@ -1,15 +1,15 @@
 package com.example.vu.ui.screens.chart
 
-import android.view.Gravity
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.shape.ZeroCornerSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Tab
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -20,22 +20,27 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.example.vu.R
 import com.example.vu.data.viewmodel.ChartViewModel
 import com.scichart.charting.model.dataSeries.XyDataSeries
 import com.scichart.charting.modifiers.*
 import com.scichart.charting.visuals.SciChartSurface
 import com.scichart.charting.visuals.axes.AutoRange
+import com.scichart.charting.visuals.axes.AxisAlignment
 import com.scichart.charting.visuals.axes.IAxis
 import com.scichart.charting.visuals.axes.NumericAxis
 import com.scichart.charting.visuals.renderableSeries.FastLineRenderableSeries
 import com.scichart.charting.visuals.renderableSeries.IRenderableSeries
-import com.scichart.core.annotations.Orientation
 import com.scichart.core.framework.UpdateSuspender
 import com.scichart.core.model.DoubleValues
 import com.scichart.core.model.IntegerValues
+import com.scichart.core.utility.Dispatcher
 import com.scichart.data.model.DoubleRange
 import com.scichart.drawing.common.SolidPenStyle
 import com.scichart.drawing.utility.ColorUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -44,48 +49,73 @@ fun Chart(chartViewModel: ChartViewModel) {
 
 
     Column {
-        val tabs = listOf("Custom", "2ECG", "ISRC", "ECG", "ICG", "TEMP", "Tab 6", "Tab 7")
-        val selectedTabIndex = remember { mutableStateOf(0) }
+        val tabs = listOf("ECG", "RES", "GYRO", "ACC", "PRESS")
+        val selectedTabIndex = remember { mutableStateOf(5) }
 
-        HorizontalScrollableTabs(tabs = tabs, selectedTabIndex = selectedTabIndex)
+//        HorizontalScrollableTabs(tabs = tabs, selectedTabIndex = selectedTabIndex)
+        if (selectedTabIndex.value != 5) {
+            LazyRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentWidth(Alignment.CenterHorizontally),
+                contentPadding = PaddingValues(start = 8.dp, end = 8.dp)
+            ) {
+                itemsIndexed(tabs) { index, title ->
+                    Tab(
+                        selected = selectedTabIndex.value == index,
+                        onClick = { selectedTabIndex.value = index },
+                        text = { Text(text = title) }
+                    )
+                }
+            }
+        }
 
         // Rest of your screen content based on the selected tab
         when (selectedTabIndex.value) {
             0 -> {
-                Text(text = "Preferences screen")
-            }
-            1 -> {
-                ChartType(chartViewModel, lineName = "2ECG")
-            }
-            2 -> {
-                ChartType(chartViewModel, lineName = "ISRC")
-            }
-            3 -> {
                 ChartType(chartViewModel, lineName = "ECG")
             }
+            1 -> {
+                ChartType(chartViewModel, lineName = "RES")
+            }
+            2 -> {
+                ChartType(chartViewModel, lineName = "GYRO")
+            }
+            3 -> {
+                ChartType(chartViewModel, lineName = "ACC")
+            }
             4 -> {
-                ChartType(chartViewModel, lineName = "ICG")
+                ChartType(chartViewModel, lineName = "PRES")
             }
             5 -> {
-                ChartType(chartViewModel, lineName = "T")
-            }
-            6 -> {
-                // Content for Tab 6
-            }
-            7 -> {
-                // Content for Tab 7
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(668.dp)
+                            .padding(16.dp)
+                            .clip(RoundedCornerShape(10.dp)),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Button(onClick = {
+                            selectedTabIndex.value = 0
+                        }) {
+                            Text(text = "See ur measurements")
+                        }
+                    }
+                }
             }
         }
-
 
     }
 }
 
 @Composable
 fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
-    val context = LocalContext.current
-    val sciChartSurface = SciChartSurface(context)
-
     val sectionAMeasurements by chartViewModel.sectionAMeasurements.observeAsState()
 
     val lineData = DoubleValues()
@@ -105,15 +135,15 @@ fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
             factory = { context ->
                 // Create Android View with SciChartSurface
                 val sciChartSurfaceView = SciChartSurface(context)
-                sciChartSurface.setBackgroundColor(ColorUtil.White)
+                sciChartSurfaceView.theme = com.scichart.charting.R.style.SciChart_ChromeStyle
 
                 // Configure SciChartSurface with chart data and options here
                 val xAxis: IAxis = NumericAxis(context).apply {
-                    growBy = DoubleRange(0.3, 0.3)
+                    growBy = DoubleRange(0.0, 0.0)
                     autoRange = AutoRange.Always
                 }
                 val yAxis: IAxis = NumericAxis(context).apply {
-                    growBy = DoubleRange(0.3, 0.3)
+                    growBy = DoubleRange(0.0, 0.0)
                     autoRange = AutoRange.Always
                 }
 
@@ -131,8 +161,6 @@ fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
                     dataSeries = lineDataSeries
                     strokeStyle = SolidPenStyle(ColorUtil.Blue, true, 5f, null)
                 }
-
-                // Set the stroke style and color for the line
 
                 // Add all those data and modifiers
                 UpdateSuspender.using(sciChartSurfaceView) {
@@ -163,22 +191,110 @@ fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
                             return@let
                         }
                         when (lineName) {
-                            "2ECG" -> lineDataSeries.append(section.tickCount, section.twoEcg)
-                            "ISRC" -> lineDataSeries.append(
+                            "ECG" -> lineDataSeries.append(section.tickCount, section.ecg)
+                            "RES" -> lineDataSeries.append(section.tickCount, section.icg)
+                            "GYRO" -> lineDataSeries.append(section.tickCount, section.temperature)
+                            "ACC" -> lineDataSeries.append(section.tickCount, section.temperature)
+                            "PRES" -> lineDataSeries.append(section.tickCount, section.temperature)
+                        }
+                    }
+                }
+            }
+        )
+    }
+}
+
+@Composable
+fun ChartTypeHome(chartViewModel: ChartViewModel, lineName: String) {
+    val sectionAMeasurements by chartViewModel.sectionAMeasurements.observeAsState()
+
+    val lineData = DoubleValues()
+    val lineDataSeries = XyDataSeries(Int::class.javaObjectType, Double::class.javaObjectType)
+
+    val xValues = IntegerValues()
+
+    // Append data to initialize the data series
+    lineDataSeries.append(xValues, lineData)
+
+    Button(onClick = {
+
+    }) {
+
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        AndroidView(
+            factory = { context ->
+                // Create Android View with SciChartSurface
+                val sciChartSurfaceView = SciChartSurface(context)
+                sciChartSurfaceView.theme = com.scichart.charting.R.style.SciChart_ChromeStyle
+
+                // Configure SciChartSurface with chart data and options here
+                val xAxis: IAxis = NumericAxis(context).apply {
+                    growBy = DoubleRange(0.0, 0.0)
+                    autoRange = AutoRange.Always
+                }
+                val yAxis: IAxis = NumericAxis(context).apply {
+                    growBy = DoubleRange(0.0, 0.0)
+                    autoRange = AutoRange.Always
+                }
+
+                lineDataSeries.seriesName = lineName
+
+                // How much it will show on the screen
+                lineDataSeries.fifoCapacity = 5000
+
+                // Append data to initialise the data series
+                lineDataSeries.append(xValues, lineData)
+
+                // Type of line
+
+                val lineSeries: IRenderableSeries = FastLineRenderableSeries().apply {
+                    dataSeries = lineDataSeries
+                    strokeStyle = SolidPenStyle(ColorUtil.Blue, true, 5f, null)
+                }
+
+                // Add all those data and modifiers
+                UpdateSuspender.using(sciChartSurfaceView) {
+                    Collections.addAll(
+                        sciChartSurfaceView.renderableSeries,
+                        lineSeries
+                    )
+                    Collections.addAll(
+                        sciChartSurfaceView.chartModifiers,
+                        PinchZoomModifier(),
+                        ZoomPanModifier(),
+                        ZoomExtentsModifier(),
+                    )
+                    sciChartSurfaceView.chartModifiers.add(RolloverModifier())
+                }
+
+                // Add the x and y axis to the chart
+                UpdateSuspender.using(sciChartSurfaceView) {
+                    sciChartSurfaceView.xAxes.add(xAxis)
+                    sciChartSurfaceView.yAxes.add(yAxis)
+                }
+
+                sciChartSurfaceView // return the SciChartSurface instance
+            }, update = {
+                sectionAMeasurements?.let { sectionMeasurements ->
+                    sectionMeasurements.values.forEach { section ->
+                        if (lineDataSeries.xMax > section.tickCount) {
+                            return@let
+                        }
+                        when (lineName) {
+                            "RES" -> lineDataSeries.append(
                                 section.tickCount,
                                 section.isrc.toDouble()
                             )
                             "ECG" -> lineDataSeries.append(section.tickCount, section.ecg)
                             "ICG" -> lineDataSeries.append(section.tickCount, section.icg)
-                            "T" -> lineDataSeries.append(section.tickCount, section.temperature)
+                            "GYRO" -> lineDataSeries.append(section.tickCount, section.temperature)
+                            "ACC" -> lineDataSeries.append(section.tickCount, section.temperature)
                         }
-
-//                        UpdateSuspender.using(sciChartSurface) {
-//                            lineDataSeries.updateRangeYAt(0, lineData)
-//
-//                            // zoom series to fit viewport size into X-Axis direction
-//                            sciChartSurface.zoomExtentsX()
-//                        }
                     }
                 }
             }
@@ -226,16 +342,23 @@ fun AllCharts(chartViewModel: ChartViewModel) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 55.dp)
     ) {
         AndroidView(
             factory = { context ->
                 // Create Android View with SciChartSurface
                 val sciChartSurfaceView = SciChartSurface(context)
+                sciChartSurfaceView.theme = com.scichart.charting.R.style.SciChart_ChromeStyle
+
 
                 // Configure SciChartSurface with chart data and options here
-                val xAxis: IAxis = NumericAxis(context)
-                val yAxis: IAxis = NumericAxis(context)
+                val xAxis: IAxis = NumericAxis(context).apply {
+                    growBy = DoubleRange(0.0, 0.0)
+                    autoRange = AutoRange.Always
+                }
+                val yAxis: IAxis = NumericAxis(context).apply {
+                    growBy = DoubleRange(0.0, 0.0)
+                    autoRange = AutoRange.Always
+                }
 
                 twoEcgLineDataSeries.seriesName = "2ECG"
                 isrcLineDataSeries.seriesName = "ISRC"
@@ -250,45 +373,47 @@ fun AllCharts(chartViewModel: ChartViewModel) {
                 icgLineDataSeries.fifoCapacity = 5000
                 temperateLineDataSeries.fifoCapacity = 5000
 
-                yAxis.growBy = DoubleRange(0.3, 0.3)
-
                 val xValues = IntegerValues()
 
                 // Append data to initialise the data series
-                twoEcgLineDataSeries.append(xValues, twoEcgLineData)
-                isrcLineDataSeries.append(xValues, isrcLineData)
+//                twoEcgLineDataSeries.append(xValues, twoEcgLineData)
+//                isrcLineDataSeries.append(xValues, isrcLineData)
                 ecgLineDataSeries.append(xValues, ecgLineData)
                 icgLineDataSeries.append(xValues, icgLineData)
-                temperateLineDataSeries.append(xValues, temperatureLineData)
+//                temperateLineDataSeries.append(xValues, temperatureLineData)
 
                 // Type of line
-                val twoEcgLineSeries: IRenderableSeries = FastLineRenderableSeries()
-                twoEcgLineSeries.dataSeries = twoEcgLineDataSeries
+                val twoEcgLineSeries: IRenderableSeries = FastLineRenderableSeries().apply {
+                    dataSeries = twoEcgLineDataSeries
+                    strokeStyle = SolidPenStyle(ColorUtil.Green, true, 5f, null)
+                }
 
-                val isrcLineSeries: IRenderableSeries = FastLineRenderableSeries()
-                isrcLineSeries.dataSeries = isrcLineDataSeries
+                val isrcLineSeries: IRenderableSeries = FastLineRenderableSeries().apply {
+                    dataSeries = isrcLineDataSeries
+                    strokeStyle = SolidPenStyle(ColorUtil.Blue, true, 5f, null)
+                }
 
-                val ecgLineSeries: IRenderableSeries = FastLineRenderableSeries()
-                ecgLineSeries.dataSeries = ecgLineDataSeries
+//                val ecgLineSeries: IRenderableSeries = FastLineRenderableSeries()
+//                ecgLineSeries.dataSeries = ecgLineDataSeries
 
-                val icgLineSeries: IRenderableSeries = FastLineRenderableSeries()
-                icgLineSeries.dataSeries = icgLineDataSeries
+                val ecgLineSeries: IRenderableSeries = FastLineRenderableSeries().apply {
+                    dataSeries = ecgLineDataSeries
+                    strokeStyle = SolidPenStyle(ColorUtil.LimeGreen, true, 5f, null)
+                }
 
-                val temperatureLineSeries: IRenderableSeries = FastLineRenderableSeries()
-                temperatureLineSeries.dataSeries = temperateLineDataSeries
+//                val icgLineSeries: IRenderableSeries = FastLineRenderableSeries()
+//                icgLineSeries.dataSeries = icgLineDataSeries
 
-                // Color of the line
-                twoEcgLineSeries.strokeStyle = SolidPenStyle(ColorUtil.Green, true, 5f, null)
-                isrcLineSeries.strokeStyle = SolidPenStyle(ColorUtil.Blue, true, 5f, null)
-                ecgLineSeries.strokeStyle = SolidPenStyle(ColorUtil.LimeGreen, true, 5f, null)
-                icgLineSeries.strokeStyle = SolidPenStyle(ColorUtil.Yellow, true, 5f, null)
-                temperatureLineSeries.strokeStyle = SolidPenStyle(ColorUtil.Red, true, 5f, null)
+                val icgLineSeries: IRenderableSeries = FastLineRenderableSeries().apply {
+                    dataSeries = icgLineDataSeries
+                    strokeStyle = SolidPenStyle(ColorUtil.Yellow, true, 5f, null)
+                }
 
 
-                // Legend with all the data from the lines
-                val legendModifier = LegendModifier(context)
-                legendModifier.setOrientation(Orientation.VERTICAL)
-                legendModifier.setLegendPosition(Gravity.START, 0, 0, 0, 10)
+                val temperatureLineSeries: IRenderableSeries = FastLineRenderableSeries().apply {
+                    dataSeries = temperateLineDataSeries
+                    strokeStyle = SolidPenStyle(ColorUtil.Red, true, 5f, null)
+                }
 
                 // Add all those data and modifiers
                 UpdateSuspender.using(sciChartSurfaceView) {
@@ -306,7 +431,7 @@ fun AllCharts(chartViewModel: ChartViewModel) {
                         ZoomPanModifier(),
                         ZoomExtentsModifier(),
                     )
-                    Collections.addAll(sciChartSurfaceView.chartModifiers, legendModifier)
+                    //TODO: See if this is needed
                     Collections.addAll(sciChartSurfaceView.chartModifiers, RolloverModifier())
                 }
 
@@ -314,8 +439,6 @@ fun AllCharts(chartViewModel: ChartViewModel) {
                 UpdateSuspender.using(sciChartSurfaceView) {
                     sciChartSurfaceView.xAxes.add(xAxis)
                     sciChartSurfaceView.yAxes.add(yAxis)
-                    sciChartSurfaceView.zoomExtentsX()
-                    sciChartSurfaceView.zoomExtentsY()
                 }
                 sciChartSurfaceView // return the SciChartSurface instance
             }, update = {
@@ -325,11 +448,11 @@ fun AllCharts(chartViewModel: ChartViewModel) {
                             return@let
                         }
 
-                        twoEcgLineDataSeries.append(section.tickCount, section.twoEcg)
-                        isrcLineDataSeries.append(section.tickCount, section.isrc)
+//                        twoEcgLineDataSeries.append(section.tickCount, section.twoEcg)
+//                        isrcLineDataSeries.append(section.tickCount, section.isrc)
                         ecgLineDataSeries.append(section.tickCount, section.ecg)
                         icgLineDataSeries.append(section.tickCount, section.icg)
-                        temperateLineDataSeries.append(section.tickCount, section.temperature)
+//                        temperateLineDataSeries.append(section.tickCount, section.temperature)
 
                         sciChartSurface.zoomExtentsX()
                         sciChartSurface.zoomExtentsY()

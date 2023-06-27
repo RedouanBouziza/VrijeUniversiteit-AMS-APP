@@ -8,6 +8,14 @@ import android.hardware.SensorEventListener
 import android.hardware.SensorManager
 import android.view.Surface
 
+/**
+ * A helper class for detecting device orientation based on rotation sensor.
+ *
+ * This class provides functionality to listen for changes in device orientation using the rotation sensor.
+ * It converts the sensor data into azimuth, pitch, and roll angles and notifies the listener with the updated values.
+ *
+ * @param context The application context.
+ */
 class Orientation(private val context: Context) {
     private val mSensorManager: SensorManager by lazy {
         context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
@@ -16,12 +24,16 @@ class Orientation(private val context: Context) {
         mSensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR)
     }
 
+    /**
+     * Starts listening for device orientation changes.
+     */
     fun startListening() {
         mSensorManager.registerListener(mSensorEventListener, mRotationSensor, SensorManager.SENSOR_DELAY_NORMAL)
     }
 
-    var listener: ((Float, Float, Float) -> Unit)? = null
-
+    /**
+     * A listener for sensor events.
+     */
     private val mSensorEventListener = object : SensorEventListener {
         override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
         @SuppressLint("NewApi")
@@ -69,4 +81,10 @@ class Orientation(private val context: Context) {
             }
         }
     }
+
+    /**
+     * A listener for receiving device orientation changes.
+     * The listener will be invoked with the updated pitch, roll, and yaw angles in degrees.
+     */
+    var listener: ((Float, Float, Float) -> Unit)? = null
 }

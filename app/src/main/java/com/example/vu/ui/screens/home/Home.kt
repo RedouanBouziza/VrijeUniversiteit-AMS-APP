@@ -2,8 +2,8 @@ package com.example.vu.ui.screens.home
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -25,250 +25,23 @@ import com.example.vu.R
 import com.example.vu.data.viewmodel.ChartViewModel
 import com.example.vu.data.viewmodel.UDPViewModel
 import com.example.vu.ui.screens.Screen
-import com.example.vu.ui.screens.chart.Chart
+import com.example.vu.ui.screens.chart.AllCharts
 
 @Composable
 fun Home(
     modifier: Modifier,
     navController: NavHostController,
-    chartViewModel: ChartViewModel
 ) {
-
-    ConnectionEstablished(
-        udpViewModel = UDPViewModel(),
-        modifier = modifier,
-        chartViewModel = chartViewModel,
-        navController = navController
-    )
-
-    /*            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 15.dp)
-            ) {
-                Text(
-                    text = "About VU-AMS",
-                    style = MaterialTheme.typography.h5,
-                    fontWeight = FontWeight.Bold,
-                    color = colorResource(id = R.color.amsDark)
-                )
-                Text(
-                    text = "The VU University Ambulatory Monitoring System, created by the department " +
-                            "of Biological Psychology and the Technical Department of the Faculty of " +
-                            "Psychology and Education, enables monitoring of autonomic and cardiovascular " +
-                            "activity in research settings, including ambulatory monitoring in naturalistic " +
-                            "environments. The device and its software program meet high technical standards, " +
-                            "with support from the ITM of the Faculty of Psychology and Education"
-                )
-            }*/
-}
-
-@Composable
-private fun ConnectionEstablished(
-    udpViewModel: UDPViewModel,
-    modifier: Modifier,
-    chartViewModel: ChartViewModel,
-    navController: NavHostController
-) {
-    val isConnected by udpViewModel.isConnected.observeAsState()
-    val isReceivingData by udpViewModel.isReceivingData.observeAsState()
-
-    when (isConnected) {
-        true -> {
-            if (isReceivingData!!) {
-                Column(
-                    modifier
-                        .padding(18.dp)
-                        .fillMaxSize()
-                ) {
-                    Column(
-                        modifier = modifier
-                            .fillMaxSize()
-                    ) {
-                        Text(
-                            text = "RECORDINGS:",
-                            style = MaterialTheme.typography.h4,
-                            fontWeight = FontWeight.Bold,
-                            color = colorResource(id = R.color.amsDark)
-                        )
-
-                        Column(
-                            modifier
-                                .padding(top = 20.dp)
-                        ) {
-                            Box(
-                                modifier
-                                    .fillMaxWidth()
-                                    .height(150.dp)
-                                    .clip(RoundedCornerShape(topEnd = 10.dp, topStart = 10.dp))
-                            ) {
-                                Chart(chartViewModel)
-                            }
-                            Box(
-                                modifier
-                                    .fillMaxWidth()
-                                    .height(150.dp)
-                                    .clip(
-                                        RoundedCornerShape(
-                                            bottomEnd = 10.dp,
-                                            bottomStart = 10.dp
-                                        )
-                                    )
-                            ) {
-                                Chart(chartViewModel)
-                            }
-                        }
-
-                        Text(
-                            text = "TIMESTAMPS:",
-                            style = MaterialTheme.typography.h4,
-                            fontWeight = FontWeight.Bold,
-                            color = colorResource(id = R.color.amsDark),
-                            modifier = Modifier.padding(top = 20.dp)
-                        )
-
-                        Column(
-                            modifier
-                                .padding(top = 16.dp),
-                        ) {
-                            Row(
-                                horizontalArrangement = Arrangement.spacedBy(10.dp),
-                            ) {
-                                Button(
-                                    onClick = {
-                                        //TODO: Stamp the time and the message
-                                    },
-                                    border = BorderStroke(
-                                        1.dp,
-                                        colorResource(id = R.color.amsDark)
-                                    ),
-                                    shape = RoundedCornerShape(10.dp),
-                                    colors = ButtonDefaults.buttonColors(
-                                        backgroundColor = colorResource(id = R.color.babyBlue)
-                                    ),
-                                    modifier = Modifier
-                                        .width(181.dp)
-                                        .height(60.dp),
-                                ) {
-                                    Text(
-                                        text = "Cigarette",
-                                        color = Color.White,
-                                        fontStyle = FontStyle.Italic,
-                                    )
-                                }
-
-                                Button(
-                                    onClick = {
-                                        //TODO: Stamp the time and the message
-                                    },
-                                    border = BorderStroke(
-                                        1.dp,
-                                        colorResource(id = R.color.amsDark)
-                                    ),
-                                    shape = RoundedCornerShape(10.dp),
-                                    colors = ButtonDefaults.buttonColors(
-                                        backgroundColor = colorResource(id = R.color.pink)
-                                    ),
-                                    modifier = Modifier
-                                        .width(181.dp)
-                                        .height(60.dp),
-                                ) {
-                                    Text(
-                                        text = "Intense Activity",
-                                        color = Color.White,
-                                        fontStyle = FontStyle.Italic,
-                                    )
-                                }
-                            }
-                            Spacer(modifier = Modifier.height(10.dp))
-                            Row(
-                                horizontalArrangement = Arrangement.spacedBy(10.dp)
-                            ) {
-                                Button(
-                                    onClick = {
-                                        //TODO: Stamp the time and the message
-                                    },
-                                    border = BorderStroke(
-                                        1.dp,
-                                        colorResource(id = R.color.amsDark)
-                                    ),
-                                    shape = RoundedCornerShape(10.dp),
-                                    colors = ButtonDefaults.buttonColors(
-                                        backgroundColor = colorResource(id = R.color.blue)
-                                    ),
-                                    modifier = Modifier
-                                        .width(181.dp)
-                                        .height(60.dp),
-                                ) {
-                                    Text(
-                                        text = "Relaxing",
-                                        color = Color.White,
-                                        fontStyle = FontStyle.Italic,
-                                    )
-                                }
-
-                                Button(
-                                    onClick = {
-                                        //TODO: Stamp the time and the message
-                                    },
-                                    border = BorderStroke(
-                                        1.dp,
-                                        colorResource(id = R.color.amsDark)
-                                    ),
-                                    shape = RoundedCornerShape(10.dp),
-                                    colors = ButtonDefaults.buttonColors(
-                                        backgroundColor = colorResource(id = R.color.purple)
-                                    ),
-                                    modifier = Modifier
-                                        .width(181.dp)
-                                        .height(60.dp),
-                                ) {
-                                    Text(
-                                        text = "Cycling",
-                                        color = Color.White,
-                                        fontStyle = FontStyle.Italic,
-                                    )
-                                }
-                            }
-                            Button(
-                                onClick = {
-                                    //TODO: Stamp the time and the message
-                                },
-                                border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
-                                shape = RoundedCornerShape(10.dp),
-                                colors = ButtonDefaults.buttonColors(
-                                    backgroundColor = colorResource(id = R.color.darkBlue)
-                                ),
-                                modifier = Modifier
-                                    .width(372.dp)
-                                    .height(70.dp)
-                                    .padding(top = 10.dp),
-                            ) {
-                                Text(
-                                    text = "Free Text Marker",
-                                    color = Color.White,
-                                    fontStyle = FontStyle.Italic,
-                                )
-                            }
-                        }
-                    }
-                }
-            } else {
-                Icon(
-                    imageVector = Icons.Default.Error,
-                    contentDescription = "ERROR",
-                    tint = Color.Red
-                )
-            }
-        }
-        else -> {
+    LazyColumn(content = {
+        item {
             Column(
                 modifier
                     .padding(18.dp)
                     .fillMaxSize()
             ) {
+
                 Column(
-                    modifier = modifier
+                    modifier
                         .fillMaxSize()
                 ) {
                     Text(
@@ -295,7 +68,7 @@ private fun ConnectionEstablished(
                             .padding(top = 20.dp)
                             .height(90.dp),
                         onClick = {
-                            navController.navigate("Setup")
+                            navController.navigate(Screen.Setup.route)
                         },
                         border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
                         shape = RoundedCornerShape(10.dp),
@@ -322,13 +95,13 @@ private fun ConnectionEstablished(
                                     .absolutePadding(left = 10.dp),
                             ) {
                                 Text(
-                                    text = "Take your first step",
+                                    text = "First step",
                                     style = MaterialTheme.typography.h5,
                                     fontWeight = FontWeight.Bold,
                                     color = Color.White
                                 )
                                 Text(
-                                    text = "Find your device",
+                                    text = "Wear the device",
                                     style = MaterialTheme.typography.body1,
                                     color = Color.White
                                 )
@@ -344,7 +117,7 @@ private fun ConnectionEstablished(
                             .padding(top = 20.dp)
                             .height(90.dp),
                         onClick = {
-                            navController.navigate(Screen.StartRecording.route)
+                            navController.navigate(Screen.SetupConnection.route)
                         },
                         border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
                         shape = RoundedCornerShape(10.dp),
@@ -371,13 +144,62 @@ private fun ConnectionEstablished(
                                     .absolutePadding(left = 10.dp),
                             ) {
                                 Text(
-                                    text = "Take your second step",
+                                    text = "Second step",
                                     style = MaterialTheme.typography.h5,
                                     fontWeight = FontWeight.Bold,
                                     color = Color.White
                                 )
                                 Text(
-                                    text = "Find the device",
+                                    text = "Power on the device",
+                                    style = MaterialTheme.typography.body1,
+                                    color = Color.White
+                                )
+                            }
+                        }
+
+                    }
+
+                    //Third button
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 20.dp)
+                            .height(90.dp),
+                        onClick = {
+                            navController.navigate(Screen.HomeConnected.route)
+                        },
+                        border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
+                        shape = RoundedCornerShape(10.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = colorResource(id = R.color.ams)
+                        ),
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                modifier = Modifier
+                                    .size(50.dp),
+                                imageVector = Icons.Default.Filter3,
+                                contentDescription = "Help",
+                                tint = Color.White
+                            )
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(10.dp)
+                                    .absolutePadding(left = 10.dp),
+                            ) {
+                                Text(
+                                    text = "Final step",
+                                    style = MaterialTheme.typography.h5,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.White
+                                )
+                                Text(
+                                    text = "Use the device",
                                     style = MaterialTheme.typography.body1,
                                     color = Color.White
                                 )
@@ -389,5 +211,6 @@ private fun ConnectionEstablished(
                 }
             }
         }
-    }
+    })
+
 }
