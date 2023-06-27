@@ -31,7 +31,6 @@ fun HomeConnected(
     chartViewModel: ChartViewModel,
     webSocket: SocketService
 ) {
-    val buttonClicked = remember { mutableStateOf(false) }
     val customMarkerText = remember { mutableStateOf("") }
 
     val marker = "cmd !MARKER=${customMarkerText.value};"
@@ -57,39 +56,33 @@ fun HomeConnected(
                         .fillMaxSize()
                 ) {
                     Column {
-                        if (!buttonClicked.value) {
-                            MyButton(onClick = { buttonClicked.value = true })
+                        // Call your desired composable function or perform any action here
+                        Box(
+                            modifier
+                                .fillMaxWidth()
+                                .height(190.dp)
+                                .clip(
+                                    RoundedCornerShape(
+                                        topEnd = 10.dp,
+                                        topStart = 10.dp
+                                    )
+                                )
+                        ) {
+                            ChartTypeHome(chartViewModel, lineName = "ECG")
                         }
 
-                        if (buttonClicked.value) {
-                            // Call your desired composable function or perform any action here
-                            Box(
-                                modifier
-                                    .fillMaxWidth()
-                                    .height(190.dp)
-                                    .clip(
-                                        RoundedCornerShape(
-                                            topEnd = 10.dp,
-                                            topStart = 10.dp
-                                        )
+                        Box(
+                            modifier
+                                .fillMaxWidth()
+                                .height(190.dp)
+                                .clip(
+                                    RoundedCornerShape(
+                                        bottomEnd = 10.dp,
+                                        bottomStart = 10.dp
                                     )
-                            ) {
-                                ChartTypeHome(chartViewModel, lineName = "ECG")
-                            }
-
-                            Box(
-                                modifier
-                                    .fillMaxWidth()
-                                    .height(190.dp)
-                                    .clip(
-                                        RoundedCornerShape(
-                                            bottomEnd = 10.dp,
-                                            bottomStart = 10.dp
-                                        )
-                                    )
-                            ) {
-                                ChartTypeHome(chartViewModel, lineName = "ICG")
-                            }
+                                )
+                        ) {
+                            ChartTypeHome(chartViewModel, lineName = "RES")
                         }
                     }
 
@@ -253,21 +246,6 @@ fun HomeConnected(
                     }
                 }
             }
-        }
-    }
-}
-
-@Composable
-fun MyButton(onClick: () -> Unit) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(268.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Button(onClick = onClick) {
-            Text("See measurements")
         }
     }
 }
