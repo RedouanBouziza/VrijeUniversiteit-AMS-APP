@@ -267,7 +267,7 @@ fun MyButton(onClick: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Button(onClick = onClick) {
-            Text("See ur measurements")
+            Text("See measurements")
         }
     }
 }

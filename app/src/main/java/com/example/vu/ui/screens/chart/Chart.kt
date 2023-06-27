@@ -104,7 +104,7 @@ fun Chart(chartViewModel: ChartViewModel) {
                         Button(onClick = {
                             selectedTabIndex.value = 0
                         }) {
-                            Text(text = "See ur measurements")
+                            Text(text = "See measurements")
                         }
                     }
                 }
@@ -450,7 +450,7 @@ fun AllCharts(chartViewModel: ChartViewModel) {
 
 //                        twoEcgLineDataSeries.append(section.tickCount, section.twoEcg)
 //                        isrcLineDataSeries.append(section.tickCount, section.isrc)
-                        ecgLineDataSeries.append(section.tickCount, section.ecg)
+//                        ecgLineDataSeries.append(section.tickCount, section.ecg)
                         icgLineDataSeries.append(section.tickCount, section.icg)
 //                        temperateLineDataSeries.append(section.tickCount, section.temperature)
 
