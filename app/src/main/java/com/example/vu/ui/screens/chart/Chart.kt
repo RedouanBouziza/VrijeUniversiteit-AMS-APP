@@ -1,5 +1,6 @@
 package com.example.vu.ui.screens.chart
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
@@ -8,10 +9,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.shape.ZeroCornerSize
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -36,9 +34,13 @@ import com.scichart.charting.visuals.renderableSeries.IRenderableSeries
 import com.scichart.core.framework.UpdateSuspender
 import com.scichart.core.model.DoubleValues
 import com.scichart.core.model.IntegerValues
+import com.scichart.core.utility.Dispatcher
 import com.scichart.data.model.DoubleRange
 import com.scichart.drawing.common.SolidPenStyle
 import com.scichart.drawing.utility.ColorUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -48,21 +50,23 @@ fun Chart(chartViewModel: ChartViewModel) {
 
     Column {
         val tabs = listOf("ECG", "RES", "GYRO", "ACC", "PRESS")
-        val selectedTabIndex = remember { mutableStateOf(0) }
+        val selectedTabIndex = remember { mutableStateOf(5) }
 
 //        HorizontalScrollableTabs(tabs = tabs, selectedTabIndex = selectedTabIndex)
-        LazyRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentWidth(Alignment.CenterHorizontally),
-            contentPadding = PaddingValues(start = 8.dp, end = 8.dp)
-        ) {
-            itemsIndexed(tabs) { index, title ->
-                Tab(
-                    selected = selectedTabIndex.value == index,
-                    onClick = { selectedTabIndex.value = index },
-                    text = { Text(text = title) }
-                )
+        if (selectedTabIndex.value != 5) {
+            LazyRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentWidth(Alignment.CenterHorizontally),
+                contentPadding = PaddingValues(start = 8.dp, end = 8.dp)
+            ) {
+                itemsIndexed(tabs) { index, title ->
+                    Tab(
+                        selected = selectedTabIndex.value == index,
+                        onClick = { selectedTabIndex.value = index },
+                        text = { Text(text = title) }
+                    )
+                }
             }
         }
 
@@ -82,6 +86,28 @@ fun Chart(chartViewModel: ChartViewModel) {
             }
             4 -> {
                 ChartType(chartViewModel, lineName = "PRES")
+            }
+            5 -> {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(668.dp)
+                            .padding(16.dp)
+                            .clip(RoundedCornerShape(10.dp)),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Button(onClick = {
+                            selectedTabIndex.value = 0
+                        }) {
+                            Text(text = "See ur measurement")
+                        }
+                    }
+                }
             }
         }
 
@@ -189,6 +215,12 @@ fun ChartTypeHome(chartViewModel: ChartViewModel, lineName: String) {
 
     // Append data to initialize the data series
     lineDataSeries.append(xValues, lineData)
+
+    Button(onClick = {
+
+    }) {
+
+    }
 
     Box(
         modifier = Modifier

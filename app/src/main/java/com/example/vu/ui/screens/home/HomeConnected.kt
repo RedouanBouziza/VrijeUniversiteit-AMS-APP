@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.example.vu.MyComposableFunction
 import com.example.vu.R
 import com.example.vu.data.viewmodel.ChartViewModel
 import com.example.vu.data.websocket.SocketService
@@ -30,13 +31,15 @@ fun HomeConnected(
     chartViewModel: ChartViewModel,
     webSocket: SocketService
 ) {
+    val buttonClicked = remember { mutableStateOf(false) }
+    val customMarkerText = remember { mutableStateOf("") }
+
+    val marker = "cmd !MARKER=${customMarkerText.value};"
+
     val cigarette = "Cigarette"
     val intenseActivity = "Intense Activity"
     val relaxing = "Relaxing"
     val cycling = "Cycling"
-
-    val customMarkerText = remember { mutableStateOf("") }
-    val marker = "cmd !MARKER=${customMarkerText.value};"
 
     LazyColumn(
         modifier = Modifier
@@ -54,32 +57,39 @@ fun HomeConnected(
                         .fillMaxSize()
                 ) {
                     Column {
-                        Box(
-                            modifier
-                                .fillMaxWidth()
-                                .height(190.dp)
-                                .clip(
-                                    RoundedCornerShape(
-                                        topEnd = 10.dp,
-                                        topStart = 10.dp
-                                    )
-                                )
-                        ) {
-                            ChartTypeHome(chartViewModel, lineName = "ECG")
+                        if (!buttonClicked.value) {
+                            MyButton(onClick = { buttonClicked.value = true })
                         }
 
-                        Box(
-                            modifier
-                                .fillMaxWidth()
-                                .height(190.dp)
-                                .clip(
-                                    RoundedCornerShape(
-                                        bottomEnd = 10.dp,
-                                        bottomStart = 10.dp
+                        if (buttonClicked.value) {
+                            // Call your desired composable function or perform any action here
+                            Box(
+                                modifier
+                                    .fillMaxWidth()
+                                    .height(190.dp)
+                                    .clip(
+                                        RoundedCornerShape(
+                                            topEnd = 10.dp,
+                                            topStart = 10.dp
+                                        )
                                     )
-                                )
-                        ) {
-                            ChartTypeHome(chartViewModel, lineName = "ICG")
+                            ) {
+                                ChartTypeHome(chartViewModel, lineName = "ECG")
+                            }
+
+                            Box(
+                                modifier
+                                    .fillMaxWidth()
+                                    .height(190.dp)
+                                    .clip(
+                                        RoundedCornerShape(
+                                            bottomEnd = 10.dp,
+                                            bottomStart = 10.dp
+                                        )
+                                    )
+                            ) {
+                                ChartTypeHome(chartViewModel, lineName = "ICG")
+                            }
                         }
                     }
 
@@ -244,5 +254,12 @@ fun HomeConnected(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun MyButton(onClick: () -> Unit) {
+    Button(onClick = onClick) {
+        Text("Press me")
     }
 }

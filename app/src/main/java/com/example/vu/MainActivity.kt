@@ -46,6 +46,7 @@ import com.example.vu.ui.screens.about.AboutUs
 import com.example.vu.ui.screens.faq.*
 import com.example.vu.ui.screens.home.HomeConnected
 import com.example.vu.ui.screens.movement.Movement
+import com.example.vu.ui.screens.setup.SetupInstructions
 import com.example.vu.ui.screens.system.System
 import com.example.vu.ui.theme.VUTheme
 import com.scichart.charting.visuals.SciChartSurface
@@ -174,7 +175,7 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
                 System(modifier, navController, webSocket)
             }
             composable(route = Screen.SetupConnection.route){
-                SetupInstructions(navController)
+                SetupConnection(navController)
             }
             composable(route = Screen.AboutUs.route){
                 AboutUs()

@@ -68,7 +68,7 @@ fun Home(
                             .padding(top = 20.dp)
                             .height(90.dp),
                         onClick = {
-                            navController.navigate("Setup")
+                            navController.navigate(Screen.Setup.route)
                         },
                         border = BorderStroke(1.dp, colorResource(id = R.color.amsDark)),
                         shape = RoundedCornerShape(10.dp),
