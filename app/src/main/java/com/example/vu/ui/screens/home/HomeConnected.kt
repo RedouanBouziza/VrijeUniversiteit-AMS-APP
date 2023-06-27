@@ -259,7 +259,15 @@ fun HomeConnected(
 
 @Composable
 fun MyButton(onClick: () -> Unit) {
-    Button(onClick = onClick) {
-        Text("Press me")
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(268.dp),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Button(onClick = onClick) {
+            Text("See ur measurements")
+        }
     }
 }

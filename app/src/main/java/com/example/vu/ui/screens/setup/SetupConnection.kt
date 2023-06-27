@@ -36,8 +36,8 @@ fun SetupConnection(navController: NavHostController) {
     val showDialog = remember { mutableStateOf(false) }
     val scope = rememberCoroutineScope()
 
-    val secondLastQuestion = 7
-    val lastQuestion = 8
+    val secondLastQuestion = 2
+    val lastQuestion = 3
 
 
     Column(
@@ -51,7 +51,7 @@ fun SetupConnection(navController: NavHostController) {
         )
 
         Text(
-            text = stringResource(id = R.string.step_connection, currentStep),
+            text = stringResource(id = R.string.step_recording, currentStep),
             Modifier.padding(top = 10.dp),
             style = MaterialTheme.typography.subtitle1
         )
@@ -93,31 +93,16 @@ fun SetupConnection(navController: NavHostController) {
                 SideEffect {
                     when (pagerState.currentPage) {
                         images.indexOf(R.drawable.recording1) -> {
-                            explanationForEachStep = R.string.step1_connection
+                            explanationForEachStep = R.string.step1_recording
                         }
                         images.indexOf(R.drawable.recording2_1) -> {
-                            explanationForEachStep = R.string.step2_connection
+                            explanationForEachStep = R.string.step2_recording
                         }
                         images.indexOf(R.drawable.recording2_2) -> {
-                            explanationForEachStep = R.string.step2_connection
+                            explanationForEachStep = R.string.step2_recording
                         }
                         images.indexOf(R.drawable.recording2_3) -> {
-                            explanationForEachStep = R.string.step2_connection
-                        }
-                        images.indexOf(R.drawable.recording2_3) -> {
-                            explanationForEachStep = R.string.step3_connection
-                        }
-                        images.indexOf(R.drawable.recording2_3) -> {
-                            explanationForEachStep = R.string.step4_connection
-                        }
-                        images.indexOf(R.drawable.recording2_3) -> {
-                            explanationForEachStep = R.string.step5_connection
-                        }
-                        images.indexOf(R.drawable.recording2_3) -> {
-                            explanationForEachStep = R.string.step6_connection
-                        }
-                        images.indexOf(R.drawable.recording2_3) -> {
-                            explanationForEachStep = R.string.step7_connection
+                            explanationForEachStep = R.string.step2_recording
                         }
                     }
                 }

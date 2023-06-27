@@ -104,7 +104,7 @@ fun Chart(chartViewModel: ChartViewModel) {
                         Button(onClick = {
                             selectedTabIndex.value = 0
                         }) {
-                            Text(text = "See ur measurement")
+                            Text(text = "See ur measurements")
                         }
                     }
                 }
