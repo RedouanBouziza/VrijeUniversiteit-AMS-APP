@@ -110,12 +110,17 @@ fun Chart(chartViewModel: ChartViewModel) {
 @Composable
 fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
     val sectionAMeasurements by chartViewModel.sectionAMeasurements.observeAsState()
-    val lineData = DoubleValues()
-    val lineDataSeries = XyDataSeries(Int::class.javaObjectType, Double::class.javaObjectType)
-
-    val xValues = IntegerValues()
-    // Append data to initialize the data series
-    lineDataSeries.append(xValues, lineData)
+    val lineData = remember { DoubleValues() }
+    val lineDataSeries = remember { XyDataSeries(Int::class.javaObjectType, Double::class.javaObjectType) }
+    val xValues = remember { IntegerValues() }
+    val chartModifiers = remember {
+        mutableListOf<IChartModifier>(
+            PinchZoomModifier(),
+            ZoomPanModifier(),
+            ZoomExtentsModifier(),
+            RolloverModifier()
+        )
+    }
 
     Box(
         modifier = Modifier
@@ -143,11 +148,6 @@ fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
                 // How much it will show on the screen
                 lineDataSeries.fifoCapacity = 5000
 
-                // Append data to initialise the data series
-                lineDataSeries.append(xValues, lineData)
-
-                // Type of line
-
                 val lineSeries: IRenderableSeries = FastLineRenderableSeries().apply {
                     dataSeries = lineDataSeries
                     strokeStyle = SolidPenStyle(ColorUtil.Blue, true, 5f, null)
@@ -155,17 +155,8 @@ fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
 
                 // Add all those data and modifiers
                 UpdateSuspender.using(sciChartSurfaceView) {
-                    Collections.addAll(
-                        sciChartSurfaceView.renderableSeries,
-                        lineSeries
-                    )
-                    Collections.addAll(
-                        sciChartSurfaceView.chartModifiers,
-                        PinchZoomModifier(),
-                        ZoomPanModifier(),
-                        ZoomExtentsModifier(),
-                    )
-                    sciChartSurfaceView.chartModifiers.add(RolloverModifier())
+                    sciChartSurfaceView.renderableSeries.add(lineSeries)
+                    chartModifiers.forEach { sciChartSurfaceView.chartModifiers.add(it) }
                 }
 
                 // Add the x and y axis to the chart
@@ -175,25 +166,115 @@ fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
                 }
 
                 sciChartSurfaceView // return the SciChartSurface instance
-            }, update = {
-                sectionAMeasurements?.let { sectionMeasurements ->
-                    sectionMeasurements.values.forEach { section ->
-                        if (lineDataSeries.xMax > section.tickCount) {
-                            return@let
-                        }
-                        when (lineName) {
-                            "ECG" -> lineDataSeries.append(section.tickCount, section.ecg)
-                            "RES" -> lineDataSeries.append(section.tickCount, section.icg)
-                            "GYRO" -> lineDataSeries.append(section.tickCount, section.temperature)
-                            "ACC" -> lineDataSeries.append(section.tickCount, section.temperature)
-                            "PRES" -> lineDataSeries.append(section.tickCount, section.temperature)
-                        }
+            }
+        )
+
+        LaunchedEffect(sectionAMeasurements) {
+            sectionAMeasurements?.let { sectionMeasurements ->
+                sectionMeasurements.values.forEach { section ->
+                    if (lineDataSeries.xMax > section.tickCount) {
+                        return@let
+                    }
+                    when (lineName) {
+                        "ECG" -> lineDataSeries.append(section.tickCount, section.ecg)
+                        "RES" -> lineDataSeries.append(section.tickCount, section.icg)
+                        "GYRO" -> lineDataSeries.append(section.tickCount, section.temperature)
+                        "ACC" -> lineDataSeries.append(section.tickCount, section.temperature)
+                        "PRES" -> lineDataSeries.append(section.tickCount, section.temperature)
                     }
                 }
             }
-        )
+        }
     }
 }
+
+//@Composable
+//fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
+//    val sectionAMeasurements by chartViewModel.sectionAMeasurements.observeAsState()
+//    val lineData = DoubleValues()
+//    val lineDataSeries = XyDataSeries(Int::class.javaObjectType, Double::class.javaObjectType)
+//
+//    val xValues = IntegerValues()
+//    // Append data to initialize the data series
+//    lineDataSeries.append(xValues, lineData)
+//
+//    Box(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(bottom = 55.dp)
+//    ) {
+//        AndroidView(
+//            factory = { context ->
+//                // Create Android View with SciChartSurface
+//                val sciChartSurfaceView = SciChartSurface(context)
+//                sciChartSurfaceView.theme = com.scichart.charting.R.style.SciChart_ChromeStyle
+//
+//                // Configure SciChartSurface with chart data and options here
+//                val xAxis: IAxis = NumericAxis(context).apply {
+//                    growBy = DoubleRange(0.0, 0.0)
+//                    autoRange = AutoRange.Always
+//                }
+//                val yAxis: IAxis = NumericAxis(context).apply {
+//                    growBy = DoubleRange(0.0, 0.0)
+//                    autoRange = AutoRange.Always
+//                }
+//
+//                lineDataSeries.seriesName = lineName
+//
+//                // How much it will show on the screen
+//                lineDataSeries.fifoCapacity = 5000
+//
+//                // Append data to initialise the data series
+//                lineDataSeries.append(xValues, lineData)
+//
+//                // Type of line
+//
+//                val lineSeries: IRenderableSeries = FastLineRenderableSeries().apply {
+//                    dataSeries = lineDataSeries
+//                    strokeStyle = SolidPenStyle(ColorUtil.Blue, true, 5f, null)
+//                }
+//
+//                // Add all those data and modifiers
+//                UpdateSuspender.using(sciChartSurfaceView) {
+//                    Collections.addAll(
+//                        sciChartSurfaceView.renderableSeries,
+//                        lineSeries
+//                    )
+//                    Collections.addAll(
+//                        sciChartSurfaceView.chartModifiers,
+//                        PinchZoomModifier(),
+//                        ZoomPanModifier(),
+//                        ZoomExtentsModifier(),
+//                    )
+//                    sciChartSurfaceView.chartModifiers.add(RolloverModifier())
+//                }
+//
+//                // Add the x and y axis to the chart
+//                UpdateSuspender.using(sciChartSurfaceView) {
+//                    sciChartSurfaceView.xAxes.add(xAxis)
+//                    sciChartSurfaceView.yAxes.add(yAxis)
+//                }
+//
+//                sciChartSurfaceView // return the SciChartSurface instance
+//            }, update = {
+//                sectionAMeasurements?.let { sectionMeasurements ->
+//                    sectionMeasurements.values.forEach { section ->
+//                        if (lineDataSeries.xMax > section.tickCount) {
+//                            return@let
+//                        }
+//                        when (lineName) {
+//                            "ECG" -> lineDataSeries.append(section.tickCount, section.ecg)
+//                            "RES" -> lineDataSeries.append(section.tickCount, section.icg)
+//                            "GYRO" -> lineDataSeries.append(section.tickCount, section.temperature)
+//                            "ACC" -> lineDataSeries.append(section.tickCount, section.temperature)
+//                            "PRES" -> lineDataSeries.append(section.tickCount, section.temperature)
+//                        }
+//                    }
+//                }
+//            }
+//        )
+//    }
+//}
 
 @Composable
 fun ChartTypeHome(chartViewModel: ChartViewModel, lineName: String) {
