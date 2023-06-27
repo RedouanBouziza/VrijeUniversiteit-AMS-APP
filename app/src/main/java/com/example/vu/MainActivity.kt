@@ -107,10 +107,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    val scope = rememberCoroutineScope()
-
                     MyComposableFunction()
-                    ScreenContent(Modifier, scope)
+                    ScreenContent(Modifier)
                 }
             }
         }
@@ -119,7 +117,7 @@ class MainActivity : ComponentActivity() {
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
+private fun ScreenContent(modifier: Modifier) {
     val webSocket: SocketService by lazy { SocketService() }
 
     DisposableEffect(key1 = webSocket) {
@@ -160,7 +158,7 @@ private fun ScreenContent(modifier: Modifier, scope: CoroutineScope) {
                 BreathingSettings(navController, breathingViewModel)
             }
             composable(Screen.BreathingExercise.route) {
-                BreathingExercise(breathingViewModel, scope, chartViewModel)
+                BreathingExercise(breathingViewModel, chartViewModel)
             }
             composable(route = Screen.Setup.route) {
                 SetupInstructions(navController)

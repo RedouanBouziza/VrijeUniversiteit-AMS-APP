@@ -1,6 +1,5 @@
 package com.example.vu.ui.screens.chart
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.*
@@ -20,13 +19,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.example.vu.R
 import com.example.vu.data.viewmodel.ChartViewModel
 import com.scichart.charting.model.dataSeries.XyDataSeries
 import com.scichart.charting.modifiers.*
 import com.scichart.charting.visuals.SciChartSurface
 import com.scichart.charting.visuals.axes.AutoRange
-import com.scichart.charting.visuals.axes.AxisAlignment
 import com.scichart.charting.visuals.axes.IAxis
 import com.scichart.charting.visuals.axes.NumericAxis
 import com.scichart.charting.visuals.renderableSeries.FastLineRenderableSeries
@@ -34,13 +31,9 @@ import com.scichart.charting.visuals.renderableSeries.IRenderableSeries
 import com.scichart.core.framework.UpdateSuspender
 import com.scichart.core.model.DoubleValues
 import com.scichart.core.model.IntegerValues
-import com.scichart.core.utility.Dispatcher
 import com.scichart.data.model.DoubleRange
 import com.scichart.drawing.common.SolidPenStyle
 import com.scichart.drawing.utility.ColorUtil
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.util.*
 
 
@@ -117,12 +110,10 @@ fun Chart(chartViewModel: ChartViewModel) {
 @Composable
 fun ChartType(chartViewModel: ChartViewModel, lineName: String) {
     val sectionAMeasurements by chartViewModel.sectionAMeasurements.observeAsState()
-
     val lineData = DoubleValues()
     val lineDataSeries = XyDataSeries(Int::class.javaObjectType, Double::class.javaObjectType)
 
     val xValues = IntegerValues()
-
     // Append data to initialize the data series
     lineDataSeries.append(xValues, lineData)
 

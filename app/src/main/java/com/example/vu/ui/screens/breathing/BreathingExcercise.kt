@@ -24,28 +24,22 @@ import com.example.vu.ui.screens.chart.Chart
 import com.example.vu.ui.screens.chart.ChartType
 import com.example.vu.ui.screens.chart.ChartTypeHome
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 @Composable
 fun BreathingExercise(
     breathingViewModel: BreathingViewModel,
-    scope: CoroutineScope,
     chartViewModel: ChartViewModel
 ) {
     val scale = remember { Animatable(1f) }
     val buttonClicked = remember { mutableStateOf(false) }
-    val breatheIn = (breathingViewModel.breathIn.value!! * 1000).roundToInt()
-    val breatheOut = (breathingViewModel.breathOut.value!! * 1000).roundToInt()
-    val pauseBreatheIn = (breathingViewModel.pauseBreatheIn.value!! * 1000).roundToInt()
-    val pauseBreatheOut = (breathingViewModel.pauseBreatheOut.value!! * 1000).roundToInt()
-    val breathesPerMinute = 60000 / (breatheIn + pauseBreatheIn + breatheOut + pauseBreatheOut)
-
-//    LaunchedEffect(Unit) {
-//        while (true) {
-//            scale.animateTo(1.5f, tween(breatheIn, pauseBreatheIn, LinearEasing))
-//            scale.animateTo(1f, tween(breatheOut, pauseBreatheOut, LinearEasing))
-//        }
-//    }
+    val breatheIn = remember { (breathingViewModel.breathIn.value!! * 1000).roundToInt() }
+    val breatheOut = remember { (breathingViewModel.breathOut.value!! * 1000).roundToInt() }
+    val pauseBreatheIn = remember { (breathingViewModel.pauseBreatheIn.value!! * 1000).roundToInt() }
+    val pauseBreatheOut = remember { (breathingViewModel.pauseBreatheOut.value!! * 1000).roundToInt() }
+    val breathesPerMinute = remember { 60000 / (breatheIn + pauseBreatheIn + breatheOut + pauseBreatheOut) }
 
     Column {
         Column(
@@ -92,6 +86,13 @@ fun BreathingExercise(
                     }
                 }
             }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        while (true) {
+            scale.animateTo(1.5f, tween(breatheIn, pauseBreatheIn, LinearEasing))
+            scale.animateTo(1f, tween(breatheOut, pauseBreatheOut, LinearEasing))
         }
     }
 }
