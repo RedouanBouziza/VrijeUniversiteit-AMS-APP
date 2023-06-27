@@ -9,8 +9,6 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -22,10 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.vu.R
-import com.example.vu.data.viewmodel.ChartViewModel
-import com.example.vu.data.viewmodel.UDPViewModel
 import com.example.vu.ui.screens.Screen
-import com.example.vu.ui.screens.chart.AllCharts
 
 @Composable
 fun Home(
